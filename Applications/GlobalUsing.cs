@@ -6,4 +6,5 @@ global using FluentResults;
 global using MediatR;
 global using FluentValidation;
 global using Applications.Interfaces;
+global using Microsoft.EntityFrameworkCore;
 

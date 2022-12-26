@@ -8,7 +8,7 @@ namespace Applications.Interfaces
 
         IDataContext GetContext();
          
-        Task SaveChangesAsyncRoot();
-        Task SaveChangesAsyncRoot(string userOrgId);        
+        Task CommitSaveAsync();
+        Task CommitSaveAsync(string userOrgId);        
     }
 }

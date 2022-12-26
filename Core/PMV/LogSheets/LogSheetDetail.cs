@@ -16,7 +16,7 @@ public class LogSheetDetail : BaseEntity<Guid>
 
     public bool IsLessThan(int currentReading) => Reading < currentReading;
 
-    public bool IsLessThanPrevious(int currentReading) => PreviousReading > currentReading;
+    public bool IsLessThanPrevious(int currentReading) => PreviousReading < currentReading;
 
     public static LogSheetDetail CreateNoAutoId(
         string id,

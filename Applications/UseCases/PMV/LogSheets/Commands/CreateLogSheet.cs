@@ -45,7 +45,7 @@ public class CreateLogSheetRequestHandler : IRequestHandler<CreateLogSheetReques
             
             _unitWork.LogSheets.Add(logsheet);
 
-            await _unitWork.SaveChangesAsyncRoot(request.LogSheetRequest.EmployeeCode);
+            await _unitWork.CommitSaveAsync(request.LogSheetRequest.EmployeeCode);
 
             return Result.Ok(new LogSheetResponse {
                     Id = logsheet.Id.ToString(),

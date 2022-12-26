@@ -54,5 +54,5 @@ public class LogSheetDetailRequest
     public string? CurrentSMUUrl { get; set; }
     public string? TankMeterUrl { get; set; }
 
-    public string? UIState { get; set; }
+    public string EmployeeCode { get; set; }
 }
