@@ -77,4 +77,10 @@ public class LogSheet : BaseEntity<Guid>
         if (!string.IsNullOrEmpty(tankMeterUrl))
             logSheetDetail.TankMeterUrl = tankMeterUrl;
     }
+
+    public void Posted()
+    {
+        Post = PostingObject.Posted();
+    }
+
 }

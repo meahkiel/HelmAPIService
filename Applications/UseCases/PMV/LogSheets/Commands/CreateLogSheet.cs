@@ -1,9 +1,5 @@
-using Applications.Interfaces;
 using Applications.UseCases.PMV.LogSheets.DTO;
 using Core.PMV.LogSheets;
-using FluentResults;
-using FluentValidation;
-using MediatR;
 
 namespace Applications.UseCases.PMV.LogSheets;
 
@@ -33,6 +29,7 @@ public class CreateLogSheetRequestHandler : IRequestHandler<CreateLogSheetReques
     {
 
         try {
+            
             var existingLog = await _unitWork.LogSheets.GetLatestRecord() ?? new LogSheet();
 
             //get the id of the station and location

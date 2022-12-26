@@ -1,11 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "j7aW2yC0s3zJkoraRX4gVDQpVpq/bX+yQm268NgZQFsZFMfydXUO8/yJDL3O2Ee/+bIAsNScJz9SoRxhp6LBOA==",
+  "dgSpecHash": "BjSVEl3oIcQAuLVqy1cIWWT2FkMFsUBepjQmSM8iOhR4yLeI4Czdpa5zRsq8Pbs6NlpFeX0M6TsDBfjWfxRkzw==",
   "success": true,
   "projectFilePath": "D:\\Projects\\HelmApps\\HelmAPI\\Infrastructure\\Infrastructure.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\AMercado\\.nuget\\packages\\fluentresults\\3.15.0\\fluentresults.3.15.0.nupkg.sha512",
     "C:\\Users\\AMercado\\.nuget\\packages\\fluentresults.extensions.aspnetcore\\0.1.0\\fluentresults.extensions.aspnetcore.0.1.0.nupkg.sha512",
+    "C:\\Users\\AMercado\\.nuget\\packages\\fluentvalidation\\11.4.0\\fluentvalidation.11.4.0.nupkg.sha512",
+    "C:\\Users\\AMercado\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\11.4.0\\fluentvalidation.dependencyinjectionextensions.11.4.0.nupkg.sha512",
     "C:\\Users\\AMercado\\.nuget\\packages\\mediatr\\11.0.0\\mediatr.11.0.0.nupkg.sha512",
     "C:\\Users\\AMercado\\.nuget\\packages\\mediatr.contracts\\1.0.1\\mediatr.contracts.1.0.1.nupkg.sha512",
     "C:\\Users\\AMercado\\.nuget\\packages\\mediatr.extensions.microsoft.dependencyinjection\\11.0.0\\mediatr.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512",
