@@ -7,5 +7,7 @@ namespace Applications.Interfaces
 
         Task<T?> GetByIdAsync(Guid Id);
         Task<IEnumerable<T>> GetAll();
+
+        
     }
 }

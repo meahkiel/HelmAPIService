@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Applications.Interfaces
 {
-    public interface IDataContext
+    public interface IDataContext : IDisposable
     {
         public DbSet<LogSheet> LogSheets { get; set; }
         public DbSet<LogSheetDetail> LogSheetDetails { get; set; }
