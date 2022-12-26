@@ -7,27 +7,27 @@ public class LogSheet : BaseEntity<Guid>
 
      public static LogSheet Create(
         int refNo,
-        DateTime shiftStartTime,
+        string shiftStartTime,
         int startShiftTankerKm,
         int startShiftMeterReading,
         string locationId,
-        string LVStationId)
+        string LVStationId,
+        string fueler)
     {
 
         return new LogSheet
         {
             ReferenceNo = refNo + 1,
-            FueledDate = shiftStartTime,
-            ShiftStartTime = shiftStartTime,
+            ShiftStartTime = DateTime.Parse(shiftStartTime),
             StartShiftTankerKm = startShiftTankerKm,
             StartShiftMeterReading = startShiftMeterReading,
             LocationId = locationId,
-            LVStationId = LVStationId
+            LVStationId = LVStationId,
+            Fueler = fueler
         };
     }
 
     public int ReferenceNo { get; set; }
-    public DateTime FueledDate { get; set; } = DateTime.Now;
     public DateTime ShiftStartTime { get; set; }
     public DateTime? ShiftEndTime { get; set; }
     public int StartShiftTankerKm { get; set; }
@@ -50,33 +50,15 @@ public class LogSheet : BaseEntity<Guid>
         _details.Add(detail);
     }
 
-     public void UpdateDetail(string id, string assetCode, int reading, float quantity, string? operatorDriver,
-            string? driverQatariIdUrl, string? currentSMUUrl, string? tankMeterUrl)
-    {
-
-        var logSheetDetail = _details.FirstOrDefault(d => d.Id == Guid.Parse(id));
-
-        if (logSheetDetail == null)
-            throw new Exception("detail cannot be found");
-
-        if (logSheetDetail.IsLessThanPrevious(reading)) {
-            throw new Exception("Current reading must be higher than the previous");
-        }
-
-        logSheetDetail.AssetCode = assetCode;
-        logSheetDetail.Reading = reading;
-        logSheetDetail.Quantity = quantity;
-        logSheetDetail.OperatorDriver = operatorDriver;
-
-        if (!string.IsNullOrEmpty(driverQatariIdUrl))
-            logSheetDetail.DriverQatarIdUrl = driverQatariIdUrl;
-
-        if (!string.IsNullOrEmpty(currentSMUUrl))
-            logSheetDetail.CurrentSMUUrl = currentSMUUrl;
-
-        if (!string.IsNullOrEmpty(tankMeterUrl))
-            logSheetDetail.TankMeterUrl = tankMeterUrl;
+    public void CloseLogSheet(int endShiftMeterReading, int endShiftTankerKm, string shiftEndTime,string? remarks) {
+        EndShiftMeterReading = endShiftMeterReading;
+        EndShiftTankerKm = endShiftTankerKm;
+        ShiftEndTime =  DateTime.Parse(shiftEndTime);
+        Remarks = remarks ?? "";
+        this.Posted();
     }
+
+    
 
     public void Posted()
     {

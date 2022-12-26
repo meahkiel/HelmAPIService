@@ -22,7 +22,7 @@ public class LogSheetDetail : BaseEntity<Guid>
         string id,
         LogSheet logSheet,
         string assetCode,
-        DateTime fuelTime,
+        string fuelTime,
         int reading,
         int previousReading,
         float quantity,
@@ -37,7 +37,7 @@ public class LogSheetDetail : BaseEntity<Guid>
             Id = Guid.Parse(id),
 
             AssetCode = assetCode,
-            FuelTime = fuelTime,
+            FuelTime = DateTime.Parse(fuelTime),
             Reading = reading,
             PreviousReading = previousReading,
             Quantity = quantity,
@@ -50,7 +50,7 @@ public class LogSheetDetail : BaseEntity<Guid>
     }
     public static LogSheetDetail Create(
         string assetCode,
-        DateTime fuelTime,
+        string fuelTime,
         int reading,
         int previousReading,
         float quantity,
@@ -62,8 +62,9 @@ public class LogSheetDetail : BaseEntity<Guid>
 
         return new LogSheetDetail
         {
+            Id = Guid.NewGuid(),
             AssetCode = assetCode,
-            FuelTime = fuelTime,
+            FuelTime = DateTime.Parse(fuelTime),
             Reading = reading,
             PreviousReading = previousReading,
             Quantity = quantity,

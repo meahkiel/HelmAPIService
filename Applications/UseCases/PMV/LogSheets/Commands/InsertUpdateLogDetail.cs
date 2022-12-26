@@ -33,7 +33,7 @@ public class InsertUpdateLogDetailRequestHandler : IRequestHandler<InsertUpdateL
                 
                 detail = LogSheetDetail.Create(
                                     assetCode: request.DetailRequest.AssetCode,
-                                    fuelTime: DateTime.Parse(request.DetailRequest.FuelTime),
+                                    fuelTime: request.DetailRequest.FuelTime,
                                     reading: request.DetailRequest.Reading,
                                     previousReading: previousRecord!.Reading,
                                     quantity: request.DetailRequest.Quantity,
@@ -93,7 +93,7 @@ public class InsertUpdateLogDetailRequestHandler : IRequestHandler<InsertUpdateL
                                     .OrderByDescending(l => l.LogSheet.CreatedAt)
                                     .FirstOrDefaultAsync() ?? new LogSheetDetail();
 
-            if (previousRecord.IsLessThan(request.Reading)) {
+            if (!previousRecord.IsLessThan(request.Reading)) {
                 throw new Exception("Error");
             }
 

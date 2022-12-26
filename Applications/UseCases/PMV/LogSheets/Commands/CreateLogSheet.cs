@@ -37,10 +37,11 @@ public class CreateLogSheetRequestHandler : IRequestHandler<CreateLogSheetReques
             string stationId = "";
 
             var logsheet = LogSheet.Create(existingLog.ReferenceNo,
-                            DateTime.Parse(request.LogSheetRequest.ShiftStartTime),
+                            request.LogSheetRequest.ShiftStartTime,
                             request.LogSheetRequest.StartShiftTankerKm,
                             request.LogSheetRequest.StartShiftMeterReading,
-                            locationId,stationId);
+                            locationId,stationId, 
+                            request.LogSheetRequest.EmployeeCode);
             
             
             _unitWork.LogSheets.Add(logsheet);
@@ -53,7 +54,7 @@ public class CreateLogSheetRequestHandler : IRequestHandler<CreateLogSheetReques
                     ShiftStartTime = logsheet.ShiftStartTime.ToLongTimeString(),
                     StartShiftMeterReading = logsheet.StartShiftMeterReading,
                     StartShiftTankerKm = logsheet.StartShiftTankerKm,
-                    FueledDate = logsheet.FueledDate,
+                    FueledDate = logsheet.ShiftStartTime,
                     Location = request.LogSheetRequest.Location,
                     Remarks = logsheet.Remarks
                 });

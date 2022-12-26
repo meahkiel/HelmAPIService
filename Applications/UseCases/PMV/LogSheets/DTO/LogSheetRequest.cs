@@ -32,10 +32,9 @@ public record LogSheetRequest(
     string LVStation,
     string? Remarks,
     string Fueler,
+    bool IsPosted,
     ICollection<LogSheetDetailRequest>? details
 );
-
-
 
 public class LogSheetDetailRequest
 {
@@ -55,4 +54,8 @@ public class LogSheetDetailRequest
     public string? TankMeterUrl { get; set; }
 
     public string EmployeeCode { get; set; }
+    
+    public bool IsMarkEdit { get; set; }
+    
+    public bool IsMarkDeleted { get; set; }
 }

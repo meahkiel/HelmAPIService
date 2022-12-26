@@ -25,13 +25,18 @@ public class PostLogSheetRequestHandler : IRequestHandler<PostLogSheetRequest, R
     {
         try {
 
-            LogSheet logsheet = await GetOpenLogSheet(request.LogSheetRequest);
-            logsheet.EndShiftMeterReading = request.LogSheetRequest.EndShiftMeterReading;
-            logsheet.EndShiftTankerKm = request.LogSheetRequest.EndShiftMeterReading;
-            logsheet.ShiftEndTime = DateTime.Parse(request.LogSheetRequest.ShiftEndTime!);
-            logsheet.Remarks = request.LogSheetRequest.Remarks;
-            logsheet.Posted();
+            LogSheet? logsheet = await _unitWork.LogSheets.GetDraft(Guid.Parse((request.LogSheetRequest.Id!)));
+            
+            if (logsheet == null)
+                throw new Exception("Log sheet not found or posted already");
+            
 
+            logsheet.CloseLogSheet(
+                request.LogSheetRequest.EndShiftMeterReading,
+                request.LogSheetRequest.EndShiftTankerKm, 
+                request.LogSheetRequest.ShiftEndTime,
+                request.LogSheetRequest.Remarks);
+            
             _unitWork.LogSheets.Update(logsheet);
 
              return Result.Ok(Unit.Value);
@@ -46,7 +51,7 @@ public class PostLogSheetRequestHandler : IRequestHandler<PostLogSheetRequest, R
         {
             //get the selected logsheet
             var logsheet = await _unitWork.LogSheets
-                                    .GetSingleLogSheet(Guid.Parse(request.Id!));
+                                    .GetDraft(Guid.Parse(request.Id!));
 
             if (logsheet == null)
                 throw new Exception("Log sheet not found");
