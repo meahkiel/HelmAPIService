@@ -1,3 +1,5 @@
+using Applications.UseCases.PMV.Common;
+using Applications.UseCases.PMV.Services;
 using Core.PMV.LogSheets;
 
 namespace Applications.UseCases.PMV.LogSheets.Commands;
@@ -13,14 +15,20 @@ public class CreateUpdateFullLogSheetValidator : AbstractValidator<LogSheetReque
 public class CreateUpdateFullLogSheetRequestHandler : IRequestHandler<CreateUpdateFullLogSheetRequest, Result<Unit>>
 {
     private readonly IUnitWork _unitWork;
+    private readonly ICommonService _commonService;
+    private readonly ILogSheetValidationService _validationService;
     private readonly IValidator<LogSheetRequest> _validator;
 
     public CreateUpdateFullLogSheetRequestHandler(
         IUnitWork unitWork, 
-        IValidator<LogSheetRequest> validator)
+        IValidator<LogSheetRequest> validator,
+        ICommonService commonService,
+        ILogSheetValidationService validationService)
     {
         _validator = validator;
         _unitWork = unitWork;
+        _commonService = commonService;
+        _validationService = validationService;
 
     }
     public async Task<Result<Unit>> Handle(CreateUpdateFullLogSheetRequest request, CancellationToken cancellationToken)
@@ -28,9 +36,7 @@ public class CreateUpdateFullLogSheetRequestHandler : IRequestHandler<CreateUpda
         try {
 
             LogSheet? logsheet = null;
-            int locationId = 0;
-            var stationId = "";
-
+            var location = await _commonService.GetLocationByKey(request.SheetRequest.Location);
             if (String.IsNullOrEmpty(request.SheetRequest.Id))
             {
 
@@ -40,8 +46,8 @@ public class CreateUpdateFullLogSheetRequestHandler : IRequestHandler<CreateUpda
                                     request.SheetRequest.ShiftStartTime,
                                     request.SheetRequest.StartShiftTankerKm,
                                     request.SheetRequest.StartShiftMeterReading,
-                                    locationId,
-                                    stationId, request.SheetRequest.Fueler);
+                                    location!.Id,
+                                    request.SheetRequest.LVStation, request.SheetRequest.Fueler);
 
                 logsheet.CloseLogSheet(
                     request.SheetRequest.EndShiftMeterReading,
@@ -53,9 +59,9 @@ public class CreateUpdateFullLogSheetRequestHandler : IRequestHandler<CreateUpda
                 {
                     foreach (var detail in request.SheetRequest.details)
                     {
-
-                        var prevRecord = await GetPreviousRecord(detail.AssetCode, detail.Reading);
-
+                        
+                        var prevRecord = await _validationService.GetLatestFuelLogRecord(detail.AssetCode,detail.Reading);
+                        
                         var logSheetDetail = LogSheetDetail.Create(
                                 assetCode: detail.AssetCode,
                                 fuelTime: detail.FuelTime,
@@ -67,6 +73,7 @@ public class CreateUpdateFullLogSheetRequestHandler : IRequestHandler<CreateUpda
                                 tankMeterUrl: detail.TankMeterUrl ?? "",
                                 operatorDriver: detail.OperatorDriver
                         );
+                        
                         logsheet.AddDetail(logSheetDetail);
                     }
                 }
@@ -87,10 +94,10 @@ public class CreateUpdateFullLogSheetRequestHandler : IRequestHandler<CreateUpda
                 logsheet!.EndShiftTankerKm = request.SheetRequest.EndShiftTankerKm;
                 logsheet!.StartShiftMeterReading = request.SheetRequest.StartShiftMeterReading;
                 logsheet!.EndShiftMeterReading = request.SheetRequest.EndShiftMeterReading;
-                logsheet!.LocationId = locationId;
-                logsheet!.LvStationCode = stationId;
+                logsheet!.LocationId = location!.Id;
+                logsheet!.LvStationCode = request.SheetRequest.LVStation;
 
-                if(request.SheetRequest.IsPosted) logsheet.Posted();
+                logsheet.Posted();
 
                 _unitWork.LogSheets.Update(logsheet);
 
@@ -98,8 +105,12 @@ public class CreateUpdateFullLogSheetRequestHandler : IRequestHandler<CreateUpda
                 {
                     foreach (var requestDetail in request.SheetRequest.details)
                     {
-                        var detail = await _unitWork.GetContext()
-                                        .LogSheetDetails.Where(d => d.Id == Guid.Parse(requestDetail.Id!)).FirstOrDefaultAsync();
+                        
+                        var detail = await _unitWork
+                                        .GetContext()
+                                        .LogSheetDetails
+                                        .Where(d => d.Id == Guid.Parse(requestDetail.Id!))
+                                        .FirstOrDefaultAsync();
                         
                         if(detail == null) continue;
 
@@ -122,7 +133,6 @@ public class CreateUpdateFullLogSheetRequestHandler : IRequestHandler<CreateUpda
             //commit save
             await _unitWork.CommitSaveAsync(request.SheetRequest.EmployeeCode);
 
-
             return Result.Ok(Unit.Value);
         } 
         catch(Exception ex) {
@@ -131,20 +141,7 @@ public class CreateUpdateFullLogSheetRequestHandler : IRequestHandler<CreateUpda
         }
     }
 
-    private async Task<LogSheetDetail> GetPreviousRecord(string assetCode,int reading)
-    {
-        //check the previous record
-        var previousRecord = await _unitWork.GetContext()
-                                .LogSheetDetails.Where(d => d.AssetCode == assetCode)
-                                .OrderByDescending(l => l.LogSheet.CreatedAt)
-                                .FirstOrDefaultAsync() ?? new LogSheetDetail();
-
-        if (!previousRecord.IsLessThan(reading)) {
-            throw new Exception("Error");
-        }
-
-        return previousRecord;
-    }
+   
 
    
 }

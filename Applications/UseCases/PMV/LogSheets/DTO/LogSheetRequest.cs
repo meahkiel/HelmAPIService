@@ -40,8 +40,7 @@ public class LogSheetDetailRequest
 {
 
     public string? Id { get; set; }
-
-    public string LogSheetId { get; set; } = null!;
+    public string? LogSheetId { get; set; } = null!;
 
     public string AssetCode { get; set; } = "";
     public string FuelTime { get; set; } = "";
@@ -53,7 +52,7 @@ public class LogSheetDetailRequest
     public string? CurrentSMUUrl { get; set; }
     public string? TankMeterUrl { get; set; }
 
-    public string EmployeeCode { get; set; }
+    public string? EmployeeCode { get; set; }
     
     public bool IsMarkEdit { get; set; }
     

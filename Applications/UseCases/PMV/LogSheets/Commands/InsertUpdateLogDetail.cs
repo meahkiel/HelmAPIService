@@ -1,4 +1,5 @@
 using Applications.UseCases.PMV.LogSheets.DTO;
+using Applications.UseCases.PMV.Services;
 using Core.PMV.LogSheets;
 
 
@@ -16,20 +17,32 @@ public class InsertUpdateLogDetailRequestHandler : IRequestHandler<InsertUpdateL
 {
     private readonly IUnitWork _unitWork;
     private readonly IValidator<LogSheetDetailRequest> _validator;
+    private readonly ILogSheetValidationService _service;
 
-    public InsertUpdateLogDetailRequestHandler(IUnitWork unitWork,IValidator<LogSheetDetailRequest> validator)
+    public InsertUpdateLogDetailRequestHandler(
+        IUnitWork unitWork,
+        IValidator<LogSheetDetailRequest> validator, 
+        ILogSheetValidationService service)
     {
         _unitWork = unitWork;
         _validator = validator;
+        _service = service;
     }
     public async Task<Result<LogSheetDetailResponse>> Handle(InsertUpdateLogDetailRequest request, CancellationToken cancellationToken)
     {
         try {
             
+            
             LogSheetDetail? detail = new LogSheetDetail();
+            var logSheet = await _unitWork.LogSheets.GetDraft(Guid.Parse(request.DetailRequest.LogSheetId));
+            
+            if(logSheet == null)  
+                throw new Exception("Logsheet must not be null");
+
             if(String.IsNullOrEmpty(request.DetailRequest.Id)) {
-                
-                LogSheetDetail previousRecord = await GetPreviousRecord(request.DetailRequest);
+
+                LogSheetDetail previousRecord = await _service
+                                                        .GetLatestFuelLogRecord(request.DetailRequest.AssetCode,request.DetailRequest.Reading);
                 
                 detail = LogSheetDetail.Create(
                                     assetCode: request.DetailRequest.AssetCode,
@@ -42,16 +55,13 @@ public class InsertUpdateLogDetailRequestHandler : IRequestHandler<InsertUpdateL
                                     tankMeterUrl: request.DetailRequest.TankMeterUrl ?? "",
                                     operatorDriver: request.DetailRequest.OperatorDriver);
                 
+                detail.LogSheet = logSheet;    
                 _unitWork.LogSheets.AddDetail(detail);
             }
             else {
-                //too much  consider rev.
-                detail = await _unitWork.GetContext()
-                                .LogSheetDetails
-                                .Where(d => d.Id == Guid.Parse(request.DetailRequest.Id))
-                                .FirstOrDefaultAsync();
                 
-
+                //too much  consider rev.
+                detail = _unitWork.GetContext().LogSheetDetails.Where(d => d.Id == Guid.Parse(request.DetailRequest.Id)).FirstOrDefault();
                 if(detail == null) throw new Exception("Log Sheet Detail no found");
 
                 if(!detail.IsLessThanPrevious(request.DetailRequest.Reading)) {
@@ -63,7 +73,6 @@ public class InsertUpdateLogDetailRequestHandler : IRequestHandler<InsertUpdateL
                 detail.Quantity = request.DetailRequest.Quantity;
                 detail.OperatorDriver = request.DetailRequest.OperatorDriver;
                 
-                _unitWork.LogSheets.UpdateDetail(detail);
             }
 
             await _unitWork.CommitSaveAsync(request.DetailRequest.EmployeeCode);
@@ -85,20 +94,6 @@ public class InsertUpdateLogDetailRequestHandler : IRequestHandler<InsertUpdateL
           
     }
 
-    private async Task<LogSheetDetail> GetPreviousRecord(LogSheetDetailRequest request)
-    {      
-            //check the previous record
-            var previousRecord = await _unitWork.GetContext()
-                                    .LogSheetDetails.Where(d => d.AssetCode == request.AssetCode)
-                                    .OrderByDescending(l => l.LogSheet.CreatedAt)
-                                    .FirstOrDefaultAsync() ?? new LogSheetDetail();
-
-            if (!previousRecord.IsLessThan(request.Reading)) {
-                throw new Exception("Error");
-            }
-
-            return previousRecord;
-    }
-
+    
 
 }

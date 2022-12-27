@@ -14,15 +14,20 @@ public class CommonService : ICommonService
     {
         _context = (PMVDataContext)context;
     }
-    public async Task<LocationResponse?> GetLocationByCode(string code)
+    public async Task<LocationResponse?> GetLocationByKey(string code,string type = "code",int id=0)
     {   
         
             var results = await _context.Database.GetDbConnection().QueryAsync<LocationResponse>(
                 "sp_GetLocationByCode",
-                new { code = code },
+                new { code = code, type = type, id = id },
                 commandType: System.Data.CommandType.StoredProcedure);
             
             return results.FirstOrDefault();
         
+    }
+
+    public Task<LocationResponse?> GetLocationById(string code)
+    {
+        throw new NotImplementedException();
     }
 }

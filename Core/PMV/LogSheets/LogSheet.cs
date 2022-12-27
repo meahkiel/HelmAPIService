@@ -19,6 +19,7 @@ public class LogSheet : BaseEntity<Guid>
 
         return new LogSheet
         {
+            Id = Guid.NewGuid(),
             ReferenceNo = refNo + 1,
             ShiftStartTime = DateTime.Parse(shiftStartTime),
             StartShiftTankerKm = startShiftTankerKm,
@@ -35,20 +36,24 @@ public class LogSheet : BaseEntity<Guid>
     public int StartShiftTankerKm { get; set; }
     public int? EndShiftTankerKm { get; set; }
     public int StartShiftMeterReading { get; set; }
+    
     public int? EndShiftMeterReading { get; set; }
+    
     public string? Remarks { get; set; } = null;
+    
     public string Fueler { get; set; } = "";
 
     public int LocationId { get; set; }
+    
     public string LvStationCode { get; set; }
 
-    private List<LogSheetDetail> _details;
+    private List<LogSheetDetail> _details = new List<LogSheetDetail>();
     public IEnumerable<LogSheetDetail> Details => new List<LogSheetDetail>(_details);
 
     public PostingObject Post { get; set; } = new PostingObject();
 
     public void AddDetail(LogSheetDetail detail)
-    {
+    {   
         _details.Add(detail);
     }
 

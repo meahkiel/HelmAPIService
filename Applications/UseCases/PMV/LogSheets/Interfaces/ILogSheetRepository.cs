@@ -7,16 +7,10 @@ public interface ILogSheetRepository : IRepository<LogSheet>
 {
 
     Task<IEnumerable<FuelLogTransactionsResponse>> GetTransactions(string dateFrom,string dateTo);
-
-    Task<IEnumerable<LogSheetResponse?>> GetByStation(string station);
-
+    Task<IEnumerable<LogSheetResponse?>> GetDraftSheetsByStation(string station);
     Task<LogSheet?> GetSingleLogSheet(Guid id);
-
     Task<LogSheet?> GetDraft(Guid id);
-    
     Task<LogSheet?> GetLatestRecord();
-
-
 
     bool UpdateDetail(LogSheetDetail detail);
     bool AddDetail(LogSheetDetail detail);

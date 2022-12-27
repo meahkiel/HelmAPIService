@@ -2,7 +2,7 @@ using Applications.UseCases.PMV.LogSheets.DTO;
 
 namespace Applications.UseCases.PMV.LogSheets.Queries;
 
-public record GetPendingLogSheetsRequest(string Station) : IRequest<Result<IEnumerable<LogSheetResponse>>>;
+public record GetPendingLogSheetsRequest(string LvStation) : IRequest<Result<IEnumerable<LogSheetResponse>>>;
 
 public class GetPendingLogSheetsRequestHandler : IRequestHandler<GetPendingLogSheetsRequest, Result<IEnumerable<LogSheetResponse>>>
 {
@@ -16,7 +16,8 @@ public class GetPendingLogSheetsRequestHandler : IRequestHandler<GetPendingLogSh
     {
         try {
             
-            var response = await _unitWork.LogSheets.GetByStation(request.Station) ?? new List<LogSheetResponse>();
+            var response = await _unitWork.LogSheets
+                                    .GetDraftSheetsByStation(request.LvStation) ?? new List<LogSheetResponse>();
             
             return Result.Ok(response);
         }

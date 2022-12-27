@@ -29,7 +29,7 @@ public class LogSheetResponse
 
     public string EmployeeCode { get; set; } = null!;
 
-    public IList<LogSheetDetailResponse> Details { get; set; } = new List<LogSheetDetailResponse>();
+    public IEnumerable<LogSheetDetailResponse> Details { get; set; } = new List<LogSheetDetailResponse>();
 }
 
 
