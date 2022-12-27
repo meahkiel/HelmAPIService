@@ -19,12 +19,12 @@ public class ServiceAlert : BaseEntity<Guid>
     public string GroupName { get; set; }
     public string Description { get; set; }
     
-    private List<AlertDetail> _details = new List<AlertDetail>();
+    private List<ServiceAlertDetail> _details = new List<ServiceAlertDetail>();
 
-    public IEnumerable<AlertDetail> Details => new List<AlertDetail>(_details);
+    public IEnumerable<ServiceAlertDetail> Details => new List<ServiceAlertDetail>(_details);
 
     public void AddDetail(string serviceCode,int kmAlert,int kmInterval,string employeeCode) {
-        _details.Add(new AlertDetail 
+        _details.Add(new ServiceAlertDetail 
             { 
                 Id = Guid.NewGuid(),
                 ServiceCode = serviceCode,

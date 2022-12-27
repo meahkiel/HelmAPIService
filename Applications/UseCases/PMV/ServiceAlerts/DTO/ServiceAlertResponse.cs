@@ -12,6 +12,7 @@ public class ServiceAlertResponse
 
 
 public record ServiceAlertDetailResponse {
+    public string Id { get; init; }
     public string ServiceCode { get; init; }
     public int KmAlert { get; init; }
     public int KmInterval { get; init; }
