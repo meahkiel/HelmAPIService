@@ -40,21 +40,26 @@ public class CreateUpdateFullLogSheetRequestHandler : IRequestHandler<CreateUpda
             if (String.IsNullOrEmpty(request.SheetRequest.Id))
             {
 
+
+                //purpose to obtain the latest ref not much of rep. consider rev.
                 var existingLog = await _unitWork.LogSheets.GetLatestRecord() ?? new LogSheet();
                 
+                //create new logsheet also create unique identifier whithin the creation
                 logsheet = LogSheet.Create(existingLog.ReferenceNo,
                                     request.SheetRequest.ShiftStartTime,
                                     request.SheetRequest.StartShiftTankerKm,
                                     request.SheetRequest.StartShiftMeterReading,
                                     location!.Id,
                                     request.SheetRequest.LVStation, request.SheetRequest.Fueler);
-
+                
+                //close logsheet post the transaction
                 logsheet.CloseLogSheet(
                     request.SheetRequest.EndShiftMeterReading,
                     request.SheetRequest.EndShiftTankerKm,
                     request.SheetRequest.ShiftEndTime,
                     request.SheetRequest.Remarks);
 
+                
                 if (request.SheetRequest.details != null && request.SheetRequest.details.Count > 0)
                 {
                     foreach (var detail in request.SheetRequest.details)
