@@ -8,6 +8,7 @@ public class LogSheetConfig : IEntityTypeConfiguration<LogSheet>
     public void Configure(EntityTypeBuilder<LogSheet> builder)
     {
         builder.ToTable("LogSheets");
+        builder.OwnsOne(l => l.Post);
     }
 }
 

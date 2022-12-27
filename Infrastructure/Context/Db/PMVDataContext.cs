@@ -13,8 +13,7 @@ public class PMVDataContext : DbContext, IDataContext
     public DbSet<LogSheet> LogSheets { get; set; }
     public DbSet<LogSheetDetail> LogSheetDetails { get; set; }
     public DbSet<ServiceAlert> ServiceAlert { get; set; }
-    public DbSet<LVStation> LVStations { get; set; }
-
+    
 
     public PMVDataContext(DbContextOptions<PMVDataContext> options) : base(options)
     {
@@ -26,7 +25,7 @@ public class PMVDataContext : DbContext, IDataContext
 
         base.OnModelCreating(modelBuilder);
         
-        modelBuilder.HasDefaultSchema("PMV");
+        modelBuilder.HasDefaultSchema("HLMPMV");
         modelBuilder.ApplyConfiguration(new LogSheetConfig());
         modelBuilder.ApplyConfiguration(new LogSheetDetailConfig());
         
@@ -36,6 +35,4 @@ public class PMVDataContext : DbContext, IDataContext
             .WithMany(s => s.Details);
         
     }
-
-
 }

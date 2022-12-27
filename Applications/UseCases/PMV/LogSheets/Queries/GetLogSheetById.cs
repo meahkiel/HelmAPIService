@@ -36,9 +36,9 @@ public class GetLogSheetsByIdRequestHandler : IRequestHandler<GetLogSheetByIdReq
                 EndShiftTankerKm = logsheet.EndShiftTankerKm ?? 0,
                 FueledDate = logsheet.ShiftStartTime,
                 EmployeeCode = logsheet.UpdatedBy!,
-                Location = logsheet.LocationId,
+                Location = "",//logsheet.LocationId,
                 Remarks = logsheet.Remarks,
-                LVStation = logsheet.LVStationId,
+                LVStation = logsheet.LvStationCode,
                 Details = ExtractDetail(logsheet.Details).ToList()
             });
         }

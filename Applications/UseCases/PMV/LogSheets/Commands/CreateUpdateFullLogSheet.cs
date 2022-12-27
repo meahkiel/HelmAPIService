@@ -28,7 +28,7 @@ public class CreateUpdateFullLogSheetRequestHandler : IRequestHandler<CreateUpda
         try {
 
             LogSheet? logsheet = null;
-            var locationId = "";
+            int locationId = 0;
             var stationId = "";
 
             if (String.IsNullOrEmpty(request.SheetRequest.Id))
@@ -88,7 +88,7 @@ public class CreateUpdateFullLogSheetRequestHandler : IRequestHandler<CreateUpda
                 logsheet!.StartShiftMeterReading = request.SheetRequest.StartShiftMeterReading;
                 logsheet!.EndShiftMeterReading = request.SheetRequest.EndShiftMeterReading;
                 logsheet!.LocationId = locationId;
-                logsheet!.LVStationId = stationId;
+                logsheet!.LvStationCode = stationId;
 
                 if(request.SheetRequest.IsPosted) logsheet.Posted();
 

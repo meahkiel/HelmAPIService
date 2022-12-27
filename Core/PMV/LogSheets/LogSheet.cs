@@ -10,7 +10,7 @@ public class LogSheet : BaseEntity<Guid>
         string shiftStartTime,
         int startShiftTankerKm,
         int startShiftMeterReading,
-        string locationId,
+        int locationId,
         string LVStationId,
         string fueler)
     {
@@ -22,7 +22,7 @@ public class LogSheet : BaseEntity<Guid>
             StartShiftTankerKm = startShiftTankerKm,
             StartShiftMeterReading = startShiftMeterReading,
             LocationId = locationId,
-            LVStationId = LVStationId,
+            LvStationCode = LVStationId,
             Fueler = fueler
         };
     }
@@ -37,8 +37,8 @@ public class LogSheet : BaseEntity<Guid>
     public string? Remarks { get; set; } = null;
     public string Fueler { get; set; } = "";
 
-    public string LocationId { get; set; } = "";
-    public string LVStationId { get; set; }
+    public int LocationId { get; set; }
+    public string LvStationCode { get; set; }
 
     private List<LogSheetDetail> _details;
     public IEnumerable<LogSheetDetail> Details => new List<LogSheetDetail>(_details);

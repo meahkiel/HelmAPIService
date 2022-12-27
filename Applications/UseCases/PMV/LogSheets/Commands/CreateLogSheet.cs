@@ -33,7 +33,7 @@ public class CreateLogSheetRequestHandler : IRequestHandler<CreateLogSheetReques
             var existingLog = await _unitWork.LogSheets.GetLatestRecord() ?? new LogSheet();
 
             //get the id of the station and location
-            string locationId = "";
+            int locationId = 0;
             string stationId = "";
 
             var logsheet = LogSheet.Create(existingLog.ReferenceNo,

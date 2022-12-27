@@ -11,6 +11,6 @@ public interface IDataContext : IDisposable
 
     public DbSet<ServiceAlert> ServiceAlert { get; set; }
 
-    public DbSet<LVStation> LVStations { get; set; }
+    
 
 }
