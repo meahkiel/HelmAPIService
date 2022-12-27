@@ -1,7 +1,9 @@
 using Core.Common.ValueObjects;
 
+
 namespace Core.PMV.LogSheets;
 
+[AuditableAttribute]
 public class LogSheet : BaseEntity<Guid>
 {
 

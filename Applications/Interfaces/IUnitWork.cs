@@ -3,7 +3,7 @@ using Applications.UseCases.PMV.ServiceAlerts.Interfaces;
 
 namespace Applications.Interfaces;
 
-public interface IUnitWork
+public interface IUnitWork : IDisposable
 {
     public ILogSheetRepository LogSheets {get;}
     public IServiceAlertRepository ServiceAlert { get; set; }

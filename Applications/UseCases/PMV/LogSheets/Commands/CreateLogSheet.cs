@@ -1,3 +1,4 @@
+using Applications.UseCases.PMV.Common;
 using Applications.UseCases.PMV.LogSheets.DTO;
 using Core.PMV.LogSheets;
 
@@ -16,11 +17,16 @@ public class CreateLogSheetRequestHandler : IRequestHandler<CreateLogSheetReques
     
     private readonly IUnitWork _unitWork;
     private readonly IValidator<LogSheetOpenRequest> _validator;
+    private readonly ICommonService _commonService;
 
-    public CreateLogSheetRequestHandler(IUnitWork unitWork,IValidator<LogSheetOpenRequest> validator)
+    public CreateLogSheetRequestHandler(
+        IUnitWork unitWork,
+        IValidator<LogSheetOpenRequest> validator,
+        ICommonService commonService)
     {
             _unitWork = unitWork;
             _validator = validator;
+            _commonService = commonService;
     }
 
      
@@ -33,17 +39,15 @@ public class CreateLogSheetRequestHandler : IRequestHandler<CreateLogSheetReques
             var existingLog = await _unitWork.LogSheets.GetLatestRecord() ?? new LogSheet();
 
             //get the id of the station and location
-            int locationId = 0;
-            string stationId = "";
-
+            var location = await _commonService.GetLocationByCode(request.LogSheetRequest.Location);
+            
             var logsheet = LogSheet.Create(existingLog.ReferenceNo,
                             request.LogSheetRequest.ShiftStartTime,
                             request.LogSheetRequest.StartShiftTankerKm,
                             request.LogSheetRequest.StartShiftMeterReading,
-                            locationId,stationId, 
+                            location.Id,request.LogSheetRequest.LVStation, 
                             request.LogSheetRequest.EmployeeCode);
-            
-            
+                            
             _unitWork.LogSheets.Add(logsheet);
 
             await _unitWork.CommitSaveAsync(request.LogSheetRequest.EmployeeCode);

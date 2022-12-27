@@ -1,5 +1,8 @@
+
+
 namespace Core.PMV.LogSheets;
 
+[AuditableAttribute]
 public class LogSheetDetail : BaseEntity<Guid>
 {
     public string AssetCode { get; set; } = "";

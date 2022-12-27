@@ -1,6 +1,6 @@
 namespace Applications.Interfaces
 {
-    public interface IRepository<T> : IDisposable where T : class
+    public interface IRepository<T> 
     {
         void Add(T value);
         void Update(T value);

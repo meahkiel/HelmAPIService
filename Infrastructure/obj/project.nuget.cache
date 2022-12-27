@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "vA2r8SdsudZpOo3zUHhqzXIgzBb2X32fNjM3xY+TGSWLUYAuVx2JN4qKvHEm2HNRonIMUnMTzexE6jCNHMWApQ==",
+  "dgSpecHash": "FgwUuGCbsAQueUqzgsxA5mb9Wou01dHNyDKlC7APwurU5JohfkXBGU6+AIzkHQIaExFOoqhdTT+TEAN4uLZreg==",
   "success": true,
   "projectFilePath": "D:\\Projects\\HelmApps\\HelmAPI\\Infrastructure\\Infrastructure.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\AMercado\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",
     "C:\\Users\\AMercado\\.nuget\\packages\\fluentresults\\3.15.0\\fluentresults.3.15.0.nupkg.sha512",
     "C:\\Users\\AMercado\\.nuget\\packages\\fluentresults.extensions.aspnetcore\\0.1.0\\fluentresults.extensions.aspnetcore.0.1.0.nupkg.sha512",
     "C:\\Users\\AMercado\\.nuget\\packages\\fluentvalidation\\11.4.0\\fluentvalidation.11.4.0.nupkg.sha512",

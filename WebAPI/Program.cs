@@ -1,9 +1,11 @@
+using Applications;
 using Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services
+    .AddApplication()
     .AddInfrastructure(builder.Configuration.GetConnectionString("ServiceDb"));
 
 builder.Services.AddControllers();

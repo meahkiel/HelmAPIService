@@ -26,7 +26,6 @@ public class PostLogSheetRequestHandler : IRequestHandler<PostLogSheetRequest, R
         try {
 
             LogSheet? logsheet = await _unitWork.LogSheets.GetDraft(Guid.Parse((request.LogSheetRequest.Id!)));
-            
             if (logsheet == null)
                 throw new Exception("Log sheet not found or posted already");
             
@@ -38,7 +37,7 @@ public class PostLogSheetRequestHandler : IRequestHandler<PostLogSheetRequest, R
                 request.LogSheetRequest.Remarks);
             
             _unitWork.LogSheets.Update(logsheet);
-
+            await _unitWork.CommitSaveAsync(request.LogSheetRequest.EmployeeCode);
              return Result.Ok(Unit.Value);
 
         }

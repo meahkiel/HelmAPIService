@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "l/86WJssM1Tl+B4YazwwEW5y+eEenPER5UR4UWA/Dzv5AY4iBtwiZbqyycHXb5DmEJaO47SeXZTpW+PiSzaxsg==",
+  "dgSpecHash": "ljp8WjOGnOqsIDYHqFA2NJ2FFaHQbEf6XBvSx9M1wvNSDMFL4JnQW28d6EDvzJKgvmGOCuRmMZAaZllKELFcTg==",
   "success": true,
   "projectFilePath": "D:\\Projects\\HelmApps\\HelmAPI\\Applications\\Applications.csproj",
   "expectedPackageFiles": [
@@ -36,7 +36,7 @@
     "C:\\Users\\AMercado\\.nuget\\packages\\microsoft.extensions.caching.memory\\6.0.1\\microsoft.extensions.caching.memory.6.0.1.nupkg.sha512",
     "C:\\Users\\AMercado\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\2.2.0\\microsoft.extensions.configuration.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\AMercado\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\6.0.1\\microsoft.extensions.dependencyinjection.6.0.1.nupkg.sha512",
-    "C:\\Users\\AMercado\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\6.0.0\\microsoft.extensions.dependencyinjection.abstractions.6.0.0.nupkg.sha512",
+    "C:\\Users\\AMercado\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\7.0.0\\microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512",
     "C:\\Users\\AMercado\\.nuget\\packages\\microsoft.extensions.dependencymodel\\2.1.0\\microsoft.extensions.dependencymodel.2.1.0.nupkg.sha512",
     "C:\\Users\\AMercado\\.nuget\\packages\\microsoft.extensions.fileproviders.abstractions\\2.2.0\\microsoft.extensions.fileproviders.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\AMercado\\.nuget\\packages\\microsoft.extensions.hosting.abstractions\\2.2.0\\microsoft.extensions.hosting.abstractions.2.2.0.nupkg.sha512",
