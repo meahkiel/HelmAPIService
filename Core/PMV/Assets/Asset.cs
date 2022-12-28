@@ -1,6 +1,6 @@
 namespace Core.PMV.Assets;
 
-public class Asset
+public class Asset : BaseEntity<int>
 {
     
 }

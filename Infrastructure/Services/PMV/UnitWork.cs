@@ -1,5 +1,5 @@
 using Applications.Interfaces;
-
+using Applications.UseCases.PMV.Assets.Interfaces;
 using Applications.UseCases.PMV.LogSheets.Interfaces;
 using Applications.UseCases.PMV.ServiceAlerts.Interfaces;
 using Core.SeedWorks.Attributes;
@@ -13,6 +13,8 @@ public class UnitWork : IUnitWork
 
     private readonly PMVDataContext _context;
     private ILogSheetRepository _logsheets;
+    private IServiceAlertRepository _serviceAlert;
+    private IAssetRepository _assets;
 
     public UnitWork(IDataContext dataContext)
     {
@@ -26,8 +28,19 @@ public class UnitWork : IUnitWork
         }
     }
     
-    public IServiceAlertRepository ServiceAlert { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public IServiceAlertRepository ServiceAlert { 
+        get {
+            if(_serviceAlert == null)  _serviceAlert = new ServiceAlertRepository(_context);
+            return _serviceAlert;
+        } 
+    }
 
+    public IAssetRepository Assets {
+        get {
+          if(_assets == null)  _assets = new AssetRepository(_context);
+            return _assets;
+        }
+    }
     public async Task CommitSaveAsync()
     {
         await _context.SaveChangesAsync();

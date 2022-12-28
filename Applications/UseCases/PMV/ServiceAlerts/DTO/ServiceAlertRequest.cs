@@ -2,18 +2,22 @@ namespace Applications.UseCases.PMV.ServiceAlerts.DTO;
 
 public record ServiceAlertRequest
 {
-    public string Id { get; init; }
-    public string GroupName { get; init; }
-    public string Description { get; init; }
+    public string? Id { get; set; }
+    public string GroupName { get; set; }
+    public string Description { get; set; }
 
-    public IEnumerable<ServiceAlertDetailRequest> Details {get;init;}
+    public string Assigned { get; set; }
+
+    public string Categories { get; set; }
+
+    public IEnumerable<ServiceAlertDetailRequest> Details {get;set;}
 }
 
 public record ServiceAlertDetailRequest {
 
-    public string Id { get; init; }
-    public string ServiceCode { get; init; }
-    public int KmAlert { get; init; }
-    public int KmInterval { get; init; }
+    public string? Id { get; set; }
+    public string ServiceCode { get; set; }
+    public int KmAlert { get; set; }
+    public int KmInterval { get; set; }
     public bool MarkIsDelete { get; set; }
 }

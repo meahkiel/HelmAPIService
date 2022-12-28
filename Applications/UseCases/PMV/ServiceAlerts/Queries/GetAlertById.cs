@@ -25,6 +25,7 @@ public class GetAlertByIdRequestHandler : IRequestHandler<GetAlertByIdRequest, R
             }
 
             return Result.Ok(new ServiceAlertResponse {
+                Id = alert.Id.ToString(),
                 GroupName = alert.GroupName,
                 Description = alert.Description,
                 Details = alert.Details.Select(

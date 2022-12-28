@@ -1,5 +1,5 @@
 using Applications.UseCases.PMV.Common;
-using Applications.UseCases.PMV.Services;
+using Applications.UseCases.PMV.LogSheets.Interfaces;
 using Core.PMV.LogSheets;
 
 namespace Applications.UseCases.PMV.LogSheets.Commands;
@@ -16,14 +16,14 @@ public class CreateUpdateFullLogSheetRequestHandler : IRequestHandler<CreateUpda
 {
     private readonly IUnitWork _unitWork;
     private readonly ICommonService _commonService;
-    private readonly ILogSheetValidationService _validationService;
+    private readonly ILogSheetService _validationService;
     private readonly IValidator<LogSheetRequest> _validator;
 
     public CreateUpdateFullLogSheetRequestHandler(
         IUnitWork unitWork, 
         IValidator<LogSheetRequest> validator,
         ICommonService commonService,
-        ILogSheetValidationService validationService)
+        ILogSheetService validationService)
     {
         _validator = validator;
         _unitWork = unitWork;

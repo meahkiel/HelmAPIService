@@ -1,6 +1,6 @@
 using Applications.Interfaces;
 using Applications.UseCases.PMV.Common;
-using Applications.UseCases.PMV.Services.DTO;
+using Applications.UseCases.PMV.LogSheets.Interfaces.DTO;
 using Dapper;
 using Infrastructure.Context.Db;
 

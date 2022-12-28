@@ -1,8 +1,8 @@
 using Core.PMV.LogSheets;
 
-namespace Applications.UseCases.PMV.Services
+namespace Applications.UseCases.PMV.LogSheets.Interfaces
 {
-    public interface ILogSheetValidationService
+    public interface ILogSheetService
     {
         Task<LogSheetDetail> GetLatestFuelLogRecord(string assetCode,int currentReading);
     }

@@ -2,18 +2,18 @@ namespace Applications.UseCases.PMV.ServiceAlerts.DTO;
 
 public class ServiceAlertResponse
 {
-    
-    public string Id { get; init; }
-    public string GroupName { get; init; }
-    public string Description { get; init; }
-
-    public IEnumerable<ServiceAlertDetailResponse> Details {get;init;}
+    public string Id { get; set; }
+    public string GroupName { get; set; }
+    public string Description { get; set; }
+    public string Assigned { get; set; }
+    public string Category { get; set; }
+    public IEnumerable<ServiceAlertDetailResponse> Details {get;set;}
 }
 
 
-public record ServiceAlertDetailResponse {
-    public string Id { get; init; }
-    public string ServiceCode { get; init; }
-    public int KmAlert { get; init; }
-    public int KmInterval { get; init; }
+public class ServiceAlertDetailResponse {
+    public string Id { get; set; }
+    public string ServiceCode { get; set; }
+    public int KmAlert { get; set; }
+    public int KmInterval { get; set; }
 }

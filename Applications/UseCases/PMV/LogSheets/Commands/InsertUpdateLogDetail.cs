@@ -1,5 +1,5 @@
 using Applications.UseCases.PMV.LogSheets.DTO;
-using Applications.UseCases.PMV.Services;
+using Applications.UseCases.PMV.LogSheets.Interfaces;
 using Core.PMV.LogSheets;
 
 
@@ -17,12 +17,12 @@ public class InsertUpdateLogDetailRequestHandler : IRequestHandler<InsertUpdateL
 {
     private readonly IUnitWork _unitWork;
     private readonly IValidator<LogSheetDetailRequest> _validator;
-    private readonly ILogSheetValidationService _service;
+    private readonly ILogSheetService _service;
 
     public InsertUpdateLogDetailRequestHandler(
         IUnitWork unitWork,
         IValidator<LogSheetDetailRequest> validator, 
-        ILogSheetValidationService service)
+        ILogSheetService service)
     {
         _unitWork = unitWork;
         _validator = validator;

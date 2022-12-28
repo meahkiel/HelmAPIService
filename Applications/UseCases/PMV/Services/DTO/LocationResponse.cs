@@ -1,4 +1,4 @@
-namespace Applications.UseCases.PMV.Services.DTO
+namespace Applications.UseCases.PMV.LogSheets.Interfaces.DTO
 {
     public class LocationResponse
     {

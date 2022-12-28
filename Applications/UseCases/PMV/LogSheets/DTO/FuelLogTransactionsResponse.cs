@@ -2,28 +2,28 @@ namespace Applications.UseCases.PMV.LogSheets.DTO;
 
 public record FuelLogTransactionsResponse
 {
-    public string LogSheetId { get; init; }
-    public int ReferenceNo { get; init; }
+    public Guid LogSheetId { get; set; }
+    public int ReferenceNo { get; set; }
     public string RefNoFormatted => ReferenceNo.ToString("0000");
-    public string AssetCode { get; init; } = "";
-    public string Code { get; init; } = "";
-    public string Location { get; init; } = "";
-    public string FueledDate { get; init; } = "";
-    public string FuelTime { get; init; } = "";
+    public string AssetCode { get; set; } = "";
+    public string Code { get; set; } = "";
+    public string Location { get; set; } = "";
+    public string FueledDate { get; set; } = "";
+    public string FuelTime { get; set; } = "";
     
-    public int StartShiftMeterReading { get; init; }
+    public int StartShiftMeterReading { get; set; }
 
-    public int EndShiftMeterReading { get; init; }
+    public int EndShiftMeterReading { get; set; }
 
-    public int Quantity { get; init; }
-    public int Reading { get; init; }
-    public int PreviousReading { get; init; }
+    public int Quantity { get; set; }
+    public int Reading { get; set; } = 0;
+    public int PreviousReading { get; set; } = 0;
     public decimal Diff => Reading - PreviousReading;
-    public decimal LH => PreviousReading == 0 ? 0m : (Quantity / Diff);
-    public decimal HL => PreviousReading == 0 ? 0m : (Diff / Quantity);
+    public decimal LH => Diff == 0 ? 0m : (Quantity / Diff);
+    public decimal HL => Quantity == 0 ? 0m : (Diff / Quantity);
     public string LHFormat => LH.ToString("0.00");
     public string HLFormat => HL.ToString("0.00");
-    public bool IsPosted { get; init; }
-    public DateTime PostedAt { get; init; }
-    public string Fueler { get; init; }
+    public bool IsPosted { get; set; }
+    public string PostedAt { get; set; }
+    public string Fueler { get; set; }
 }

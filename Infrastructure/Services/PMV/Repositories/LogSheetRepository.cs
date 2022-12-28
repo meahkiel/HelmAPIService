@@ -1,6 +1,7 @@
 using Applications.UseCases.PMV.LogSheets.DTO;
 using Applications.UseCases.PMV.LogSheets.Interfaces;
 using Core.PMV.LogSheets;
+using Dapper;
 using Infrastructure.Context.Db;
 
 namespace Infrastructure.Services.PMV.Repositories;
@@ -96,9 +97,15 @@ public class LogSheetRepository : ILogSheetRepository
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<FuelLogTransactionsResponse>> GetTransactions(string dateFrom, string dateTo)
-    {
-        throw new NotImplementedException();
+    public async Task<IEnumerable<FuelLogTransactionsResponse>> GetTransactions(string dateFrom, string dateTo) {
+
+        var results = await _context.Database.GetDbConnection()
+                .QueryAsync<FuelLogTransactionsResponse>(
+                "sp_TransactionsLogView",
+                new {  dateFrom = dateFrom, dateTo = dateTo  },
+                commandType: System.Data.CommandType.StoredProcedure);
+        
+        return results;
     }
 
     public void Update(LogSheet value)

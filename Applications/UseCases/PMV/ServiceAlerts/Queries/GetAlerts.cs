@@ -13,15 +13,20 @@ public class GetAlertsRequestHandler : IRequestHandler<GetAlertsRequest, Result<
     {
         _unitWork = unitWork;
     }
-    public async Task<Result<IEnumerable<ServiceAlertResponse>>> Handle(GetAlertsRequest request, CancellationToken cancellationToken)
+    public async Task<Result<IEnumerable<ServiceAlertResponse>>> Handle(GetAlertsRequest request, 
+        CancellationToken cancellationToken)
     {
         try {
             
             var results = await _unitWork.ServiceAlert.GetAll();
 
-            return Result.Ok(results.Select(r => new ServiceAlertResponse 
-                    {Id = r.Id.ToString(), GroupName = r.GroupName,Description = r.Description}));
-
+            return Result.Ok(results.Select(r => new ServiceAlertResponse {
+                        Id = r.Id.ToString(), 
+                        GroupName = r.GroupName,
+                        Description = r.Description,
+                        Assigned = r.Assigned,
+                        Category = r.Category 
+                    }));
         }
         catch(Exception ex) {
             return Result.Fail(ex.Message);

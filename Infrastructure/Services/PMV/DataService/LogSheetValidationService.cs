@@ -1,11 +1,11 @@
 using Applications.Interfaces;
-using Applications.UseCases.PMV.Services;
+using Applications.UseCases.PMV.LogSheets.Interfaces;
 using Core.PMV.LogSheets;
 using Infrastructure.Context.Db;
 
 namespace Infrastructure.Services.PMV.DataService
 {
-    public class LogSheetValidationService : ILogSheetValidationService
+    public class LogSheetValidationService : ILogSheetService
     {
 
         private readonly PMVDataContext _context;

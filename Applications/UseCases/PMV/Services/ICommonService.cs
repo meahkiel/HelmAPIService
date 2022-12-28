@@ -1,4 +1,4 @@
-using Applications.UseCases.PMV.Services.DTO;
+using Applications.UseCases.PMV.LogSheets.Interfaces.DTO;
 
 namespace Applications.UseCases.PMV.Common;
 

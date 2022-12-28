@@ -1,6 +1,8 @@
 
 namespace Core.PMV.Alerts;
 
+
+[Auditable]
 public class ServiceAlert : BaseEntity<Guid>
 {
     public ServiceAlert()
@@ -8,16 +10,21 @@ public class ServiceAlert : BaseEntity<Guid>
         
     }
     
-    public ServiceAlert(string groupName,string description)
+    public ServiceAlert(string groupName,string description,string assigned, string category)
     {
         Id = Guid.NewGuid();
         GroupName = groupName;
         Description = description;
+        Assigned = assigned;
+        Category = category;
     }
 
 
     public string GroupName { get; set; }
     public string Description { get; set; }
+    public string Assigned { get; set; }
+    public string Category { get; set; }
+    public bool InActive { get; private set; } = false;
     
     private List<ServiceAlertDetail> _details = new List<ServiceAlertDetail>();
 
@@ -31,7 +38,9 @@ public class ServiceAlert : BaseEntity<Guid>
                 KmAlert = kmAlert,
                 KmInterval = kmInterval,
                 CreatedAt = DateTime.Now,
-                CreatedBy = employeeCode
+                CreatedBy = employeeCode,
+                Tracker = "a",
+                ServiceAlert = this
             });
     }
 
@@ -51,6 +60,7 @@ public class ServiceAlert : BaseEntity<Guid>
             detail.KmInterval = kmInterval;
             detail.UpdatedAt = DateTime.Now;
             detail.UpdatedBy = employeeCode;
+            detail.Tracker = "m";
         }
         
     }

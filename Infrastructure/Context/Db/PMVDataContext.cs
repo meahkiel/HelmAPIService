@@ -2,6 +2,7 @@
 
 using Applications.Interfaces;
 using Core.PMV.Alerts;
+using Core.PMV.Assets;
 using Core.PMV.LogSheets;
 using Core.PMV.Stations;
 using Infrastructure.Context.Configurations;
@@ -13,7 +14,9 @@ public class PMVDataContext : DbContext, IDataContext
     public DbSet<LogSheet> LogSheets { get; set; }
     public DbSet<LogSheetDetail> LogSheetDetails { get; set; }
     public DbSet<ServiceAlert> ServiceAlert { get; set; }
-    
+    public DbSet<ServiceAlertDetail> ServiceAlertDetails { get; set; }
+    public DbSet<AssetRecord> AssetRecord { get; set; }
+    public DbSet<ServiceLog> ServiceLogs { get ;set; }
 
     public PMVDataContext(DbContextOptions<PMVDataContext> options) : base(options)
     {
@@ -28,11 +31,13 @@ public class PMVDataContext : DbContext, IDataContext
         modelBuilder.HasDefaultSchema("HLMPMV");
         modelBuilder.ApplyConfiguration(new LogSheetConfig());
         modelBuilder.ApplyConfiguration(new LogSheetDetailConfig());
+        modelBuilder.ApplyConfiguration(new ServiceAlertConfig());
+        modelBuilder.ApplyConfiguration(new ServiceAlertDetailConfig());
+        modelBuilder.ApplyConfiguration(new AssetRecordConfig());
+        modelBuilder.ApplyConfiguration(new ServiceLogConfig());
         
-        modelBuilder.Entity<ServiceAlert>().ToTable("ServiceAlerts");
-        modelBuilder.Entity<ServiceAlertDetail>().ToTable("ServiceAlertDetails");
-        modelBuilder.Entity<ServiceAlertDetail>().HasOne(s => s.ServiceAlert)
-            .WithMany(s => s.Details);
+        
+        
         
     }
 }

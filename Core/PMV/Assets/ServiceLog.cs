@@ -3,21 +3,23 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Core.PMV.Assets;
 
-public class ServiceLog : BaseEntity<Guid>
-{
-    public string ServiceAlertId { get; set; } = null!;
-
+public class ServiceLog : BaseEntity<Guid> {
+    public int AssetId { get; set; }
+    public string ServiceCode { get; set; } = null!;
+    public string? TransactionId { get; set; }
+    public string? Source { get; set; }
     public DateTime? LastServiceDate { get; set; }
     
     public int LastReading { get; set; }
 
     public int KmAlert { get; set; }
-    public int KmInteraval { get; set; }
+    public int KmInterval { get; set; }
 
     [NotMapped]
-    public int AlertAtKm => LastReading + KmAlert;
+    public virtual int AlertAtKm => LastReading + KmAlert;
 
-    public int IntervalAtKm => LastReading + KmInteraval;
+    [NotMapped]
+    public virtual int IntervalAtKm => LastReading + KmInterval;
 
     public string GetServiceStatus() 
     {
