@@ -1,0 +1,26 @@
+[
+    {
+        "logSheetId": "31185ce4-5bff-4974-ba74-8e032e7966d3",
+        "referenceNo": "10",
+        "assetCode": "",
+        "code": "LV375",
+        "location": "D191",
+        "fueledDate": "2022/12/17 05:10:46",
+        "fuelTime": "2022/12/17 05:10:46",
+        "startShiftMeterReading": 75256,
+        "endShiftMeterReading": 0,
+        "quantity": 0,
+        "reading": 0,
+        "previousReading": 0,
+        "diff": 0,
+        "lh": 0,
+        "hl": 0,
+        "lhFormat": "0.00",
+        "hlFormat": "0.00",
+        "posted": false,
+        "IsPosted1": false,
+        "isPosted2": false,
+        "postedAt": "0001-01-01T00:00:00",
+        "fueler": "H22095411"
+    }
+]

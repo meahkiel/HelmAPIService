@@ -1,0 +1,33 @@
+[
+    {
+      
+       "serviceCode" : "SRVC01",
+       "serviceName" : "ENGINE OIL & OIL FILTER",
+       "serviceAlert": 300,
+       "ServiceInterval": 300
+    },
+    {
+        "serviceCode" : "SRVC02",
+        "serviceName" : "FUEL FILTER",
+        "serviceAlert": 300,
+        "ServiceInterval": 300
+    },
+    {
+        "serviceCode" : "SRVC03",
+        "serviceName" : "AIR FILTER PRIMARY",
+        "serviceAlert": 300,
+        "ServiceInterval": 300
+    },
+    {
+        "serviceCode" : "SRVC04",
+        "serviceName" : "AIR FILTER SECONDARY",
+        "serviceAlert": 300,
+        "ServiceInterval": 300
+    },
+    {
+        "serviceCode" : "SRVC05",
+        "serviceName" : " HYDRAULIC OIL & RETURN FILTER",
+        "serviceAlert": 300,
+        "ServiceInterval": 300
+    }
+]

@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "1yOMRYU1nIYVtaXptj4m2hkvJFrXKDz278/oSV7GMEFrdnk4SpCAJrkYlQpGvPKdx+k3jvfpnVwxN51vcjZm2A==",
+  "dgSpecHash": "BlugLuRUB0yyV87cdIqoheE49aAwEmK93TV2tfdQedl/PInAgTKVzaWQ2EXwpgIALvQO0mk2TlHFTKrAeHcaEA==",
   "success": true,
-  "projectFilePath": "D:\\Projects\\HelmApps\\HelmAPI\\Core\\Core.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "D:\\Projects\\API\\HelmAPIService\\Core\\Core.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\arnol\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.11\\microsoft.aspnetcore.app.ref.6.0.11.nupkg.sha512",
+    "C:\\Users\\arnol\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.11\\microsoft.windowsdesktop.app.ref.6.0.11.nupkg.sha512",
+    "C:\\Users\\arnol\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.11\\microsoft.netcore.app.ref.6.0.11.nupkg.sha512"
+  ],
   "logs": []
 }

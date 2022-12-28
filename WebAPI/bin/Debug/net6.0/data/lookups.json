@@ -1,0 +1,178 @@
+[
+
+  {
+    "text": "Ancilaries",
+    "value": "Ancilaries",
+    "type": "category"
+  },
+  {
+    "text": "Asphalt Equipment",
+    "value": "Asphalt Equipment",
+    "type": "category"
+  },
+  {
+
+    "text": "Earth Moving",
+    "value": "Earth Moving",
+    "type": "category"
+  },
+  {
+    "text": "Heavy Vehicle",
+    "value": "Heavy Vehicle",
+    "type": "category"
+  },
+  {
+    "text": "Lifting Equipment",
+    "value": "Lifting Equipment",
+    "type": "category"
+  },
+  {
+    "value": "BHL014",
+    "text": "Backhoe Loader",
+    "type": "asset"
+  },
+  {
+    "value": "BHL015",
+    "text": "BHL015 - Backhoe Loader",
+    "type": "asset"
+  },
+  {
+    "value": "BHL037",
+    "text": "BHL037 - Backhoe Loader",
+    "type": "asset"
+  },
+  {
+    "value": "CE-M001",
+    "text": "CE-M001 - Excavator Mini",
+    "type": "asset"
+  },
+  {
+    "value": "CE-M002",
+    "text": "CE-M002 - Excavator Mini",
+    "type": "asset"
+  },
+  {
+    "text": "CE-M003",
+    "value": "CE-M003 - Excavator Mini",
+    "type": "asset"
+  },
+  {
+
+    "value": "SRVC01",
+    "text": "ENGINE OIL & OIL FILTER",
+    "type": "sc"
+  },
+  {
+    "value": "SRVC02",
+    "text": "FUEL FILTER",
+    "type": "sc"
+  },
+  {
+    "value": "SRVC03",
+    "text": "AIR FILTER PRIMARY",
+    "type": "sc"
+  },
+  {
+    "value": "SRVC04",
+    "text": "AIR FILTER SECONDARY",
+    "type": "sc"
+  },
+  {
+    "value": "SRVC05",
+    "text": " HYDRAULIC OIL & RETURN FILTER",
+    "type": "sc"
+  },
+  {
+    "text": "Internal Asset",
+    "value": "internal",
+    "type": "as"
+  },
+  {
+    "text": "External Asset",
+    "value": "external",
+    "type": "as"
+  },
+  {
+    "text": "Hire",
+    "value": "hire",
+    "type": "ct"
+  },
+  {
+    "text": "Sub Contract",
+    "value": "subcontract",
+    "type": "ct"
+  },
+  {
+    "text": "LV463",
+    "value": "LV463",
+    "type": "station"
+
+  },
+  {
+    "text": "LV478",
+    "value": "LV478",
+    "type": "station"
+
+  },
+  {
+    "text": "LV215",
+    "value": "LV215",
+    "type": "station"
+
+  },
+  {
+    "text": "AL THAKIRA",
+    "value": "AL THAKIRA",
+    "type": "location"
+
+  },
+  {
+    "text": "BRU",
+    "value": "BRU",
+    "type": "location"
+
+  },
+  {
+    "text": "D171",
+    "value": "D171",
+    "type": "location"
+
+  },
+  {
+    "text": "D172",
+    "value": "D172",
+    "type": "location"
+
+  },
+  {
+    "text": "RENTABLE",
+    "value": "RENTABLE",
+    "type": "rentowned"
+  },
+  {
+    "text": "OWNED",
+    "value": "OWNED",
+    "type": "rentowned"
+  },
+  {
+    "text": "#N/A",
+    "value": "NA",
+    "type": "rentowned"
+  },
+  {
+    "text": "Active",
+    "value": "Active",
+    "type": "asset-status"
+  },
+  {
+    "text": "Sold",
+    "value": "Sold",
+    "type": "asset-status"
+  },
+  {
+    "text": "Traded-In",
+    "value": "Traded",
+    "type": "asset-status"
+  }
+
+]

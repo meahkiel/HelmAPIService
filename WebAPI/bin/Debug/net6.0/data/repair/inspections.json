@@ -1,0 +1,74 @@
+[
+  {
+    "id": "1",
+    "inspectionNo": 1,
+    "date": "2022-12-01",
+    "lastServiceDate": "2022-12-01",
+
+    "assetCode": "CE-M013",
+    "description": "Excavator Mini",
+    "inspectedBy": "Engineer1",
+    "projectLocation": "D171",
+    "category": "Earth Moving",
+    "sMU": 2500,
+    "lastReading": 2000,
+    "remarks": "",
+    "checkList": [
+      {
+        "serviceCode": "SRVC01",
+        "description": "ENGINE OIL & OIL FILTER",
+        "condition": "good",
+        "remarks": ""
+      },
+      {
+        "serviceCode": "SRVC02",
+        "description": "FUEL FILTER",
+        "condition": "service",
+        "remarks": ""
+      },
+      {
+        "serviceCode": "SRVC03",
+        "description": "AIR FILTER PRIMARY",
+        "condition": "service",
+        "remarks": ""
+      }
+    ]
+  },
+  {
+    "id": "2",
+    "inspectionNo": 2,
+    "date": "2022-12-01",
+    "lastServiceDate": "2022-12-01",
+
+    "assetCode": "CE-M014",
+    "description": "Excavator Mini",
+    "inspectedBy": "Engineer2",
+    "projectLocation": "D172",
+    "category": "Earth Moving",
+    "sMU": 1500,
+    "lastReading": 1000,
+    "remarks": "",
+
+    "checkList": [
+      {
+        "serviceCode": "SRVC01",
+        "description": "ENGINE OIL & OIL FILTER",
+        "condition": "good",
+        "remarks": ""
+      },
+      {
+        "serviceCode": "SRVC02",
+        "description": "FUEL FILTER",
+        "condition": "service",
+        "remarks": ""
+      },
+      {
+        "serviceCode": "SRVC03",
+        "description": "AIR FILTER PRIMARY",
+        "condition": "service",
+        "remarks": ""
+      }
+    ]
+  }
+ 
+]

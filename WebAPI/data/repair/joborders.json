@@ -1,0 +1,20 @@
+[
+    {
+        "id": "1",
+        "jobOrderNo": "1",
+        "referenceNo": "1",
+        "inspectedBy": "Engineer 1",
+        "assetCode": "BHL014",
+        "date": "2022-12-03",
+        "status": "Pending for Repair"
+    },
+    {
+        "id": "2",
+        "jobOrderNo": "2",
+        "referenceNo": "2",
+        "inspectedBy": "Engineer 1",
+        "assetCode": "BHL013",
+        "date": "2022-12-03",
+        "status": "Pending for Repair"
+    }
+]

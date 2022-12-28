@@ -1,0 +1,21 @@
+[
+
+    {
+        "jobOrderNo": "0001",
+        "assetCode": "BHL014",
+        "scheduleDate": "2022-12-01",
+        "expReturnDate": "2022-12-03",
+        "assignedTeam": "Team 1",
+        "priority": "High",
+        "remarks": "BHL014 - Engine Oil Replacement"
+    },
+    {
+        "jobOrderNo": "0002",
+        "assetCode": "BHL013",
+        "scheduleDate": "2022-12-05",
+        "expReturnDate": "2022-12-07",
+        "assignedTeam": "Team 2",
+        "priority": "High",
+        "remarks": "BHL013 - Coolant"
+    }
+]
