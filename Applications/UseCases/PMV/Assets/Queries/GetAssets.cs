@@ -2,9 +2,9 @@ using Applications.UseCases.PMV.Assets.DTO;
 
 namespace Applications.UseCases.PMV.Assets.Queries
 {
-    public record GetAssetsRequest(string? Category,string? AssetCode) : IRequest<Result<IEnumerable<AssetViewResponse>>>;
+    public record GetAssetsRequest(string? Category,string? AssetCode) : IRequest<Result<IEnumerable<AssetListResponse>>>;
 
-    public class GetAssetsRequestHandler : IRequestHandler<GetAssetsRequest, Result<IEnumerable<AssetViewResponse>>>
+    public class GetAssetsRequestHandler : IRequestHandler<GetAssetsRequest, Result<IEnumerable<AssetListResponse>>>
     {
         private readonly IUnitWork _unitWork;
 
@@ -13,11 +13,11 @@ namespace Applications.UseCases.PMV.Assets.Queries
             _unitWork = unitWork;
         }
         
-        public async Task<Result<IEnumerable<AssetViewResponse>>> Handle(GetAssetsRequest request, CancellationToken cancellationToken)
+        public async Task<Result<IEnumerable<AssetListResponse>>> Handle(GetAssetsRequest request, CancellationToken cancellationToken)
         {
             try {
                 
-                IEnumerable<AssetViewResponse>? assets = null;
+                IEnumerable<AssetListResponse>? assets = null;
                 
                 if(!string.IsNullOrEmpty(request.AssetCode)) {
                     assets  = await _unitWork.Assets.GetAssetsByCode(request.AssetCode);

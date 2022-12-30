@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "XAhHpJ+MYefoOT/VpjQI0U59Fo7wGRk+TOmJEf/kXAZ2KlsDUI+7p6LHXTgZytKSbch4HtV50JJcTcR7H1+vGw==",
+  "dgSpecHash": "ooSULsE/kANPL3v6lBX/DdvpTgOJ8ohjo72CMFRLm98TjYM/6y4zXRm0q1Y2fbW45i8mtV7jE5275o6jaVeY5A==",
   "success": true,
   "projectFilePath": "D:\\Projects\\API\\HelmAPIService\\Applications\\Applications.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\arnol\\.nuget\\packages\\automapper\\12.0.0\\automapper.12.0.0.nupkg.sha512",
+    "C:\\Users\\arnol\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.0\\automapper.extensions.microsoft.dependencyinjection.12.0.0.nupkg.sha512",
     "C:\\Users\\arnol\\.nuget\\packages\\fluentresults\\3.15.0\\fluentresults.3.15.0.nupkg.sha512",
     "C:\\Users\\arnol\\.nuget\\packages\\fluentresults.extensions.aspnetcore\\0.1.0\\fluentresults.extensions.aspnetcore.0.1.0.nupkg.sha512",
     "C:\\Users\\arnol\\.nuget\\packages\\fluentvalidation\\11.4.0\\fluentvalidation.11.4.0.nupkg.sha512",
@@ -27,7 +29,7 @@
     "C:\\Users\\arnol\\.nuget\\packages\\microsoft.aspnetcore.routing\\2.2.0\\microsoft.aspnetcore.routing.2.2.0.nupkg.sha512",
     "C:\\Users\\arnol\\.nuget\\packages\\microsoft.aspnetcore.routing.abstractions\\2.2.0\\microsoft.aspnetcore.routing.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\arnol\\.nuget\\packages\\microsoft.aspnetcore.webutilities\\2.2.0\\microsoft.aspnetcore.webutilities.2.2.0.nupkg.sha512",
-    "C:\\Users\\arnol\\.nuget\\packages\\microsoft.csharp\\4.0.1\\microsoft.csharp.4.0.1.nupkg.sha512",
+    "C:\\Users\\arnol\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\arnol\\.nuget\\packages\\microsoft.dotnet.platformabstractions\\2.1.0\\microsoft.dotnet.platformabstractions.2.1.0.nupkg.sha512",
     "C:\\Users\\arnol\\.nuget\\packages\\microsoft.entityframeworkcore\\6.0.12\\microsoft.entityframeworkcore.6.0.12.nupkg.sha512",
     "C:\\Users\\arnol\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\6.0.12\\microsoft.entityframeworkcore.abstractions.6.0.12.nupkg.sha512",

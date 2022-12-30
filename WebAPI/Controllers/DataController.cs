@@ -3,6 +3,8 @@ using System.Text.Json;
 using WebAPI.DTO;
 
 
+
+
 namespace WebAPI.Controllers;
 
 [ApiController]
@@ -29,4 +31,6 @@ public class DataController : ControllerBase
         // Return the serialized data as a string
         return Ok(data);
     }
+
+   
 }

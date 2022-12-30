@@ -11,7 +11,7 @@ Get all Assets
 ```
 
 **Business Rules**
-- Get assets either by categories or by assetcode
+- Get assets either by categories/subcategory or by assetcode
 
 **Request**
 
@@ -23,6 +23,7 @@ Get all Assets
 ```json
     {
         "assetCode": "",
+        "subCategory": "",
         "category": ""
     }
 ```
@@ -31,11 +32,14 @@ Get all Assets
 ```json
 [
     {
-        "id": "{000-000-000-000}",
-        "category": "",
-        "assetCode" : "",
-        "subCategory": "",
-        "description": ""
+        "id": 245,
+        "assetCode": "TMC002",
+        "assetDesc": "Crane Truck 6x2",
+        "companyCode": "QBS",
+        "category": "Heavy Vehicle",
+        "subCategory": "Crane Pick up",
+        "model": "PKC210",
+        "year": 2010
     }
 ]
 ```
@@ -43,6 +47,14 @@ Get all Assets
 
 ## -View Asset By Id
 View Asset By Id view
+
+**Request**
+
+```code
+    http://{{url}}api/pmv/asset/{id}
+    Action: GET
+    Header: Bearer: {{token}}
+```
 
 **Response**
 ```json

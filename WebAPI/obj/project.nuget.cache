@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "JMGY2WrCdWCQ+JKELcu70DHRhl74xPEXab+LVsrOX2NdJVJ+AEO1L5qjzOjFhf2XIDVWrgdal7WVkDdpGI7ChQ==",
+  "dgSpecHash": "pG3BCYfRVPSuaG82mjsG2Rgiogx5OugIEXf+eFZC8uKOZpNBXnYmZus4t5kIdXph11MKYDvvceoPyE4w4GEpKg==",
   "success": true,
   "projectFilePath": "D:\\Projects\\API\\HelmAPIService\\WebAPI\\WebAPI.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\arnol\\.nuget\\packages\\automapper\\12.0.0\\automapper.12.0.0.nupkg.sha512",
+    "C:\\Users\\arnol\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.0\\automapper.extensions.microsoft.dependencyinjection.12.0.0.nupkg.sha512",
     "C:\\Users\\arnol\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",
     "C:\\Users\\arnol\\.nuget\\packages\\fluentresults\\3.15.0\\fluentresults.3.15.0.nupkg.sha512",
     "C:\\Users\\arnol\\.nuget\\packages\\fluentresults.extensions.aspnetcore\\0.1.0\\fluentresults.extensions.aspnetcore.0.1.0.nupkg.sha512",
@@ -29,7 +31,7 @@
     "C:\\Users\\arnol\\.nuget\\packages\\microsoft.aspnetcore.routing\\2.2.0\\microsoft.aspnetcore.routing.2.2.0.nupkg.sha512",
     "C:\\Users\\arnol\\.nuget\\packages\\microsoft.aspnetcore.routing.abstractions\\2.2.0\\microsoft.aspnetcore.routing.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\arnol\\.nuget\\packages\\microsoft.aspnetcore.webutilities\\2.2.0\\microsoft.aspnetcore.webutilities.2.2.0.nupkg.sha512",
-    "C:\\Users\\arnol\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
+    "C:\\Users\\arnol\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\arnol\\.nuget\\packages\\microsoft.data.sqlclient\\2.1.4\\microsoft.data.sqlclient.2.1.4.nupkg.sha512",
     "C:\\Users\\arnol\\.nuget\\packages\\microsoft.data.sqlclient.sni.runtime\\2.1.1\\microsoft.data.sqlclient.sni.runtime.2.1.1.nupkg.sha512",
     "C:\\Users\\arnol\\.nuget\\packages\\microsoft.dotnet.platformabstractions\\2.1.0\\microsoft.dotnet.platformabstractions.2.1.0.nupkg.sha512",

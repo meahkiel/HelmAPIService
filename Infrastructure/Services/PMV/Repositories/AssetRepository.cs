@@ -14,44 +14,45 @@ public class AssetRepository : IAssetRepository
     {
         _context = context;
     }
-    public void Add(Asset value)
-    {
-        throw new NotImplementedException();
-    }
+    public void Add(Asset value) => throw new NotImplementedException();
 
-    public Task<IEnumerable<Asset>> GetAll()
-    {
-        throw new NotImplementedException();
-    }
+    public Task<IEnumerable<Asset>> GetAll() => throw new NotImplementedException();
 
-    public async Task<IEnumerable<AssetViewResponse>> GetAssets() => await GetAllAssets();
+    
 
-    public async Task<IEnumerable<AssetViewResponse>> GetAssetsByAttribute(string category) => await GetAllAssets(new { category = category });
+    public async Task<IEnumerable<AssetListResponse>> GetAssets() => await GetAllAssets();
+    public async Task<IEnumerable<AssetListResponse>> GetAssetsByAttribute(string category) => await GetAllAssets(new { category = category });
 
-    public async Task<IEnumerable<AssetViewResponse>> GetAssetsByCode(string assetCode) => await GetAllAssets(new { assetCode = assetCode });
+    public async Task<IEnumerable<AssetListResponse>> GetAssetsByCode(string assetCode) => await GetAllAssets(new { assetCode = assetCode });
 
-    public Task<Asset?> GetByIdAsync(Guid Id)
-    {
-        throw new NotImplementedException();
-    }
-
+    public Task<Asset?> GetByIdAsync(Guid Id) => throw new NotImplementedException();
     public void Update(Asset value)
     {
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<AssetViewResponse>> ViewAssetById(int assetId)
+    public async Task<AssetViewResponse?> ViewAssetById(int assetId)
     {
-        throw new NotImplementedException();
-    }
-
-    private async Task<IEnumerable<AssetViewResponse>> GetAllAssets(object? param = null) {
-
         var connection = _context.Database.GetDbConnection();
         var results = await connection.QueryAsync<AssetViewResponse>(
+            "sp_PMVAsset_ViewAsset",
+            new { AssetId = assetId },
+            commandType: System.Data.CommandType.StoredProcedure);
+
+        return results.FirstOrDefault();
+    }
+
+    private async Task<IEnumerable<AssetListResponse>> GetAllAssets(object? param = null) {
+
+        var connection = _context.Database.GetDbConnection();
+        var results = await connection.QueryAsync<AssetListResponse>(
             "sp_PMVAsset_GetAssets",param,
             commandType: System.Data.CommandType.StoredProcedure);
         
         return results;
     }
+
+   
+
+    
 }

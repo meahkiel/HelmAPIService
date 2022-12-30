@@ -1,5 +1,18 @@
 namespace Applications.UseCases.PMV.Assets.DTO;
 
+
+public class AssetListResponse {
+     public int? Id { get; set; }
+    public string AssetCode { get; set; } = "";
+    public string AssetDesc { get; set; } = "";
+    public string? CompanyCode { get; set; }
+    
+    public string Category { get; set; } = "";
+    public string SubCategory { get; set; } = "";
+
+    public string Model { get; set; }
+    public int Year { get; set; }
+}
 public class AssetViewResponse
 {
     public string Id { get; set; }
@@ -30,6 +43,7 @@ public class AssetViewResponse
     public DateTime? LastServiceDate { get; set; }
     public string? LatestTransactionId { get; set; }
     public DateTime? LastInspectionDate { get; set; }
+
     public IEnumerable<ServiceLogResponse> ServiceLogs { get; set; }
 }
 
