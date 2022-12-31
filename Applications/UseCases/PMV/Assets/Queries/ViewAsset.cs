@@ -20,14 +20,12 @@ public class ViewAssetRequestHandler :
         try
         {
             var viewAsset = await _unitWork.Assets.ViewAssetById(request.Id);
-
             if (viewAsset == null)
                 throw new Exception("Cannot find asset");
             
             return Result.Ok(viewAsset);
         }
-        catch(Exception ex)
-        {
+        catch(Exception ex) {
             return Result.Fail(ex.Message);
         }
     }

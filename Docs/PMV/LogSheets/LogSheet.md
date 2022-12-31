@@ -1,3 +1,0 @@
-#API
-
-###Get Transaction API

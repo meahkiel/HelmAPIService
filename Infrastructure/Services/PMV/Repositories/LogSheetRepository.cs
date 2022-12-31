@@ -101,8 +101,11 @@ public class LogSheetRepository : ILogSheetRepository
 
         var results = await _context.Database.GetDbConnection()
                 .QueryAsync<FuelLogTransactionsResponse>(
-                "sp_TransactionsLogView",
-                new {  dateFrom = dateFrom, dateTo = dateTo  },
+                "sp_PMVFuel_ Transactions",
+                new {  
+                    dateFrom = $"{dateFrom} 00:00:00" , 
+                    dateTo = $"{dateTo} 23:59:59"  
+                },
                 commandType: System.Data.CommandType.StoredProcedure);
         
         return results;

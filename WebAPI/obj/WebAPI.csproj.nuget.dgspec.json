@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Projects\\API\\HelmAPIService\\WebAPI\\WebAPI.csproj": {}
+    "D:\\Projects\\HelmApps\\HelmAPI\\HelmAPIService\\WebAPI\\WebAPI.csproj": {}
   },
   "projects": {
-    "D:\\Projects\\API\\HelmAPIService\\Applications\\Applications.csproj": {
+    "D:\\Projects\\HelmApps\\HelmAPI\\HelmAPIService\\Applications\\Applications.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projects\\API\\HelmAPIService\\Applications\\Applications.csproj",
+        "projectUniqueName": "D:\\Projects\\HelmApps\\HelmAPI\\HelmAPIService\\Applications\\Applications.csproj",
         "projectName": "Applications",
-        "projectPath": "D:\\Projects\\API\\HelmAPIService\\Applications\\Applications.csproj",
-        "packagesPath": "C:\\Users\\arnol\\.nuget\\packages\\",
-        "outputPath": "D:\\Projects\\API\\HelmAPIService\\Applications\\obj\\",
+        "projectPath": "D:\\Projects\\HelmApps\\HelmAPI\\HelmAPIService\\Applications\\Applications.csproj",
+        "packagesPath": "C:\\Users\\AMercado\\.nuget\\packages\\",
+        "outputPath": "D:\\Projects\\HelmApps\\HelmAPI\\HelmAPIService\\Applications\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\arnol\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\AMercado\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -28,8 +28,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\Projects\\API\\HelmAPIService\\Core\\Core.csproj": {
-                "projectPath": "D:\\Projects\\API\\HelmAPIService\\Core\\Core.csproj"
+              "D:\\Projects\\HelmApps\\HelmAPI\\HelmAPIService\\Core\\Core.csproj": {
+                "projectPath": "D:\\Projects\\HelmApps\\HelmAPI\\HelmAPIService\\Core\\Core.csproj"
               }
             }
           }
@@ -80,40 +80,26 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[6.0.11, 6.0.11]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Ref",
-              "version": "[6.0.11, 6.0.11]"
-            },
-            {
-              "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[6.0.11, 6.0.11]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.404\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\Projects\\API\\HelmAPIService\\Core\\Core.csproj": {
+    "D:\\Projects\\HelmApps\\HelmAPI\\HelmAPIService\\Core\\Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projects\\API\\HelmAPIService\\Core\\Core.csproj",
+        "projectUniqueName": "D:\\Projects\\HelmApps\\HelmAPI\\HelmAPIService\\Core\\Core.csproj",
         "projectName": "Core",
-        "projectPath": "D:\\Projects\\API\\HelmAPIService\\Core\\Core.csproj",
-        "packagesPath": "C:\\Users\\arnol\\.nuget\\packages\\",
-        "outputPath": "D:\\Projects\\API\\HelmAPIService\\Core\\obj\\",
+        "projectPath": "D:\\Projects\\HelmApps\\HelmAPI\\HelmAPIService\\Core\\Core.csproj",
+        "packagesPath": "C:\\Users\\AMercado\\.nuget\\packages\\",
+        "outputPath": "D:\\Projects\\HelmApps\\HelmAPI\\HelmAPIService\\Core\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\arnol\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\AMercado\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -149,40 +135,26 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[6.0.11, 6.0.11]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Ref",
-              "version": "[6.0.11, 6.0.11]"
-            },
-            {
-              "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[6.0.11, 6.0.11]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.404\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\Projects\\API\\HelmAPIService\\Infrastructure\\Infrastructure.csproj": {
+    "D:\\Projects\\HelmApps\\HelmAPI\\HelmAPIService\\Infrastructure\\Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projects\\API\\HelmAPIService\\Infrastructure\\Infrastructure.csproj",
+        "projectUniqueName": "D:\\Projects\\HelmApps\\HelmAPI\\HelmAPIService\\Infrastructure\\Infrastructure.csproj",
         "projectName": "Infrastructure",
-        "projectPath": "D:\\Projects\\API\\HelmAPIService\\Infrastructure\\Infrastructure.csproj",
-        "packagesPath": "C:\\Users\\arnol\\.nuget\\packages\\",
-        "outputPath": "D:\\Projects\\API\\HelmAPIService\\Infrastructure\\obj\\",
+        "projectPath": "D:\\Projects\\HelmApps\\HelmAPI\\HelmAPIService\\Infrastructure\\Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\AMercado\\.nuget\\packages\\",
+        "outputPath": "D:\\Projects\\HelmApps\\HelmAPI\\HelmAPIService\\Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\arnol\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\AMercado\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -196,8 +168,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\Projects\\API\\HelmAPIService\\Applications\\Applications.csproj": {
-                "projectPath": "D:\\Projects\\API\\HelmAPIService\\Applications\\Applications.csproj"
+              "D:\\Projects\\HelmApps\\HelmAPI\\HelmAPIService\\Applications\\Applications.csproj": {
+                "projectPath": "D:\\Projects\\HelmApps\\HelmAPI\\HelmAPIService\\Applications\\Applications.csproj"
               }
             }
           }
@@ -236,40 +208,26 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[6.0.11, 6.0.11]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Ref",
-              "version": "[6.0.11, 6.0.11]"
-            },
-            {
-              "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[6.0.11, 6.0.11]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.404\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\Projects\\API\\HelmAPIService\\WebAPI\\WebAPI.csproj": {
+    "D:\\Projects\\HelmApps\\HelmAPI\\HelmAPIService\\WebAPI\\WebAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projects\\API\\HelmAPIService\\WebAPI\\WebAPI.csproj",
+        "projectUniqueName": "D:\\Projects\\HelmApps\\HelmAPI\\HelmAPIService\\WebAPI\\WebAPI.csproj",
         "projectName": "WebAPI",
-        "projectPath": "D:\\Projects\\API\\HelmAPIService\\WebAPI\\WebAPI.csproj",
-        "packagesPath": "C:\\Users\\arnol\\.nuget\\packages\\",
-        "outputPath": "D:\\Projects\\API\\HelmAPIService\\WebAPI\\obj\\",
+        "projectPath": "D:\\Projects\\HelmApps\\HelmAPI\\HelmAPIService\\WebAPI\\WebAPI.csproj",
+        "packagesPath": "C:\\Users\\AMercado\\.nuget\\packages\\",
+        "outputPath": "D:\\Projects\\HelmApps\\HelmAPI\\HelmAPIService\\WebAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\arnol\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\AMercado\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -283,11 +241,11 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\Projects\\API\\HelmAPIService\\Applications\\Applications.csproj": {
-                "projectPath": "D:\\Projects\\API\\HelmAPIService\\Applications\\Applications.csproj"
+              "D:\\Projects\\HelmApps\\HelmAPI\\HelmAPIService\\Applications\\Applications.csproj": {
+                "projectPath": "D:\\Projects\\HelmApps\\HelmAPI\\HelmAPIService\\Applications\\Applications.csproj"
               },
-              "D:\\Projects\\API\\HelmAPIService\\Infrastructure\\Infrastructure.csproj": {
-                "projectPath": "D:\\Projects\\API\\HelmAPIService\\Infrastructure\\Infrastructure.csproj"
+              "D:\\Projects\\HelmApps\\HelmAPI\\HelmAPIService\\Infrastructure\\Infrastructure.csproj": {
+                "projectPath": "D:\\Projects\\HelmApps\\HelmAPI\\HelmAPIService\\Infrastructure\\Infrastructure.csproj"
               }
             }
           }
@@ -324,24 +282,6 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[6.0.11, 6.0.11]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Host.win-x64",
-              "version": "[6.0.11, 6.0.11]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Ref",
-              "version": "[6.0.11, 6.0.11]"
-            },
-            {
-              "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[6.0.11, 6.0.11]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -350,7 +290,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.404\\RuntimeIdentifierGraph.json"
         }
       }
     }
