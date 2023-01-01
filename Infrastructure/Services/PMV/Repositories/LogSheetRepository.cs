@@ -6,11 +6,11 @@ using Infrastructure.Context.Db;
 
 namespace Infrastructure.Services.PMV.Repositories;
 
+
+
 public class LogSheetRepository : ILogSheetRepository
 {
     private readonly PMVDataContext _context;
-    
-
     public LogSheetRepository(PMVDataContext context)
     {
         _context = context;
@@ -32,7 +32,6 @@ public class LogSheetRepository : ILogSheetRepository
     {
         throw new NotImplementedException();
     }
-
    
     public Task<IEnumerable<LogSheet>> GetAll()
     {
@@ -92,16 +91,13 @@ public class LogSheetRepository : ILogSheetRepository
                 .LastOrDefaultAsync();
     }
 
-    public Task<LogSheet?> GetSingleLogSheet(Guid id)
-    {
-        throw new NotImplementedException();
-    }
+    
 
     public async Task<IEnumerable<FuelLogTransactionsResponse>> GetTransactions(string dateFrom, string dateTo) {
 
         var results = await _context.Database.GetDbConnection()
                 .QueryAsync<FuelLogTransactionsResponse>(
-                "sp_PMVFuel_ Transactions",
+                "sp_PMVFuel_Transactions",
                 new {  
                     dateFrom = $"{dateFrom} 00:00:00" , 
                     dateTo = $"{dateTo} 23:59:59"  
@@ -113,11 +109,26 @@ public class LogSheetRepository : ILogSheetRepository
 
     public void Update(LogSheet value)
     {  
-        
         _context.LogSheets.Update(value);
     }
 
     public bool UpdateDetail(LogSheetDetail detail)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<IEnumerable<FuelLogTransactionsResponse>> GetPostedTransactionsByAsset(string assetCode)
+    {
+        var results = await _context.Database.GetDbConnection()
+                .QueryAsync<FuelLogTransactionsResponse>(
+                "sp_PMVFuel_TransactionByAsset",
+                new {  assetCode = assetCode},
+                commandType: System.Data.CommandType.StoredProcedure);
+        
+        return results;
+    }
+
+    public Task<LogSheet?> GetSingleLogSheet(Guid id)
     {
         throw new NotImplementedException();
     }

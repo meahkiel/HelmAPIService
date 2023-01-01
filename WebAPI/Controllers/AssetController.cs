@@ -17,6 +17,7 @@ public class AssetController : APIControllerBase
     [HttpGet]
     public async Task<IActionResult> Index([FromQuery] GetAssetsRequest request) => HandleResult(await _mediator.Send(request));
 
+
     [HttpGet("{Id}")]
     public async Task<IActionResult> Get([FromRoute] ViewAssetRequest request) => HandleResult(await _mediator.Send(request));
 }

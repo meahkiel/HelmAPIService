@@ -8,7 +8,7 @@ public record ServiceAlertRequest
 
     public string Assigned { get; set; }
 
-    public string Categories { get; set; }
+    public string Category { get; set; }
 
     public IEnumerable<ServiceAlertDetailRequest> Details {get;set;}
 }

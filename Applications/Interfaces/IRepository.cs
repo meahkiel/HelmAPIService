@@ -6,6 +6,7 @@ namespace Applications.Interfaces
         void Update(T value);
 
         Task<T?> GetByIdAsync(Guid Id);
+        
         Task<IEnumerable<T>> GetAll();
 
         

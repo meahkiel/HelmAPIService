@@ -1,3 +1,5 @@
+using Applications.UseCases.PMV.LogSheets.DTO;
+
 namespace Applications.UseCases.PMV.Assets.DTO;
 
 
@@ -45,11 +47,13 @@ public class AssetViewResponse
     public DateTime? LastInspectionDate { get; set; }
 
     public IEnumerable<ServiceLogResponse> ServiceLogs { get; set; }
+    public IEnumerable<FuelLogTransactionsResponse> LogSheets { get; set; }
 }
 
 public class ServiceLogResponse {
     public int AssetId { get; set; }
     public string ServiceCode { get; set; } = null!;
+    public string Description { get; set; }
     public string? TransactionId { get; set; }
     public string? Source { get; set; }
     public DateTime? LastServiceDate { get; set; }

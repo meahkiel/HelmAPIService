@@ -7,6 +7,7 @@ public interface ILogSheetRepository : IRepository<LogSheet>
 {
 
     Task<IEnumerable<FuelLogTransactionsResponse>> GetTransactions(string dateFrom,string dateTo);
+    Task<IEnumerable<FuelLogTransactionsResponse>> GetPostedTransactionsByAsset(string assetCode);
     Task<IEnumerable<LogSheetResponse?>> GetDraftSheetsByStation(string station);
     Task<LogSheet?> GetSingleLogSheet(Guid id);
     Task<LogSheet?> GetDraft(Guid id);

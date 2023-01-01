@@ -1,5 +1,6 @@
 using Applications.UseCases.PMV.Assets.DTO;
 using Applications.UseCases.PMV.Assets.Interfaces;
+using Core.PMV.Alerts;
 using Core.PMV.Assets;
 using Dapper;
 using Infrastructure.Context.Db;
@@ -14,22 +15,22 @@ public class AssetRepository : IAssetRepository
     {
         _context = context;
     }
-    public void Add(Asset value) => throw new NotImplementedException();
-
-    public Task<IEnumerable<Asset>> GetAll() => throw new NotImplementedException();
-
     
+    #region [not implemented]
+    public void Update(Asset value)
+    {
+        throw new NotImplementedException();
+    }
+    public void Add(Asset value) => throw new NotImplementedException();
+    public Task<Asset?> GetByIdAsync(Guid Id) => throw new NotImplementedException();
+    public Task<IEnumerable<Asset>> GetAll() => throw new NotImplementedException();
+    #endregion
 
     public async Task<IEnumerable<AssetListResponse>> GetAssets() => await GetAllAssets();
     public async Task<IEnumerable<AssetListResponse>> GetAssetsByAttribute(string category) => await GetAllAssets(new { category = category });
 
     public async Task<IEnumerable<AssetListResponse>> GetAssetsByCode(string assetCode) => await GetAllAssets(new { assetCode = assetCode });
 
-    public Task<Asset?> GetByIdAsync(Guid Id) => throw new NotImplementedException();
-    public void Update(Asset value)
-    {
-        throw new NotImplementedException();
-    }
 
     public async Task<AssetViewResponse?> ViewAssetById(int assetId)
     {

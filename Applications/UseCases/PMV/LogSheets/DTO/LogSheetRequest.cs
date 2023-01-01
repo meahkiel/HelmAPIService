@@ -23,7 +23,7 @@ public record LogSheetRequest(
     string ShiftEndTime,
     int EndShiftTankerKm,
     int EndShiftMeterReading,
-    string EmployeeCode,
+    string? EmployeeCode,
     string FueledDate,
     string ShiftStartTime,
     int StartShiftTankerKm,

@@ -49,8 +49,8 @@ public class CreateUpdateAlertRequestHandler : IRequestHandler<CreateUpdateAlert
             {
 
                 alert = await _unitWork.ServiceAlert.GetByIdAsync(Guid.Parse(request.AlertRequest.Id));
-
                 if (alert == null) throw new Exception("Alert not found");
+                
                 foreach (var detail in request.AlertRequest.Details)
                 {
                     if(string.IsNullOrEmpty(detail.Id)) {
@@ -67,7 +67,6 @@ public class CreateUpdateAlertRequestHandler : IRequestHandler<CreateUpdateAlert
             {
                 //check the same
                 var validation = await _validator.ValidateAsync(request.AlertRequest);
-
                 if (!validation.IsValid)
                 {
                     return Result.Fail(validation.Errors[0].ToString());
@@ -77,14 +76,14 @@ public class CreateUpdateAlertRequestHandler : IRequestHandler<CreateUpdateAlert
                     request.AlertRequest.GroupName,
                     request.AlertRequest.Description,
                     request.AlertRequest.Assigned,
-                    request.AlertRequest.Categories);
+                    request.AlertRequest.Category);
 
                 if (request.AlertRequest.Details != null && request.AlertRequest.Details.Count() > 0)
                 {
 
                     foreach (var alertDetail in request.AlertRequest.Details)
                     {
-                        alert.AddDetail(alertDetail.ServiceCode, alertDetail.KmAlert, alertDetail.KmInterval, "H22095411");
+                        alert.AddDetail(alertDetail.ServiceCode, alertDetail.KmAlert, alertDetail.KmInterval, employeeCode:userEmployeeCode);
                     }
                 }
 

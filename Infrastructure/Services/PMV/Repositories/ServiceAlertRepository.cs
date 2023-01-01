@@ -17,6 +17,28 @@ public class ServiceAlertRepository : IServiceAlertRepository
         _context.ServiceAlert.Add(value);
     }
 
+    /***
+    
+    ***/
+    public async Task<ServiceAlert?> GetAlertServiceSetup(string category)
+    {
+
+        //check if there is a category
+        var serviceAlert = _context.ServiceAlert
+                                .Include(s => s.Details)
+                                .Where(s => s.Category.Contains(category));
+
+        if(serviceAlert != null) {
+            return await serviceAlert.FirstOrDefaultAsync();
+        }
+        else {
+            return await _context.ServiceAlert
+                            .Include(s => s.Details)
+                            .Where(s => s.Assigned == "all")
+                            .FirstOrDefaultAsync();
+        }
+    }
+
     public async Task<IEnumerable<ServiceAlert>> GetAll()
     {
         return await _context.ServiceAlert

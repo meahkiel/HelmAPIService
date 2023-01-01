@@ -4,12 +4,13 @@ using Core.PMV.LogSheets;
 
 namespace Applications.UseCases.PMV.LogSheets.Commands;
 
-public record CreateUpdateFullLogSheetRequest(LogSheetRequest SheetRequest) : IRequest<Result<Unit>>;
+public record CreateUpdateFullLogSheetRequest(LogSheetRequest SheetRequest) : 
+    IRequest<Result<Unit>>;
 
 
 public class CreateUpdateFullLogSheetValidator : AbstractValidator<LogSheetRequest>
 {
-
+    
 }
 
 public class CreateUpdateFullLogSheetRequestHandler : IRequestHandler<CreateUpdateFullLogSheetRequest, Result<Unit>>
@@ -17,25 +18,28 @@ public class CreateUpdateFullLogSheetRequestHandler : IRequestHandler<CreateUpda
     private readonly IUnitWork _unitWork;
     private readonly ICommonService _commonService;
     private readonly ILogSheetService _validationService;
+    private readonly IUserAccessor _userAccessor;
     private readonly IValidator<LogSheetRequest> _validator;
 
     public CreateUpdateFullLogSheetRequestHandler(
         IUnitWork unitWork, 
         IValidator<LogSheetRequest> validator,
         ICommonService commonService,
-        ILogSheetService validationService)
+        ILogSheetService validationService,
+        IUserAccessor userAccessor)
     {
         _validator = validator;
         _unitWork = unitWork;
         _commonService = commonService;
         _validationService = validationService;
-
+        _userAccessor = userAccessor;
     }
     public async Task<Result<Unit>> Handle(CreateUpdateFullLogSheetRequest request, CancellationToken cancellationToken)
     {
         try {
 
             LogSheet? logsheet = null;
+            var employeeCode = await _userAccessor.GetUserEmployeeCode();
             var location = await _commonService.GetLocationByKey(request.SheetRequest.Location);
             if (String.IsNullOrEmpty(request.SheetRequest.Id))
             {
@@ -136,7 +140,7 @@ public class CreateUpdateFullLogSheetRequestHandler : IRequestHandler<CreateUpda
             }
 
             //commit save
-            await _unitWork.CommitSaveAsync(request.SheetRequest.EmployeeCode);
+            await _unitWork.CommitSaveAsync(employeeCode);
 
             return Result.Ok(Unit.Value);
         } 
