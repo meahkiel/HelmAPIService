@@ -4,7 +4,7 @@ using Core.PMV.LogSheets;
 
 namespace Applications.UseCases.PMV.LogSheets;
 
-public record CreateLogSheetCommand(LogSheetOpenRequest LogSheetRequest) : IRequest<Result<LogSheetResponse>>;
+public record CreateLogSheetCommand(LogSheetOpenRequest LogSheetRequest) : IRequest<Result<LogSheetKeyResponse>>;
 
 public class LogSheetValidator : AbstractValidator<LogSheetOpenRequest> {
     
@@ -15,7 +15,7 @@ public class LogSheetValidator : AbstractValidator<LogSheetOpenRequest> {
     }
 }
 
-public class CreateLogSheetCommandHandler : IRequestHandler<CreateLogSheetCommand, Result<LogSheetResponse>>
+public class CreateLogSheetCommandHandler : IRequestHandler<CreateLogSheetCommand, Result<LogSheetKeyResponse>>
 {
 
     
@@ -35,7 +35,7 @@ public class CreateLogSheetCommandHandler : IRequestHandler<CreateLogSheetComman
 
      
     
-    public async Task<Result<LogSheetResponse>> Handle(CreateLogSheetCommand request, CancellationToken cancellationToken)
+    public async Task<Result<LogSheetKeyResponse>> Handle(CreateLogSheetCommand request, CancellationToken cancellationToken)
     {
 
         try {
@@ -44,28 +44,22 @@ public class CreateLogSheetCommandHandler : IRequestHandler<CreateLogSheetComman
 
             //get the id of the station and location
             var location = await _commonService.GetLocationByKey(request.LogSheetRequest.Location);
-            
+            var locationId = (location == null) ?  0 : location.Id;
+
             var logsheet = LogSheet.Create(existingLog.ReferenceNo,
                             request.LogSheetRequest.ShiftStartTime,
                             request.LogSheetRequest.StartShiftTankerKm,
                             request.LogSheetRequest.StartShiftMeterReading,
-                            location.Id,request.LogSheetRequest.LVStation, 
+                            locationId,request.LogSheetRequest.Station, 
                             request.LogSheetRequest.EmployeeCode);
                             
             _unitWork.LogSheets.Add(logsheet);
-
             await _unitWork.CommitSaveAsync(request.LogSheetRequest.EmployeeCode);
-
-            return Result.Ok(new LogSheetResponse {
-                    Id = logsheet.Id.ToString(),
-                    ReferenceNo = logsheet.ReferenceNo,
-                    ShiftStartTime = logsheet.ShiftStartTime.ToLongTimeString(),
-                    StartShiftMeterReading = logsheet.StartShiftMeterReading,
-                    StartShiftTankerKm = logsheet.StartShiftTankerKm,
-                    FueledDate = logsheet.ShiftStartTime,
-                    Location = request.LogSheetRequest.Location,
-                    Remarks = logsheet.Remarks
-                });
+            
+            return Result.Ok( new LogSheetKeyResponse {
+                Id = logsheet.Id.ToString(),
+                ReferenceNo = logsheet.ReferenceNo
+            });
         }
         catch(Exception ex) {
             return Result.Fail(ex.Message);

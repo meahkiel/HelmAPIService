@@ -58,13 +58,14 @@ public class LogSheet : BaseEntity<Guid>
         _details.Add(detail);
     }
 
-    public void UpdateDetail(string detailId, string assetCode,int reading,float quantity,string operatorDriver,string transactionType) {
+    public void UpdateDetail(string detailId,string refillStation, string assetCode,int reading,float quantity,string operatorDriver,string transactionType) {
         
         var existingDetail = _details.Where(d => d.Id == Guid.Parse(detailId)).FirstOrDefault();
         if(!existingDetail.IsLessThanPrevious(reading)) {
             throw new Exception("Current Reading must not be less than the previous reading");
         }
 
+        existingDetail.RefillStation = refillStation;
         existingDetail.AssetCode = assetCode;
         existingDetail.Reading = reading;
         existingDetail.Quantity = quantity;

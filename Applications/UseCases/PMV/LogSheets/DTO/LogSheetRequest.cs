@@ -4,8 +4,8 @@ public record LogSheetOpenRequest(
     string ShiftStartTime,
     int StartShiftTankerKm,
     int StartShiftMeterReading,
-    string Location,
-    string LVStation,
+    string? Location,
+    string Station,
     string? Remarks,
     string EmployeeCode);
 
@@ -29,7 +29,7 @@ public record LogSheetRequest(
     int StartShiftTankerKm,
     int StartShiftMeterReading,
     string Location,
-    string LVStation,
+    string Station,
     string? Remarks,
     string Fueler,
     bool IsPosted,
@@ -40,8 +40,8 @@ public class LogSheetDetailRequest
 {
 
     public string? Id { get; set; }
-    public string? LogSheetId { get; set; } = null!;
-
+    public string? LogSheetId { get; set; }
+    public string? RefillStation { get; set; }
     public string AssetCode { get; set; } = "";
     public string FuelTime { get; set; } = "";
     public string? OperatorDriver { get; set; } = "";

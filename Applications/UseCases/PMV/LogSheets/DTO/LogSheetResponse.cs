@@ -1,5 +1,17 @@
 namespace Applications.UseCases.PMV.LogSheets.DTO;
 
+
+public class LogSheetKeyResponse {
+    public string Id { get; set; }
+    public int ReferenceNo { get; set; }
+}
+
+public class LogSheetDetailKeyResponse {
+    public string Id { get; set; }
+    public string LogSheetId { get; set; }
+}
+
+
 public class LogSheetResponse
 {
 

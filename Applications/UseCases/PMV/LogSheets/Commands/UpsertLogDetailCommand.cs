@@ -6,14 +6,14 @@ using Core.PMV.LogSheets;
 namespace Applications.UseCases.PMV.LogSheets.Commands;
 
 
-public record UpsertLogDetailCommand(LogSheetDetailRequest DetailRequest) : IRequest<Result<LogSheetDetailResponse>>;
+public record UpsertLogDetailCommand(LogSheetDetailRequest DetailRequest) : IRequest<Result<LogSheetDetailKeyResponse>>;
 
 
 public class UpsertLogDetailValidator : AbstractValidator<LogSheetDetailRequest> {
 
 }
 
-public class UpsertLogDetailCommandHandler : IRequestHandler<UpsertLogDetailCommand, Result<LogSheetDetailResponse>>
+public class UpsertLogDetailCommandHandler : IRequestHandler<UpsertLogDetailCommand, Result<LogSheetDetailKeyResponse>>
 {
     private readonly IUnitWork _unitWork;
     private readonly IValidator<LogSheetDetailRequest> _validator;
@@ -45,7 +45,7 @@ public class UpsertLogDetailCommandHandler : IRequestHandler<UpsertLogDetailComm
 
 
 
-    public async Task<Result<LogSheetDetailResponse>> Handle(UpsertLogDetailCommand request, CancellationToken cancellationToken)
+    public async Task<Result<LogSheetDetailKeyResponse>> Handle(UpsertLogDetailCommand request, CancellationToken cancellationToken)
     {
         try {
 
@@ -60,11 +60,12 @@ public class UpsertLogDetailCommandHandler : IRequestHandler<UpsertLogDetailComm
                 //upset tank check if the station is main
                 var station = await _service.GetStationByCode(logSheet.StationCode);
                 var reading = 0;
-                
-                if(station!.StationType != "main") {
+                string? refillStation = null;
+                if(request.DetailRequest.TransactionType != "Restock") {
                     //post condition
                     LogSheetDetail previousRecord = await GetLatestFuelLogRecord(request.DetailRequest.AssetCode,request.DetailRequest.Reading);
                     reading = previousRecord.Reading;
+                    refillStation = logSheet.StationCode;
                 }
 
                 
@@ -76,13 +77,15 @@ public class UpsertLogDetailCommandHandler : IRequestHandler<UpsertLogDetailComm
                                     quantity: request.DetailRequest.Quantity,
                                     driverQatarIdUrl: request.DetailRequest.DriverQatarIdUrl ?? "",
                                     transactionType: request.DetailRequest.TransactionType,
-                                    operatorDriver: request.DetailRequest.OperatorDriver);
+                                    operatorDriver: request.DetailRequest.OperatorDriver,
+                                    refillStation: refillStation);
                 
                 logSheet.AddDetail(detail);
             }
             else {
                 logSheet.UpdateDetail(
                     request.DetailRequest.Id,
+                    request.DetailRequest.RefillStation,
                     request.DetailRequest.AssetCode,
                     request.DetailRequest.Reading,
                     request.DetailRequest.Quantity,
@@ -90,8 +93,9 @@ public class UpsertLogDetailCommandHandler : IRequestHandler<UpsertLogDetailComm
                     request.DetailRequest.TransactionType);
             }
 
+            _unitWork.LogSheets.Update(logSheet);
             await _unitWork.CommitSaveAsync(request.DetailRequest.EmployeeCode);
-            return Result.Ok(new LogSheetDetailResponse {Id = detail.Id.ToString()});
+            return Result.Ok(new LogSheetDetailKeyResponse {LogSheetId = logSheet.Id.ToString(), Id = detail.Id.ToString()});
         }
         catch(Exception ex) {
             return Result.Fail(ex.Message);

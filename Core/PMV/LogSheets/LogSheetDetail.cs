@@ -4,6 +4,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Core.PMV.LogSheets;
 
+
+
+
 public enum TransactionTypeEnum {
     Restock,
     Dispense
@@ -12,6 +15,7 @@ public enum TransactionTypeEnum {
 [AuditableAttribute]
 public class LogSheetDetail : BaseEntity<Guid>
 {
+    public string? RefillStation { get; set; } = "";
     public string AssetCode { get; set; } = "";
     public DateTime FuelTime { get; set; } = DateTime.Now;
     public string? OperatorDriver { get; set; } = "";
@@ -34,6 +38,7 @@ public class LogSheetDetail : BaseEntity<Guid>
 
     
     public static LogSheetDetail Create(
+        string? refillStation,
         string assetCode,
         string fuelTime,
         int reading,
@@ -47,6 +52,7 @@ public class LogSheetDetail : BaseEntity<Guid>
         return new LogSheetDetail
         {
             Id = Guid.NewGuid(),
+            RefillStation = refillStation,
             AssetCode = assetCode,
             FuelTime = DateTime.Parse(fuelTime),
             Reading = reading,

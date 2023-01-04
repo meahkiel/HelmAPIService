@@ -55,7 +55,7 @@ public class UpsertLogSheetCommandHandler : IRequestHandler<UpsertLogSheetComman
                                     request.SheetRequest.StartShiftTankerKm,
                                     request.SheetRequest.StartShiftMeterReading,
                                     location!.Id,
-                                    request.SheetRequest.LVStation, request.SheetRequest.Fueler);
+                                    request.SheetRequest.Station, request.SheetRequest.Fueler);
                 
                 //close logsheet post the transaction
                 logsheet.CloseLogSheet(
@@ -75,6 +75,7 @@ public class UpsertLogSheetCommandHandler : IRequestHandler<UpsertLogSheetComman
                         }
                         
                         var logSheetDetail = LogSheetDetail.Create(
+                                refillStation: detail.RefillStation,
                                 assetCode: detail.AssetCode,
                                 fuelTime: detail.FuelTime,
                                 reading: detail.Reading,
@@ -83,6 +84,7 @@ public class UpsertLogSheetCommandHandler : IRequestHandler<UpsertLogSheetComman
                                 driverQatarIdUrl: detail.DriverQatarIdUrl ?? "",
                                 operatorDriver: detail.OperatorDriver,
                                 transactionType: detail.TransactionType
+
                         );
                         logsheet.AddDetail(logSheetDetail);
                     }
@@ -101,12 +103,13 @@ public class UpsertLogSheetCommandHandler : IRequestHandler<UpsertLogSheetComman
                 logsheet!.StartShiftMeterReading = request.SheetRequest.StartShiftMeterReading;
                 logsheet!.EndShiftMeterReading = request.SheetRequest.EndShiftMeterReading;
                 logsheet!.LocationId = location!.Id;
-                logsheet!.StationCode = request.SheetRequest.LVStation;
+                logsheet!.StationCode = request.SheetRequest.Station;
                 
                 if (request.SheetRequest.details != null && request.SheetRequest.details.Count > 0) 
                 {
                     foreach (var requestDetail in request.SheetRequest.details) {
                         logsheet.UpdateDetail(requestDetail.Id!,
+                        requestDetail.RefillStation,
                         requestDetail.AssetCode,
                         requestDetail.Reading,requestDetail.Quantity,
                         requestDetail.OperatorDriver!,
