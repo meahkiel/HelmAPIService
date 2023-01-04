@@ -1,3 +1,4 @@
+using Core.PMV.Maintenance;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 using WebAPI.DTO;
@@ -27,6 +28,20 @@ public class DataController : ControllerBase
         
         // Deserialize the JSON data into an object
         var data = JsonSerializer.Deserialize<IEnumerable<LookupData>>(jsonData);
+
+        // Return the serialized data as a string
+        return Ok(data);
+    }
+
+    [HttpGet("inspection")]
+    public IActionResult GetInspectionJsonLookup() {
+
+        string rootDirectory = _webHostEnvironment.ContentRootPath;
+
+        string jsonData = System.IO.File.ReadAllText(Path.Combine(rootDirectory,"data/repair/inspections.json"));
+        
+        // Deserialize the JSON data into an object
+        var data = JsonSerializer.Deserialize<IEnumerable<Inspection>>(jsonData);
 
         // Return the serialized data as a string
         return Ok(data);

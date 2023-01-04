@@ -7,10 +7,10 @@ namespace Applications.UseCases.PMV.Assets.Interfaces;
 
 public interface IAssetRepository : IRepository<Asset>
 {
+    bool AddServiceLog(ServiceLog serviceLog);
+    bool AddAssetRecord(AssetRecord record);
 
     Task<IEnumerable<AssetListResponse>> GetAssets();
-    
-
     Task<IEnumerable<AssetListResponse>> GetAssetsByAttribute(string category);
     Task<IEnumerable<AssetListResponse>> GetAssetsByCode(string assetCode);
 

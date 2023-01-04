@@ -34,7 +34,7 @@ public class ServiceAlertRepository : IServiceAlertRepository
         else {
             return await _context.ServiceAlert
                             .Include(s => s.Details)
-                            .Where(s => s.Assigned == "all")
+                            .Where(s => s.Assigned == "individual")
                             .FirstOrDefaultAsync();
         }
     }

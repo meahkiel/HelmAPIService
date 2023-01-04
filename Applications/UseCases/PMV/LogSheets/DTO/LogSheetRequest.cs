@@ -47,14 +47,11 @@ public class LogSheetDetailRequest
     public string? OperatorDriver { get; set; } = "";
     public int Reading { get; set; } = 0;
     public float Quantity { get; set; } = 0f;
-
     public string? DriverQatarIdUrl { get; set; }
-    public string? CurrentSMUUrl { get; set; }
-    public string? TankMeterUrl { get; set; }
-
     public string? EmployeeCode { get; set; }
-    
+    public string TransactionType { get; set; }
     public bool IsMarkEdit { get; set; }
     
     public bool IsMarkDeleted { get; set; }
+
 }

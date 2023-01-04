@@ -53,7 +53,15 @@ public class AssetRepository : IAssetRepository
         return results;
     }
 
-   
+    public bool AddServiceLog(ServiceLog serviceLog)
+    {
+        _context.ServiceLogs.Add(serviceLog);
+        return true;
+    }
 
-    
+    public bool AddAssetRecord(AssetRecord record)
+    {
+        _context.AssetRecord.Add(record);
+        return true;
+    }
 }

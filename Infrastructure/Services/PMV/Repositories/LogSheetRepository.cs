@@ -7,7 +7,6 @@ using Infrastructure.Context.Db;
 namespace Infrastructure.Services.PMV.Repositories;
 
 
-
 public class LogSheetRepository : ILogSheetRepository
 {
     private readonly PMVDataContext _context;
@@ -16,18 +15,8 @@ public class LogSheetRepository : ILogSheetRepository
         _context = context;
        
     }
-    public void Add(LogSheet value)
-    {
-        _context.LogSheets.Add(value);
-    }
 
-    public bool AddDetail(LogSheetDetail detail)
-    {
-        _context.LogSheetDetails.Add(detail);
-        
-        return true;
-    }
-
+    
     public bool DeleteDetail(LogSheetDetail detail)
     {
         throw new NotImplementedException();
@@ -43,11 +32,14 @@ public class LogSheetRepository : ILogSheetRepository
         throw new NotImplementedException();
     }
 
+    public void Add(LogSheet value) => _context.LogSheets.Add(value);
+
     public async Task<IEnumerable<LogSheetResponse?>> GetDraftSheetsByStation(string station)
     {  
         return await _context.LogSheets
             .Include(l => l.Details)
-            .Where(s => s.LvStationCode == station 
+            .AsNoTracking()
+            .Where(s => s.StationCode == station 
                     && s.Post.IsPosted == false)
             .Select(sheet => new LogSheetResponse {
                 Id = sheet.Id.ToString(),
@@ -59,9 +51,9 @@ public class LogSheetRepository : ILogSheetRepository
                 EndShiftTankerKm = sheet.EndShiftTankerKm,
                 StartShiftMeterReading = sheet.StartShiftMeterReading,
                 EndShiftMeterReading = sheet.EndShiftMeterReading,
-                LVStation = sheet.LvStationCode,
+                Station = sheet.StationCode,
                 Remarks = sheet.Remarks,
-                EmployeeCode = sheet.CreatedBy ?? "",
+                Fueler = sheet.CreatedBy ?? "",
                 Details = sheet.Details.Select(d => new LogSheetDetailResponse {
                             Id = d.Id.ToString(),
                             AssetCode = d.AssetCode,
@@ -79,8 +71,8 @@ public class LogSheetRepository : ILogSheetRepository
     public async Task<LogSheet?> GetDraft(Guid id)
     {
         return await _context.LogSheets
-                        .Include(l => l.Details)
-                        .FirstOrDefaultAsync(l => l.Post.IsPosted == false && l.Id == id);
+            .Include(l => l.Details)
+            .SingleAsync(l => l.Post.IsPosted == false && l.Id == id);
     }
 
     public async Task<LogSheet?> GetLatestRecord()
@@ -97,7 +89,7 @@ public class LogSheetRepository : ILogSheetRepository
 
         var results = await _context.Database.GetDbConnection()
                 .QueryAsync<FuelLogTransactionsResponse>(
-                "sp_PMVFuel_Transactions",
+                "sp_PMVFuel_DispenseLogSheet",
                 new {  
                     dateFrom = $"{dateFrom} 00:00:00" , 
                     dateTo = $"{dateTo} 23:59:59"  
@@ -109,14 +101,22 @@ public class LogSheetRepository : ILogSheetRepository
 
     public void Update(LogSheet value)
     {  
+        var newDetails = value.Details.Where(d => d.Track == "new").ToList();
+        if(newDetails.Count > 0) {
+            foreach (var newDetail  in newDetails) {
+                _context.LogSheetDetails.Add(newDetail);
+            }
+        }
+
+        var updateDetails = value.Details.Where(d => d.Track == "update").ToList();
+        if(newDetails.Count > 0) {
+            foreach (var updateDetail  in updateDetails) {
+                _context.LogSheetDetails.Update(updateDetail);
+            }
+        }
+
         _context.LogSheets.Update(value);
     }
-
-    public bool UpdateDetail(LogSheetDetail detail)
-    {
-        throw new NotImplementedException();
-    }
-
     public async Task<IEnumerable<FuelLogTransactionsResponse>> GetPostedTransactionsByAsset(string assetCode)
     {
         var results = await _context.Database.GetDbConnection()
@@ -128,8 +128,10 @@ public class LogSheetRepository : ILogSheetRepository
         return results;
     }
 
-    public Task<LogSheet?> GetSingleLogSheet(Guid id)
+    public async Task<LogSheet?> GetSingleLogSheet(Guid id)
     {
-        throw new NotImplementedException();
+        return await _context.LogSheets
+            .Include(l => l.Details)
+            .SingleAsync(l => l.Id == id);
     }
 }

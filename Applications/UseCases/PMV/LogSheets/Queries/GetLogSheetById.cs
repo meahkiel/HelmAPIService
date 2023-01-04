@@ -35,10 +35,10 @@ public class GetLogSheetsByIdRequestHandler : IRequestHandler<GetLogSheetByIdReq
                 StartShiftTankerKm = logsheet.StartShiftTankerKm,
                 EndShiftTankerKm = logsheet.EndShiftTankerKm ?? 0,
                 FueledDate = logsheet.ShiftStartTime,
-                EmployeeCode = logsheet.UpdatedBy!,
+                Fueler = logsheet.UpdatedBy!,
                 Location = "",//logsheet.LocationId,
                 Remarks = logsheet.Remarks,
-                LVStation = logsheet.LvStationCode,
+                Station = logsheet.StationCode,
                 Details = ExtractDetail(logsheet.Details).ToList()
             });
         }

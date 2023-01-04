@@ -1,6 +1,7 @@
 using Applications.Interfaces;
 using Applications.UseCases.PMV.Common;
 using Applications.UseCases.PMV.LogSheets.Interfaces.DTO;
+using Applications.UseCases.PMV.Services.DTO;
 using Dapper;
 using Infrastructure.Context.Db;
 
@@ -26,8 +27,14 @@ public class CommonService : ICommonService
         
     }
 
-    public Task<LocationResponse?> GetLocationById(string code)
+   
+    public async Task<StationResponse?> GetStationByCode(string code)
     {
-        throw new NotImplementedException();
+        var results = await _context.Database.GetDbConnection().QueryAsync<StationResponse>(
+                "sp_GetStationByCode",
+                new { code = code},
+                commandType: System.Data.CommandType.StoredProcedure);
+            
+            return results.FirstOrDefault();
     }
 }

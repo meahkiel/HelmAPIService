@@ -18,7 +18,7 @@ public class LogSheetController : APIControllerBase
 
 
     [HttpGet]
-    public async Task<IActionResult> Index([FromQuery] GetPendingLogSheetsRequest query)
+    public async Task<IActionResult> Index([FromQuery] GetDispenseLogSheetQuery query)
     {
         return HandleResult(await _mediator.Send(query));
     }
@@ -26,7 +26,7 @@ public class LogSheetController : APIControllerBase
     [HttpGet("transaction-report")]
     public async Task<IActionResult> GetTransactions([FromQuery]string dateFrom , string dateTo) {
 
-        var query = new GetLogSheetsRequest(dateFrom,dateTo);
+        var query = new GetDispenseLogSheetsByDateQuery(dateFrom,dateTo);
         
         return HandleResult(await _mediator.Send(query));
     }
@@ -37,7 +37,7 @@ public class LogSheetController : APIControllerBase
     public async Task<IActionResult> SaveDraft(LogSheetOpenRequest request)
     {
 
-        var cmd = new CreateLogSheetRequest(request);
+        var cmd = new CreateLogSheetCommand(request);
         var result = await _mediator.Send(cmd);
 
         return HandleResult(result);
@@ -56,7 +56,7 @@ public class LogSheetController : APIControllerBase
     [HttpPost("detail")]
     public async Task<IActionResult> Detail(LogSheetDetailRequest detail)
     {
-        var cmd = new InsertUpdateLogDetailRequest(detail);
+        var cmd = new UpsertLogDetailCommand(detail);
         var result = await _mediator.Send(cmd);
 
         return HandleResult(result);
@@ -65,7 +65,7 @@ public class LogSheetController : APIControllerBase
     [HttpPost("detail/update")]
     public async Task<IActionResult> Update(LogSheetDetailRequest detail)
     {
-        var cmd = new InsertUpdateLogDetailRequest(detail);
+        var cmd = new UpsertLogDetailCommand(detail);
         var result = await _mediator.Send(cmd);
 
         return HandleResult(result);
@@ -76,7 +76,7 @@ public class LogSheetController : APIControllerBase
     public async Task<IActionResult> CreateFull([FromBody] LogSheetRequest request)
     {
 
-        var cmd = new CreateUpdateFullLogSheetRequest(request);
+        var cmd = new UpsertLogSheetCommand(request);
         var result = await _mediator.Send(cmd);
 
         return HandleResult(result);

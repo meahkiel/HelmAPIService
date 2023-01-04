@@ -1,3 +1,5 @@
+using Applications.UseCases.PMV.Assets.Commands;
+using Applications.UseCases.PMV.Assets.DTO;
 using Applications.UseCases.PMV.Assets.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -19,5 +21,12 @@ public class AssetController : APIControllerBase
 
 
     [HttpGet("{Id}")]
-    public async Task<IActionResult> Get([FromRoute] ViewAssetRequest request) => HandleResult(await _mediator.Send(request));
+    public async Task<IActionResult> Get([FromRoute] ViewAssetQuery request) => HandleResult(await _mediator.Send(request));
+
+    [HttpPost]
+    public async Task<IActionResult> Post([FromBody] AssetRequest request) {
+
+        var cmd = new UpsertCommand(request);
+        return HandleResult(await _mediator.Send(cmd));
+    }
 }

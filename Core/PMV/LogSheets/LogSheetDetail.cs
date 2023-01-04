@@ -1,6 +1,13 @@
 
 
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Core.PMV.LogSheets;
+
+public enum TransactionTypeEnum {
+    Restock,
+    Dispense
+}
 
 [AuditableAttribute]
 public class LogSheetDetail : BaseEntity<Guid>
@@ -13,44 +20,19 @@ public class LogSheetDetail : BaseEntity<Guid>
     public int PreviousReading { get; private set; }
     public float Quantity { get; set; } = 0f;
     public string DriverQatarIdUrl { get; set; }
-    public string CurrentSMUUrl { get; set; }
-    public string TankMeterUrl { get; set; }
+    public string TransactionType { get; set; }
     public LogSheet LogSheet { get; set; }
 
+    [NotMapped]
+    public string Track { get; set; }
+
+    
     public bool IsLessThan(int currentReading) => Reading < currentReading;
 
+    
     public bool IsLessThanPrevious(int currentReading) => PreviousReading < currentReading;
 
-    public static LogSheetDetail CreateNoAutoId(
-        string id,
-        LogSheet logSheet,
-        string assetCode,
-        string fuelTime,
-        int reading,
-        int previousReading,
-        float quantity,
-        string driverQatarIdUrl,
-        string currentSMUUrl,
-        string tankMeterUrl,
-        string? operatorDriver
-    )
-    {
-        return new LogSheetDetail
-        {
-            Id = Guid.Parse(id),
-
-            AssetCode = assetCode,
-            FuelTime = DateTime.Parse(fuelTime),
-            Reading = reading,
-            PreviousReading = previousReading,
-            Quantity = quantity,
-            DriverQatarIdUrl = driverQatarIdUrl,
-            CurrentSMUUrl = currentSMUUrl,
-            TankMeterUrl = tankMeterUrl,
-            OperatorDriver = operatorDriver,
-            LogSheet = logSheet
-        };
-    }
+    
     public static LogSheetDetail Create(
         string assetCode,
         string fuelTime,
@@ -58,9 +40,8 @@ public class LogSheetDetail : BaseEntity<Guid>
         int previousReading,
         float quantity,
         string driverQatarIdUrl,
-        string currentSMUUrl,
-        string tankMeterUrl,
-        string? operatorDriver)
+        string? operatorDriver,
+        string transactionType)
     {
 
         return new LogSheetDetail
@@ -72,9 +53,9 @@ public class LogSheetDetail : BaseEntity<Guid>
             PreviousReading = previousReading,
             Quantity = quantity,
             DriverQatarIdUrl = driverQatarIdUrl,
-            CurrentSMUUrl = currentSMUUrl,
-            TankMeterUrl = tankMeterUrl,
-            OperatorDriver = operatorDriver
+            OperatorDriver = operatorDriver,
+            TransactionType = transactionType,
+            Track = "new"
         };
     }
 }

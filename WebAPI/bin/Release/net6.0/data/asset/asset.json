@@ -1,0 +1,27 @@
+[
+    {
+        "assetCode":"BHL014",
+        "description": "Backhoe Loader"
+    },
+    {
+        "assetCode":"BHL015",
+        "description": "Backhoe Loader"
+    },
+    {
+        "assetCode":"BHL037",
+        "description": "Backhoe Loader"
+    },
+    {
+        "assetCode":"CE-M001",
+        "description": "Excavator Mini"
+    },
+    {
+        "assetCode":"CE-M002",
+        "description": "Excavator Mini"
+    },
+    {
+        "assetCode":"CE-M003",
+        "description": "Excavator Mini"
+    }
+  
+]

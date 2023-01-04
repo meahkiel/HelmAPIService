@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Core.PMV.Assets;
 
+[Auditable]
 public class ServiceLog : BaseEntity<Guid> {
     public int AssetId { get; set; }
     public string ServiceCode { get; set; } = null!;
@@ -21,19 +22,22 @@ public class ServiceLog : BaseEntity<Guid> {
     [NotMapped]
     public virtual int IntervalAtKm => LastReading + KmInterval;
 
-    public string GetServiceStatus() 
+    [NotMapped]
+    public string ServiceStatus 
     {
-        if(LastReading == AlertAtKm) {
-            return "Warning";
-        }
-        else if(LastReading > AlertAtKm && LastReading <= IntervalAtKm) {
-            return "Danger";
-        }
-        else if(LastReading > IntervalAtKm) {
-            return "Critical";
-        }
-        else {
-            return "Good";
+        get {
+            if(LastReading == AlertAtKm) {
+                return "Warning";
+            }
+            else if(LastReading > AlertAtKm && LastReading <= IntervalAtKm) {
+                return "Danger";
+            }
+            else if(LastReading > IntervalAtKm) {
+                return "Critical";
+            }
+            else {
+                return "Good";
+            }
         }
     }
 }

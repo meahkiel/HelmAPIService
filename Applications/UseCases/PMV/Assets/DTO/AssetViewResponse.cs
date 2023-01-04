@@ -17,7 +17,7 @@ public class AssetListResponse {
 }
 public class AssetViewResponse
 {
-    public string Id { get; set; }
+    public int Id { get; set; }
     public string? AssetCode { get; set; }
     public string? CompanyCode { get; set; }
     public string? Color { get; set; }
@@ -40,14 +40,14 @@ public class AssetViewResponse
 
     public string Category { get; set; }
     public string SubCategory { get; set; }
-    
+    public int KmHr { get; set; }
+
     public int CurrentReading { get; set; }
     public DateTime? LastServiceDate { get; set; }
     public string? LatestTransactionId { get; set; }
     public DateTime? LastInspectionDate { get; set; }
-
-    public IEnumerable<ServiceLogResponse> ServiceLogs { get; set; }
-    public IEnumerable<FuelLogTransactionsResponse> LogSheets { get; set; }
+    public IEnumerable<ServiceLogResponse> ServiceLogs { get; set; } = new List<ServiceLogResponse>();
+    public IEnumerable<FuelLogTransactionsResponse> LogSheets { get; set; } = new List<FuelLogTransactionsResponse>();
 }
 
 public class ServiceLogResponse {
@@ -57,14 +57,10 @@ public class ServiceLogResponse {
     public string? TransactionId { get; set; }
     public string? Source { get; set; }
     public DateTime? LastServiceDate { get; set; }
-    
     public int LastReading { get; set; }
-
     public int KmAlert { get; set; }
     public int KmInterval { get; set; }
-
-
     public virtual int AlertAtKm { get;set;}
-
     public virtual int IntervalAtKm {get;set;}
+    public string Status { get; set; }
 }

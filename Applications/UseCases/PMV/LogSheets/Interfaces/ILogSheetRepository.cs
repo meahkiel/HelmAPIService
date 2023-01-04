@@ -12,9 +12,4 @@ public interface ILogSheetRepository : IRepository<LogSheet>
     Task<LogSheet?> GetSingleLogSheet(Guid id);
     Task<LogSheet?> GetDraft(Guid id);
     Task<LogSheet?> GetLatestRecord();
-
-    bool UpdateDetail(LogSheetDetail detail);
-    bool AddDetail(LogSheetDetail detail);
-
-    bool DeleteDetail(LogSheetDetail detail);
 }
