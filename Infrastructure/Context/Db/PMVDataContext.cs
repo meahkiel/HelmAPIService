@@ -1,10 +1,8 @@
 
-
 using Applications.Interfaces;
 using Core.PMV.Alerts;
 using Core.PMV.Assets;
 using Core.PMV.LogSheets;
-using Core.PMV.Stations;
 using Infrastructure.Context.Configurations;
 
 namespace Infrastructure.Context.Db;
@@ -15,6 +13,7 @@ public class PMVDataContext : DbContext, IDataContext
     public DbSet<LogSheetDetail> LogSheetDetails { get; set; }
     public DbSet<ServiceAlert> ServiceAlert { get; set; }
     public DbSet<ServiceAlertDetail> ServiceAlertDetails { get; set; }
+   
     public DbSet<AssetRecord> AssetRecord { get; set; }
     public DbSet<ServiceLog> ServiceLogs { get ;set; }
 

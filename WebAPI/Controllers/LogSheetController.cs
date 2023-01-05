@@ -18,7 +18,7 @@ public class LogSheetController : APIControllerBase
 
 
     [HttpGet]
-    public async Task<IActionResult> Index([FromQuery] GetDispenseLogSheetQuery query)
+    public async Task<IActionResult> Index([FromQuery] GetLogSheetDraftsQuery query)
     {
         return HandleResult(await _mediator.Send(query));
     }
@@ -26,7 +26,7 @@ public class LogSheetController : APIControllerBase
     [HttpGet("transaction-report")]
     public async Task<IActionResult> GetTransactions([FromQuery]string dateFrom , string dateTo) {
 
-        var query = new GetDispenseLogSheetsByDateQuery(dateFrom,dateTo);
+        var query = new GetLogSheetTransactionsQuery(dateFrom,dateTo);
         
         return HandleResult(await _mediator.Send(query));
     }

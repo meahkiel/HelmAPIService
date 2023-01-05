@@ -85,10 +85,10 @@ public class LogSheetRepository : ILogSheetRepository
 
     
 
-    public async Task<IEnumerable<FuelLogTransactionsResponse>> GetTransactions(string dateFrom, string dateTo) {
+    public async Task<IEnumerable<FuelTransactionReport>> GetTransactions(string dateFrom, string dateTo) {
 
         var results = await _context.Database.GetDbConnection()
-                .QueryAsync<FuelLogTransactionsResponse>(
+                .QueryAsync<FuelTransactionReport>(
                 "sp_PMVFuel_DispenseLogSheet",
                 new {  
                     dateFrom = $"{dateFrom} 00:00:00" , 

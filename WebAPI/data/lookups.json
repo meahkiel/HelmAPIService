@@ -139,9 +139,15 @@
 
   },
   {
-    "text": "D172",
-    "value": "D172",
-    "type": "location"
+    "text": "D182Station",
+    "value": "D182Station",
+    "type": "master-station"
+
+  },
+  {
+    "text": "QAPMSDStation",
+    "value": "QAPMSDStation",
+    "type": "master-station"
 
   },
   {

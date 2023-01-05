@@ -80,8 +80,7 @@ public class LogSheet : BaseEntity<Guid>
         EndShiftTankerKm = endShiftTankerKm;
         ShiftEndTime =  DateTime.Parse(shiftEndTime);
         Remarks = remarks ?? "";
-        
-        this.Posted();
+        Post = PostingObject.Posted();
     }
 
     
