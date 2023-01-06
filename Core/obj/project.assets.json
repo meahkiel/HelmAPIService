@@ -1,26 +1,51 @@
 {
   "version": 3,
   "targets": {
-    "net6.0": {}
+    "net6.0": {
+      "BaseEntityPack.Core/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/BaseEntityPack.Core.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/BaseEntityPack.Core.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "BaseEntityPack.Core/1.0.0": {
+      "sha512": "dpHbIOQ1mfMRZQDfqY7dD5VfhwCO+OH42q4jSwmReJbQ3WwbTY0M8YhtfggXMXdOiCWuQJJo08GlrW3Z0bVJDQ==",
+      "type": "package",
+      "path": "baseentitypack.core/1.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "baseentitypack.core.1.0.0.nupkg.sha512",
+        "baseentitypack.core.nuspec",
+        "lib/net6.0/BaseEntityPack.Core.dll"
+      ]
+    }
+  },
   "projectFileDependencyGroups": {
-    "net6.0": []
+    "net6.0": [
+      "BaseEntityPack.Core >= 1.0.0"
+    ]
   },
   "packageFolders": {
-    "C:\\Users\\AMercado\\.nuget\\packages\\": {}
+    "C:\\Users\\arnol\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Projects\\HelmApps\\HelmAPI\\HelmAPIService\\Core\\Core.csproj",
+      "projectUniqueName": "D:\\Projects\\Application\\PMV\\HelmAPIService\\Core\\Core.csproj",
       "projectName": "Core",
-      "projectPath": "D:\\Projects\\HelmApps\\HelmAPI\\HelmAPIService\\Core\\Core.csproj",
-      "packagesPath": "C:\\Users\\AMercado\\.nuget\\packages\\",
-      "outputPath": "D:\\Projects\\HelmApps\\HelmAPI\\HelmAPIService\\Core\\obj\\",
+      "projectPath": "D:\\Projects\\Application\\PMV\\HelmAPIService\\Core\\Core.csproj",
+      "packagesPath": "C:\\Users\\arnol\\.nuget\\packages\\",
+      "outputPath": "D:\\Projects\\Application\\PMV\\HelmAPIService\\Core\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\AMercado\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\arnol\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -45,6 +70,12 @@
     "frameworks": {
       "net6.0": {
         "targetAlias": "net6.0",
+        "dependencies": {
+          "BaseEntityPack.Core": {
+            "target": "Package",
+            "version": "[1.0.0, )"
+          }
+        },
         "imports": [
           "net461",
           "net462",
@@ -61,7 +92,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.404\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
       }
     }
   }

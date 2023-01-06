@@ -1,88 +1,70 @@
+using BaseEntityPack.Core;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Core.PMV.Fuels;
 
-public enum EnumType {
-    In,
-    Out
-}
 
+enum EnumLogType { Dispense, Restock }
 
-
-public class FuelHeader : BaseEntity<Guid> {
-
-    public int ReferenceNo { get; set; }
-    public DateTime ShiftStartTime { get; set; }
-    public DateTime? ShiftEndTime { get; set; }
-    public int StartShiftTankerKm { get; set; }
-    public int? EndShiftTankerKm { get; set; }
-    public int StartShiftMeterReading { get; set; }
-    public int? EndShiftMeterReading { get; set; }
-    public string? Remarks { get; set; } = null;
-    public string Fueler { get; set; } = "";
-    public int LocationId { get; set; }
-    public FuelStation StationCode { get; set; }
-
-    public IList<FuelTransaction> Transactions { get; set; } = new List<FuelTransaction>();
-
-    public void AddInTransaction(
-        string id,
-        float qty,
-        string referenceNo = "",
-        string remarks = "") {
-
-        var transaction = Transactions.SingleOrDefault(t => t.Id == Guid.Parse(id));
-        
-        if(transaction == null) {
-            Transactions.Add(new FuelTransaction {
-                Id = Guid.NewGuid(),
-                ReferenceNo = referenceNo,
-                Remarks = remarks,
-                Quantity = qty,
-                RefillFrom = this.StationCode,
-                Type = EnumType.In
-            });
-        }
-        else {
-            transaction.ReferenceNo = referenceNo;
-            transaction.Remarks = remarks;
-            transaction.Quantity = qty;
-        }
-    }
-
-     public void AddOutTransaction(
-        string id,
-        string dispenseTo, 
-        float qty,
-        string referenceNo = "",
-        string remarks = "") {
-
-        var transaction = Transactions.SingleOrDefault(t => t.Id == Guid.Parse(id));
-        
-        if(transaction == null) {
-            Transactions.Add(new FuelTransaction {
-                Id = Guid.NewGuid(),
-                DispenseTo = dispenseTo,
-                ReferenceNo = referenceNo,
-                Remarks = remarks,
-                Quantity = qty,
-                Type = EnumType.Out
-            });
-        }
-        else {
-            transaction.ReferenceNo = referenceNo;
-            transaction.Remarks = remarks;
-            transaction.Quantity = qty;
-        }
-    }
-}
-
-public class FuelTransaction : BaseEntity<Guid>
+public class FuelTransaction : Entity<Guid>
 {
 
+    public FuelTransaction(
+           Guid id,
+        string assetCode,
+        string fuelStation,
+        DateTime fuelDateTime,
+        float qty
+    ) : base(id)
+    {
+        AssetCode = assetCode;
+        FuelStation = fuelStation;
+        FuelDateTime = fuelDateTime;
+        Quantity = qty;
+        LogType = EnumLogType.Restock.ToString();
+    }
+    public FuelTransaction(
+        Guid id,
+        string assetCode,
+        int previousReading,
+        int reading,
+        string driver,
+        string fuelStation,
+        DateTime fuelDateTime,
+        float qty) : base(id)
+    {
+
+        AssetCode = assetCode;
+        PreviousReading = previousReading;
+        Reading = reading;
+        Driver = driver;
+        FuelStation = fuelStation;
+        FuelDateTime = fuelDateTime;
+        Quantity = qty;
+        LogType = EnumLogType.Dispense.ToString();
+
+    }
+
+
+    public float GetActualQuantity() => LogType == EnumLogType.Dispense.ToString() ?
+            Quantity * -1 : Quantity;
+
+    public float GetDispenseQuantity() => LogType == EnumLogType.Dispense.ToString() ? Quantity : 0f;
+    
+    public string? FuelStation { get; set; }
+    public DateTime FuelDateTime { get; set; }
     public float Quantity { get; set; }
-    public FuelStation? RefillFrom { get; set; }
-    public string DispenseTo { get; set; }
-    public string ReferenceNo { get; set; }
+    public string AssetCode { get; set; }
+    public int PreviousReading { get; set; }
+    public int Reading { get; set; }
+    public string Driver { get; set; }
     public string Remarks { get; set; }
-    public EnumType Type { get; set; } = EnumType.Out;
+    public string LogType { get; set; }
+    public string DriverQatarIdUrl { get; set; }
+
+    [NotMapped]
+    public string Track { get; set; }
+    public bool IsLessThan(int currentReading) => Reading < currentReading;
+    public bool IsLessThanPrevious(int currentReading) => PreviousReading < currentReading;
 
 }

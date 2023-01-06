@@ -1,3 +1,4 @@
+using Applications.UseCases.PMV.Fuels.DTO;
 using Applications.UseCases.PMV.LogSheets.DTO;
 
 namespace Applications.UseCases.PMV.LogSheets.Queries;

@@ -14,6 +14,11 @@
     
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="UseCases\PMV\Fuels\Commands\" />
+    <Folder Include="UseCases\PMV\Fuels\Queries\" />
+  </ItemGroup>
+
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>

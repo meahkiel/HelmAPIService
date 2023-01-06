@@ -3,21 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI", "WebAPI\WebAPI.csproj", "{B5D4AC9E-A529-4F82-A160-6CDFE112A878}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI", "WebAPI\WebAPI.csproj", "{B5D4AC9E-A529-4F82-A160-6CDFE112A878}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Applications", "Applications\Applications.csproj", "{623AB3D4-A75C-4B88-916A-5AA8FD99A9DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Applications", "Applications\Applications.csproj", "{623AB3D4-A75C-4B88-916A-5AA8FD99A9DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{6AC1DEDE-ACEA-4F36-8236-2FA42D651DEC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{6AC1DEDE-ACEA-4F36-8236-2FA42D651DEC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{313B3444-CE49-440D-8519-2D14D63A8AFF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{313B3444-CE49-440D-8519-2D14D63A8AFF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HlmTesting", "HlmTesting\HlmTesting.csproj", "{9338EF2C-2831-41FE-82AE-9768A8B3CE7B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{B5D4AC9E-A529-4F82-A160-6CDFE112A878}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -36,5 +35,15 @@ Global
 		{313B3444-CE49-440D-8519-2D14D63A8AFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{313B3444-CE49-440D-8519-2D14D63A8AFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{313B3444-CE49-440D-8519-2D14D63A8AFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9338EF2C-2831-41FE-82AE-9768A8B3CE7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9338EF2C-2831-41FE-82AE-9768A8B3CE7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9338EF2C-2831-41FE-82AE-9768A8B3CE7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9338EF2C-2831-41FE-82AE-9768A8B3CE7B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CA70D3B8-BA97-48BE-A213-6A2AC25C78F6}
 	EndGlobalSection
 EndGlobal

@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "/R/CGDMhdx+DG9Ovehzvzwpm49GZXWUlZd+WtMAGxQY+O/DbKR6u22Q5SaSqoAx3itFYp3fqcvLR8QTTgr9Ucw==",
+  "dgSpecHash": "Vk5NrqgVOxt5z8AEH5YoenFtyN+NPPaY8HzuCbBH99RJ4gBWWVb2V0LW2+pCgPPmBB+Q0XlOjA+MYBroWrqL3A==",
   "success": true,
-  "projectFilePath": "D:\\Projects\\HelmApps\\HelmAPI\\HelmAPIService\\Core\\Core.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "D:\\Projects\\Application\\PMV\\HelmAPIService\\Core\\Core.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\arnol\\.nuget\\packages\\baseentitypack.core\\1.0.0\\baseentitypack.core.1.0.0.nupkg.sha512"
+  ],
   "logs": []
 }

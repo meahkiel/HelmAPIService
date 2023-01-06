@@ -31,6 +31,15 @@
           "lib/netstandard2.1/AutoMapper.Extensions.Microsoft.DependencyInjection.dll": {}
         }
       },
+      "BaseEntityPack.Core/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/BaseEntityPack.Core.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/BaseEntityPack.Core.dll": {}
+        }
+      },
       "FluentResults/3.15.0": {
         "type": "package",
         "dependencies": {
@@ -1449,6 +1458,9 @@
       "Core/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "BaseEntityPack.Core": "1.0.0"
+        },
         "compile": {
           "bin/placeholder/Core.dll": {}
         },
@@ -1486,6 +1498,18 @@
         "automapper.extensions.microsoft.dependencyinjection.nuspec",
         "icon.png",
         "lib/netstandard2.1/AutoMapper.Extensions.Microsoft.DependencyInjection.dll"
+      ]
+    },
+    "BaseEntityPack.Core/1.0.0": {
+      "sha512": "dpHbIOQ1mfMRZQDfqY7dD5VfhwCO+OH42q4jSwmReJbQ3WwbTY0M8YhtfggXMXdOiCWuQJJo08GlrW3Z0bVJDQ==",
+      "type": "package",
+      "path": "baseentitypack.core/1.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "baseentitypack.core.1.0.0.nupkg.sha512",
+        "baseentitypack.core.nuspec",
+        "lib/net6.0/BaseEntityPack.Core.dll"
       ]
     },
     "FluentResults/3.15.0": {
@@ -4524,19 +4548,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\AMercado\\.nuget\\packages\\": {}
+    "C:\\Users\\arnol\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Projects\\HelmApps\\HelmAPI\\HelmAPIService\\Applications\\Applications.csproj",
+      "projectUniqueName": "D:\\Projects\\Application\\PMV\\HelmAPIService\\Applications\\Applications.csproj",
       "projectName": "Applications",
-      "projectPath": "D:\\Projects\\HelmApps\\HelmAPI\\HelmAPIService\\Applications\\Applications.csproj",
-      "packagesPath": "C:\\Users\\AMercado\\.nuget\\packages\\",
-      "outputPath": "D:\\Projects\\HelmApps\\HelmAPI\\HelmAPIService\\Applications\\obj\\",
+      "projectPath": "D:\\Projects\\Application\\PMV\\HelmAPIService\\Applications\\Applications.csproj",
+      "packagesPath": "C:\\Users\\arnol\\.nuget\\packages\\",
+      "outputPath": "D:\\Projects\\Application\\PMV\\HelmAPIService\\Applications\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\AMercado\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\arnol\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -4550,8 +4574,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\Projects\\HelmApps\\HelmAPI\\HelmAPIService\\Core\\Core.csproj": {
-              "projectPath": "D:\\Projects\\HelmApps\\HelmAPI\\HelmAPIService\\Core\\Core.csproj"
+            "D:\\Projects\\Application\\PMV\\HelmAPIService\\Core\\Core.csproj": {
+              "projectPath": "D:\\Projects\\Application\\PMV\\HelmAPIService\\Core\\Core.csproj"
             }
           }
         }
@@ -4607,7 +4631,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.404\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
       }
     }
   }
