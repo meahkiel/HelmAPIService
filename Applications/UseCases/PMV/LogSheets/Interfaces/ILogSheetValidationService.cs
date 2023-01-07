@@ -2,7 +2,7 @@ using Core.PMV.LogSheets;
 
 namespace Applications.UseCases.PMV.LogSheets.Interfaces
 {
-    public interface ILogSheetService
+    public interface IFuelLogService
     {
         Task<LogSheetDetail> GetLatestFuelLogRecord(string assetCode,int currentReading);
     }

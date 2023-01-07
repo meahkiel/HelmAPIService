@@ -2,6 +2,9 @@ using Applications.Interfaces;
 using Applications.UseCases.PMV.Common;
 using Applications.UseCases.PMV.LogSheets.Interfaces.DTO;
 using Applications.UseCases.PMV.Services.DTO;
+using Core.Common;
+using Core.PMV.Assets;
+using Core.PMV.Fuels;
 using Dapper;
 using Infrastructure.Context.Db;
 
@@ -15,6 +18,27 @@ public class CommonService : ICommonService
     {
         _context = (PMVDataContext)context;
     }
+
+    public async Task<AutoNumber> GenerateAutoNumber(string type, string source)
+    {
+          var results = await _context.Database.GetDbConnection().QueryAsync<AutoNumber>(
+                "sp_GenerateSequenceNo",
+                new { Type = type, Source = source},
+                commandType: System.Data.CommandType.StoredProcedure);
+            
+            return results.FirstOrDefault();
+    }
+
+    public async Task<Asset> GetAssetByCode(string code)
+    {
+         var results = await _context.Database.GetDbConnection().QueryAsync<Asset>(
+                "sp_PMVAsset_GetAssetByCode",
+                new { assetCode = code},
+                commandType: System.Data.CommandType.StoredProcedure);
+            
+            return results.FirstOrDefault();
+    }
+
     public async Task<LocationResponse?> GetLocationByKey(string code,string type = "code",int id=0)
     {   
         
@@ -28,9 +52,9 @@ public class CommonService : ICommonService
     }
 
    
-    public async Task<StationResponse?> GetStationByCode(string code)
+    public async Task<Station?> GetStationByCode(string code)
     {
-        var results = await _context.Database.GetDbConnection().QueryAsync<StationResponse>(
+        var results = await _context.Database.GetDbConnection().QueryAsync<Station>(
                 "sp_GetStationByCode",
                 new { code = code},
                 commandType: System.Data.CommandType.StoredProcedure);

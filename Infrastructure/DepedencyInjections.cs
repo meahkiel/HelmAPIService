@@ -1,6 +1,5 @@
 using Applications.Interfaces;
 using Applications.UseCases.PMV.Common;
-using Applications.UseCases.PMV.LogSheets.Interfaces;
 using Infrastructure.Context.Db;
 using Infrastructure.Services.PMV;
 using Infrastructure.Services.PMV.DataService;
@@ -16,7 +15,9 @@ public static class DepedencyInjections
         services.AddTransient<IUnitWork,UnitWork>();
 
         services.AddScoped<ICommonService,CommonService>();
-        services.AddScoped<ILogSheetService,LogSheetValidationService>();
+        services.AddScoped<Applications.UseCases.PMV.LogSheets.Interfaces.IFuelLogService, Services.PMV.DataService.FuelService>();
+        services.AddScoped<Applications.UseCases.PMV.Fuels.Interfaces.IFuelLogService, Services.PMV.DataService.FuelLogService>();
+
         services.AddScoped<IUserAccessor,UserAccessor>();
         
         return services;

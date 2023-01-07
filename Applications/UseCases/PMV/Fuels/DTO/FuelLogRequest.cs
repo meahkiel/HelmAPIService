@@ -23,19 +23,17 @@ public record FuelLogRequest(
     string? Id,
     string? EmployeeCode,
     string FueledDate,
+    int ReferenceNo,
     string ShiftStartTime,
     string ShiftEndTime,
-    float StartShiftTankerKm,
-    float EndShiftTankerKm,
-    float StartShiftMeterReading,
-    float EndShiftMeterReading,
+    int StartShiftTankerKm,
+    int EndShiftTankerKm,
     string Location,
     string Station,
     string? Remarks,
     string Fueler,
-    bool IsPosted,
-    ICollection<LogSheetDetailRequest>? details
-
+    ICollection<LogSheetDetailRequest>? Details,
+    bool IsPosted = false
 );
 
 public class LogSheetDetailRequest

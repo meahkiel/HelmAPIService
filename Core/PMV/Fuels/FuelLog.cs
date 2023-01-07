@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Core.PMV.Fuels;
 
+[AuditableAttribute]
 public class FuelLog : AggregateRoot<Guid>
 {
 
@@ -17,10 +18,14 @@ public class FuelLog : AggregateRoot<Guid>
         return other;
     }
 
-  
+    public FuelLog() : base(Guid.NewGuid())
+    {
+        
+    }
 
     public static FuelLog Create(
         string stationCode,
+        int locationId,
         int lastDocumentNo,
         int referenceNo,
         DateTime? shiftStartTime,
@@ -35,6 +40,7 @@ public class FuelLog : AggregateRoot<Guid>
         return new FuelLog(
             Guid.NewGuid(),
             stationCode,
+            locationId,
             lastDocumentNo,
             referenceNo,
             shiftStartTime,
@@ -49,6 +55,7 @@ public class FuelLog : AggregateRoot<Guid>
     //full entry
     public FuelLog(Guid id,
         string stationCode,
+        int locationId,
         int lastDocumentNo,
         int referenceNo,
         DateTime? shiftStartTime,
@@ -60,8 +67,10 @@ public class FuelLog : AggregateRoot<Guid>
 
         Id = id;
         StationCode = stationCode;
+        LocationId = locationId;
         ReferenceNo = referenceNo;
-        DocumentNo = lastDocumentNo + 1;
+        DocumentNo = lastDocumentNo;
+        Date = shiftStartTime;
         ShiftStartTime = shiftStartTime;
         ShiftEndTime = shiftEndTime;
         StartShiftTankerKm = startShiftTankerKm;
@@ -76,11 +85,20 @@ public class FuelLog : AggregateRoot<Guid>
     }
 
     public string StationCode { get; set; }
-    public DateTime Date { get; set; }
+    public DateTime? Date { get; set; }
     public int ReferenceNo { get; set; }
     public int DocumentNo { get; set; }
     public float OpeningMeter { get; private set; }
     public float OpeningBalance { get; private set; }
+    public DateTime? ShiftStartTime { get; set; }
+    public DateTime? ShiftEndTime { get; set; }
+    public int? StartShiftTankerKm { get; set; }
+    public int? EndShiftTankerKm { get; set; }
+    public string? Remarks { get; set; } = null;
+    public string Fueler { get; set; } = "";
+    public int LocationId { get; set; }
+    public PostingObject Post { get; set; } = new PostingObject();
+    public IList<FuelTransaction> FuelTransactions { get; set; } = new List<FuelTransaction>();
 
     [NotMapped]
     public float ClosingMeter => (OpeningMeter) + TotalDispense;
@@ -90,83 +108,100 @@ public class FuelLog : AggregateRoot<Guid>
         .Sum(c => c.GetActualQuantity());
 
     [NotMapped]
-    public float TotalDispense => FuelTransactions
-        .Where(t => t.LogType == EnumLogType.Dispense.ToString())
-        .Sum(c => c.GetDispenseQuantity());
+    public float TotalDispense
+    {
+        get
+        {
+            
+            var transactions = FuelTransactions.Where(t => t.LogType == EnumLogType.Dispense.ToString()).ToList();
+            return transactions.Sum(l => l.GetDispenseQuantity());
+        }
+    }
 
     [NotMapped]
     public float RemainingBalance => (OpeningBalance - TotalDispense) + TotalRestock;
-    
-    public DateTime? ShiftStartTime { get; set; }
-    public DateTime? ShiftEndTime { get; set; }
-    public int? StartShiftTankerKm { get; set; }
-    public int? EndShiftTankerKm { get; set; }
-    public string? Remarks { get; set; } = null;
-    public string Fueler { get; set; } = "";
-    public int LocationId { get; set; }
-    public PostingObject Post { get; set; } = new PostingObject();
-    public IList<FuelTransaction> FuelTransactions { get; set; }
-
-    public void AddRestockTransaction(string assetCode, DateTime fuelDateTime, float qty)
-    {
-        var restock = new FuelTransaction(Guid.NewGuid(),
-            assetCode,
-            this.StationCode,
-            fuelDateTime,
-            qty);
-        
-        restock.Track = "add";
-        
-        FuelTransactions.Add(restock);
-       
-    }
-
-    public void UpdateDetail(
-        string detailId, 
-        string refillStation, 
+    public void UpsertRestockTransaction(
         string assetCode, 
+        DateTime fuelDateTime, 
+        float qty,
+        string? transactionId = null)
+    {
+        Guid guid = string.IsNullOrEmpty(transactionId) ? Guid.NewGuid() : Guid.Parse(transactionId);
+        var existing = FuelTransactions.Where(t => t.Id == Guid.Parse(transactionId)).FirstOrDefault();
+        if(existing == null) {
+            existing = new FuelTransaction(guid,
+                assetCode,
+                this.StationCode,
+                fuelDateTime,
+                qty);
+
+            existing.Track = "add";
+            
+            FuelTransactions.Add(existing);
+        }
+        else {
+            existing.AssetCode = assetCode;
+            existing.Quantity = qty;
+            existing.LogType = EnumLogType.Restock.ToString();
+            existing.Track = "update";
+        }
+    }
+    
+    public void UpsertDispenseTransaction(
+        string assetCode, 
+        int previousReading,
         int reading, 
+        string operatorDriver,
+        DateTime fuelDateTime,
         float quantity, 
-        string operatorDriver, 
-        string transactionType)
+        string driverQatarIdUrl = "",
+        string? detailId = null)
     {
 
-        var existingDetail = FuelTransactions.Where(d => d.Id == Guid.Parse(detailId)).FirstOrDefault();
-        if (!existingDetail.IsLessThanPrevious(reading))
-        {
-            throw new Exception("Current Reading must not be less than the previous reading");
+        Guid guid = string.IsNullOrEmpty(detailId) ? Guid.NewGuid() : Guid.Parse(detailId);
+        
+        if(!string.IsNullOrEmpty(detailId)) {
+            var transaction = FuelTransactions.Where(d => d.Id == guid).FirstOrDefault();
+            if(transaction == null) {
+                transaction = new FuelTransaction(guid,assetCode,previousReading,
+                                        reading, operatorDriver, this.StationCode,
+                                        fuelDateTime,quantity);
+                transaction.DriverQatarIdUrl = driverQatarIdUrl;
+                transaction.Track = "add";
+                FuelTransactions.Add(transaction);
+            }
+            else {
+
+                if (!transaction.IsLessThanPrevious(reading)) {
+                    throw new Exception("Current Reading must not be less than the previous reading");
+                }
+                
+                transaction.AssetCode = assetCode;
+                transaction.Reading = reading;
+                transaction.Quantity = quantity;
+                transaction.FuelDateTime = fuelDateTime;
+                transaction.Driver = operatorDriver;
+                transaction.LogType = EnumLogType.Dispense.ToString();
+                transaction.Track = "update";
+            }
         }
-
-        existingDetail.FuelStation = refillStation;
-        existingDetail.AssetCode = assetCode;
-        existingDetail.Reading = reading;
-        existingDetail.Quantity = quantity;
-        existingDetail.Driver = operatorDriver;
-        existingDetail.LogType = transactionType;
-        existingDetail.Track = "update";
     }
 
-    public void AddDispenseTransaction(string assetCode,
-        int previousReading,
-        int reading,
-        string driver,
-        DateTime fuelDateTime,
-        float qty)
-    {   
+    
 
-        var dispense = new FuelTransaction(Guid.NewGuid(),
-            assetCode,
-            previousReading,
-            reading,
-            driver,
-            this.StationCode,
-            fuelDateTime,
-            qty);
-
-        FuelTransactions.Add(dispense);
-       
+    public void Edit(int startShiftTankerKm,int endShiftTankerKm,int locationId) {
+        this.StartShiftTankerKm = startShiftTankerKm;
+        this.EndShiftTankerKm = endShiftTankerKm;
+        this.LocationId = locationId;
     }
 
-
+    public void TogglePost() {
+        if(this.Post.PostedAt != null && this.Post.IsPosted) { 
+            PostingObject.UnPost();
+        }
+        else {
+            PostingObject.Post();
+        }
+    } 
 }
 

@@ -9,6 +9,7 @@ public interface IAssetRepository : IRepository<Asset>
 {
     bool AddServiceLog(ServiceLog serviceLog);
     bool AddAssetRecord(AssetRecord record);
+    bool UpdateAssetRecord(AssetRecord record);
 
     Task<IEnumerable<AssetListResponse>> GetAssets();
     Task<IEnumerable<AssetListResponse>> GetAssetsByAttribute(string category);

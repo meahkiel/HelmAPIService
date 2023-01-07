@@ -5,14 +5,7 @@ namespace Applications.UseCases.PMV.Fuels.Interfaces;
 
 public interface IFuelLogRepository
 {
-    Task<FuelLog> CreateLog(string stationCode,
-        int referenceNo,
-        DateTime? shiftStartTime,
-        DateTime? shiftEndTime,
-        int startShiftTankerKm,
-        int endShiftTankerKm,
-        float adjustedMeter,
-        float adjustedBalance);
+    void AddFuelLog(FuelLog log);
 
     Task<FuelLog?> GetLog(string id);
 
@@ -20,5 +13,5 @@ public interface IFuelLogRepository
 
     Task<IEnumerable<FuelTransactionReport>> GetTransactions(string dateFrom, string dateTo);
 
-    Task UpdateLog(FuelLog log);
+    void UpdateLog(FuelLog log);
 }

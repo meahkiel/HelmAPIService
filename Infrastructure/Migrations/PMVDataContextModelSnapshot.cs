@@ -133,6 +133,10 @@ namespace Infrastructure.Migrations
                     b.Property<string>("LatestTransactionId")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Source")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
@@ -190,6 +194,134 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ServiceLogs", "HLMPMV");
+                });
+
+            modelBuilder.Entity("Core.PMV.Fuels.FuelLog", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DocumentNo")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("EndShiftTankerKm")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Fueler")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("LocationId")
+                        .HasColumnType("int");
+
+                    b.Property<float>("OpeningBalance")
+                        .HasColumnType("real");
+
+                    b.Property<float>("OpeningMeter")
+                        .HasColumnType("real");
+
+                    b.Property<int>("ReferenceNo")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Remarks")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ShiftEndTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ShiftStartTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("StartShiftTankerKm")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StationCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FuelLog", "HLMPMV");
+                });
+
+            modelBuilder.Entity("Core.PMV.Fuels.FuelTransaction", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AssetCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Driver")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DriverQatarIdUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("FuelDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("FuelLogId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("FuelStation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LogType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PreviousReading")
+                        .HasColumnType("int");
+
+                    b.Property<float>("Quantity")
+                        .HasColumnType("real");
+
+                    b.Property<int>("Reading")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Remarks")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FuelLogId");
+
+                    b.ToTable("FuelTransactions", "HLMPMV");
                 });
 
             modelBuilder.Entity("Core.PMV.LogSheets.LogSheet", b =>
@@ -319,6 +451,42 @@ namespace Infrastructure.Migrations
                     b.Navigation("ServiceAlert");
                 });
 
+            modelBuilder.Entity("Core.PMV.Fuels.FuelLog", b =>
+                {
+                    b.OwnsOne("Core.Common.ValueObjects.PostingObject", "Post", b1 =>
+                        {
+                            b1.Property<Guid>("FuelLogId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<bool>("IsPosted")
+                                .HasColumnType("bit");
+
+                            b1.Property<DateTime?>("PostedAt")
+                                .HasColumnType("datetime2");
+
+                            b1.HasKey("FuelLogId");
+
+                            b1.ToTable("FuelLog", "HLMPMV");
+
+                            b1.WithOwner()
+                                .HasForeignKey("FuelLogId");
+                        });
+
+                    b.Navigation("Post")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Core.PMV.Fuels.FuelTransaction", b =>
+                {
+                    b.HasOne("Core.PMV.Fuels.FuelLog", "FuelLog")
+                        .WithMany("FuelTransactions")
+                        .HasForeignKey("FuelLogId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("FuelLog");
+                });
+
             modelBuilder.Entity("Core.PMV.LogSheets.LogSheet", b =>
                 {
                     b.OwnsOne("Core.Common.ValueObjects.PostingObject", "Post", b1 =>
@@ -358,6 +526,11 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Core.PMV.Alerts.ServiceAlert", b =>
                 {
                     b.Navigation("Details");
+                });
+
+            modelBuilder.Entity("Core.PMV.Fuels.FuelLog", b =>
+                {
+                    b.Navigation("FuelTransactions");
                 });
 
             modelBuilder.Entity("Core.PMV.LogSheets.LogSheet", b =>

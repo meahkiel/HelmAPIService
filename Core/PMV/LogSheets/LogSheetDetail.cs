@@ -31,10 +31,10 @@ public class LogSheetDetail : BaseEntity<Guid>
     public string Track { get; set; }
 
     
-    public bool IsLessThan(int currentReading) => Reading < currentReading;
+    public bool IsLessThan(int currentReading) => Reading <= currentReading;
 
     
-    public bool IsLessThanPrevious(int currentReading) => PreviousReading < currentReading;
+    public bool IsLessThanPrevious(int currentReading) => PreviousReading <= currentReading;
 
     
     public static LogSheetDetail Create(

@@ -32,6 +32,7 @@ public class PMVDataContext : DbContext, IDataContext
         
         modelBuilder.HasDefaultSchema("HLMPMV");
         modelBuilder.ApplyConfiguration(new LogSheetConfig());
+        modelBuilder.ApplyConfiguration(new FuelLogConfig());
         modelBuilder.ApplyConfiguration(new LogSheetDetailConfig());
         modelBuilder.ApplyConfiguration(new ServiceAlertConfig());
         modelBuilder.ApplyConfiguration(new ServiceAlertDetailConfig());

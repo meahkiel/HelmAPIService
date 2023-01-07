@@ -1,6 +1,7 @@
 ﻿using Applications.UseCases.PMV.Fuels.DTO;
 using Applications.UseCases.PMV.Fuels.Interfaces;
 using Core.PMV.Fuels;
+using Core.Utils;
 using Infrastructure.Context.Db;
 
 namespace Infrastructure.Services.PMV.Repositories;
@@ -13,53 +14,13 @@ public class FuelLogRepository : IFuelLogRepository
     {
         _context = context;
     }
-    public async Task<FuelLog> CreateLog(
-        string stationCode,
-        int referenceNo, 
-        DateTime? shiftStartTime, 
-        DateTime? shiftEndTime, 
-        int startShiftTankerKm, 
-        int endShiftTankerKm, 
-        float adjustedMeter, 
-        float adjustedBalance)
+
+    public void AddFuelLog(FuelLog log)
     {
-        //get the latest record 
-        FuelLog? record = await _context.FuelLogs
-                            .Where(l => l.StationCode == stationCode)
-                            .OrderByDescending(l => l.Date)
-                            .OrderByDescending(l => l.ReferenceNo)
-                            .FirstOrDefaultAsync();
-        
-        float openingMeter = 0f;
-        float openingBalance = 0f;
-        int lastDocumentNo = 0;
-        
-        if (record != null)
-        {
-            openingMeter = record.ClosingMeter;
-            openingBalance = record.RemainingBalance;
-            lastDocumentNo = record.DocumentNo;
-        }
-
-
-        var log = FuelLog.Create(
-            stationCode,
-            lastDocumentNo,
-            referenceNo,
-            shiftStartTime,
-            shiftEndTime,
-            startShiftTankerKm,
-            endShiftTankerKm,
-            openingMeter,
-            openingBalance,
-            adjustedBalance,
-            adjustedMeter);
-
         _context.FuelLogs.Add(log);
-
-        return log;
-
     }
+
+   
 
     public Task<IEnumerable<FuelLog>> GetDraftLogs(string station)
     {
@@ -68,7 +29,9 @@ public class FuelLogRepository : IFuelLogRepository
 
     public Task<FuelLog?> GetLog(string id)
     {
-        throw new NotImplementedException();
+        return _context.FuelLogs
+            .Include(f => f.FuelTransactions)
+            .SingleOrDefaultAsync(f => f.Id == Guid.Parse(id));
     }
 
     public Task<IEnumerable<FuelTransactionReport>> GetTransactions(string dateFrom, string dateTo)
@@ -76,8 +39,20 @@ public class FuelLogRepository : IFuelLogRepository
         throw new NotImplementedException();
     }
 
-    public Task UpdateLog(FuelLog log)
+    public void UpdateLog(FuelLog log)
     {
-        throw new NotImplementedException();
+        var details = log.FuelTransactions.Where(d => d.Track == "new").ToList();
+        if(details.Count > 0) {
+            foreach (var detail  in details) {
+                _context.FuelTransactions.Add(detail);
+            }
+        }
+
+        var updateDetails = log.FuelTransactions.Where(d => d.Track == "update").ToList();
+        if(updateDetails.Count > 0) {
+            foreach (var updateDetail  in updateDetails) {
+                _context.FuelTransactions.Update(updateDetail);
+            }
+        }
     }
 }

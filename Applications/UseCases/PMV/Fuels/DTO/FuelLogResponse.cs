@@ -1,13 +1,13 @@
 namespace Applications.UseCases.PMV.Fuels.DTO;
 
 
-public class LogSheetKeyResponse
+public class FuelLogKeyResponse
 {
     public string Id { get; set; }
-    public int ReferenceNo { get; set; }
+    public int DocumentNo { get; set; }
 }
 
-public class LogSheetDetailKeyResponse
+public class FuelLogDetailKeyResponse
 {
     public string Id { get; set; }
     public string LogSheetId { get; set; }

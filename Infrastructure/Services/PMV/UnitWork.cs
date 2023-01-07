@@ -1,7 +1,10 @@
 using Applications.Interfaces;
 using Applications.UseCases.PMV.Assets.Interfaces;
+using Applications.UseCases.PMV.Fuels.Interfaces;
 using Applications.UseCases.PMV.LogSheets.Interfaces;
 using Applications.UseCases.PMV.ServiceAlerts.Interfaces;
+using BaseEntityPack.Core;
+using BaseEntityPack.Core.Abstractions;
 using Core.SeedWorks.Attributes;
 using Infrastructure.Context.Db;
 using Infrastructure.Services.PMV.Repositories;
@@ -15,6 +18,7 @@ public class UnitWork : IUnitWork
     private ILogSheetRepository _logsheets;
     private IServiceAlertRepository _serviceAlert;
     private IAssetRepository _assets;
+    private IFuelLogRepository _logs;
 
     public UnitWork(IDataContext dataContext)
     {
@@ -41,24 +45,33 @@ public class UnitWork : IUnitWork
             return _assets;
         }
     }
+
+    public IFuelLogRepository FuelLogs {
+        get {
+            if(_logs == null) _logs = new FuelLogRepository(_context);
+            return _logs;
+        }
+    }
+
     public async Task CommitSaveAsync()
     {
         await _context.SaveChangesAsync();
     }
-
+    
     public async Task CommitSaveAsync(string userOrgId)
-    {
-
-        
+    {   
         foreach(var entry in _context.ChangeTracker.Entries().Where(e => e.State == EntityState.Added || 
-                e.State == EntityState.Modified)) 
-        {
+                e.State == EntityState.Modified)) {
+
+            
 
             if (entry.Entity.GetType().GetCustomAttributes(typeof(AuditableAttribute), true).Length > 0) {
                 if(entry.State == EntityState.Added) {
                     if(entry.Property("CreatedAt") != null) {
                         entry.Property("CreatedBy").CurrentValue = userOrgId;
                         entry.Property("CreatedAt").CurrentValue = DateTime.Now;
+                         entry.Property("UpdatedBy").CurrentValue = userOrgId;
+                        entry.Property("UpdatedAt").CurrentValue = DateTime.Now;
                     }
                 }
                 else if(entry.State == EntityState.Modified) {

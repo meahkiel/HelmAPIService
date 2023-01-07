@@ -59,7 +59,7 @@ public class UpsertLogDetailCommandHandler : IRequestHandler<UpsertLogDetailComm
             if(String.IsNullOrEmpty(request.DetailRequest.Id)) {
                 
                 //upset tank check if the station is main
-                var station = await _service.GetStationByCode(logSheet.StationCode);
+                //var station = await _service.GetStationByCode(logSheet.StationCode);
                 var reading = 0;
                 string? refillStation = null;
                 if(request.DetailRequest.TransactionType != "Restock") {

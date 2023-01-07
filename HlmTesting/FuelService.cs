@@ -30,6 +30,7 @@ public class FuelService : IFuelService
         {
             FuelLog.Create(
                 stationCode: "D1982Station",
+                locationId: 0,
                 lastDocumentNo: 1,
                 referenceNo: 1,
                 shiftStartTime: DateTime.Today,
@@ -42,6 +43,7 @@ public class FuelService : IFuelService
                 adjustmentBalance: 1000),
              FuelLog.Create(
                 stationCode: "D1981Station",
+                locationId: 0,
                 lastDocumentNo: 1,
                 referenceNo: 1,
                 shiftStartTime: DateTime.Today,
@@ -59,19 +61,19 @@ public class FuelService : IFuelService
 		{
 			if(log.StationCode == "D1982Station")
 			{
-				log.AddRestockTransaction(log.StationCode, DateTime.Today, 50000);
-				log.AddDispenseTransaction("LV145", 0, 25000, "Mohendra",DateTime.Now,3000);
-				log.AddDispenseTransaction("LV125", 0, 25000, "Mohendra", DateTime.Now, 3000);
-				log.AddDispenseTransaction("LV165", 0, 25000, "Mohendra", DateTime.Now, 3000);
-				log.AddDispenseTransaction("LV135", 0, 25000, "Mohendra", DateTime.Now, 3000);
+				log.UpsertRestockTransaction(log.StationCode, DateTime.Today, 50000);
+				log.UpsertDispenseTransaction("LV145", 0, 25000, "Mohendra",DateTime.Now,3000,"");
+				log.UpsertDispenseTransaction("LV125", 0, 25000, "Mohendra", DateTime.Now, 3000,"");
+				log.UpsertDispenseTransaction("LV165", 0, 25000, "Mohendra", DateTime.Now, 3000,"");
+				log.UpsertDispenseTransaction("LV135", 0, 25000, "Mohendra", DateTime.Now, 3000,"");
 			}
 			else
 			{
-                log.AddRestockTransaction(log.StationCode, DateTime.Today, 50000);
-                log.AddDispenseTransaction("LV245", 0, 25000, "Mohendra", DateTime.Now, 3000);
-                log.AddDispenseTransaction("LV225", 0, 25000, "Mohendra", DateTime.Now, 3000);
-                log.AddDispenseTransaction("LV265", 0, 25000, "Mohendra", DateTime.Now, 3000);
-                log.AddDispenseTransaction("LV235", 0, 25000, "Mohendra", DateTime.Now, 3000);
+                log.UpsertRestockTransaction(log.StationCode, DateTime.Today, 50000);
+                log.UpsertDispenseTransaction("LV245", 0, 25000, "Mohendra", DateTime.Now, 3000,"");
+                log.UpsertDispenseTransaction("LV225", 0, 25000, "Mohendra", DateTime.Now, 3000,"");
+                log.UpsertDispenseTransaction("LV265", 0, 25000, "Mohendra", DateTime.Now, 3000,"");
+                log.UpsertDispenseTransaction("LV235", 0, 25000, "Mohendra", DateTime.Now, 3000,"");
             }
         }
 
@@ -121,6 +123,7 @@ public class FuelService : IFuelService
 
         var log = FuelLog.Create(
             stationCode,
+            0,
             lastDocumentNo,
             referenceNo,
             shiftStartTime,

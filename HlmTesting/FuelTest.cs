@@ -36,7 +36,7 @@ namespace HlmTesting
                 10000,
                 1000);
             
-            log.AddRestockTransaction(fuelStation, DateTime.Now, 50000);
+            log.UpsertRestockTransaction(fuelStation, DateTime.Now, 50000);
             Assert.That(log.OpeningBalance, Is.EqualTo(1000f));
             Assert.That(log.RemainingBalance, Is.EqualTo(51000f));
             Assert.That(log.OpeningMeter, Is.EqualTo(10000f));
@@ -64,9 +64,9 @@ namespace HlmTesting
                 10000,
                 1000);
 
-            log.AddRestockTransaction(fuelStation, DateTime.Now, 50000);
-            log.AddDispenseTransaction("LV435",3000,3100,"Driver", DateTime.Now, 3000);
-            log.AddDispenseTransaction("LV425", 3000, 3100, "Driver", DateTime.Now, 3000);
+            log.UpsertRestockTransaction(fuelStation, DateTime.Now, 50000);
+            log.UpsertDispenseTransaction("LV435",3000,3100,"Driver", DateTime.Now, 3000,"");
+            log.UpsertDispenseTransaction("LV425", 3000, 3100, "Driver", DateTime.Now, 3000,"");
 
             Assert.That(log.OpeningBalance, Is.EqualTo(1000f));
             Assert.That(log.RemainingBalance, Is.EqualTo(45000f));

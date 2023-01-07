@@ -1,4 +1,3 @@
-using Applications.UseCases.PMV.Fuels.DTO;
 using Applications.UseCases.PMV.LogSheets.DTO;
 using Applications.UseCases.PMV.LogSheets.Interfaces;
 using Core.PMV.LogSheets;

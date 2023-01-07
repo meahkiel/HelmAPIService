@@ -17,7 +17,7 @@ public class UpsertLogSheetCommandHandler : IRequestHandler<UpsertLogSheetComman
 {
     private readonly IUnitWork _unitWork;
     private readonly ICommonService _commonService;
-    private readonly ILogSheetService _validationService;
+    private readonly IFuelLogService _validationService;
     private readonly IUserAccessor _userAccessor;
     private readonly IValidator<LogSheetRequest> _validator;
 
@@ -25,7 +25,7 @@ public class UpsertLogSheetCommandHandler : IRequestHandler<UpsertLogSheetComman
         IUnitWork unitWork, 
         IValidator<LogSheetRequest> validator,
         ICommonService commonService,
-        ILogSheetService validationService,
+        IFuelLogService validationService,
         IUserAccessor userAccessor) {
         _validator = validator;
         _unitWork = unitWork;
@@ -66,13 +66,13 @@ public class UpsertLogSheetCommandHandler : IRequestHandler<UpsertLogSheetComman
                     
                 if (request.SheetRequest.details != null && request.SheetRequest.details.Count > 0) {
                     //upset tank check if the station is main
-                    var station = await _commonService.GetStationByCode(logsheet.StationCode);
                     var reading = 0;
                     foreach (var detail in request.SheetRequest.details) {
-                        if(station!.StationType != "main") {
+                        if(detail.TransactionType != "Restock") {
                             var prevRecord = await _validationService.GetLatestFuelLogRecord(detail.AssetCode,detail.Reading);
                             reading = prevRecord.Reading;
                         }
+                        
                         
                         var logSheetDetail = LogSheetDetail.Create(
                                 refillStation: detail.RefillStation,

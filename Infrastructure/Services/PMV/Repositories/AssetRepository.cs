@@ -64,4 +64,10 @@ public class AssetRepository : IAssetRepository
         _context.AssetRecord.Add(record);
         return true;
     }
+
+    public bool UpdateAssetRecord(AssetRecord record)
+    {
+        _context.AssetRecord.Update(record);
+        return true;
+    }
 }

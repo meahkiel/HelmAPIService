@@ -366,3 +366,4 @@ D:\Projects\Application\PMV\HelmAPIService\WebAPI\obj\Debug\net6.0\refint\WebAPI
 D:\Projects\Application\PMV\HelmAPIService\WebAPI\obj\Debug\net6.0\WebAPI.pdb
 D:\Projects\Application\PMV\HelmAPIService\WebAPI\obj\Debug\net6.0\WebAPI.genruntimeconfig.cache
 D:\Projects\Application\PMV\HelmAPIService\WebAPI\obj\Debug\net6.0\ref\WebAPI.dll
+D:\Projects\HelmApps\HelmAPI\HelmAPIService\WebAPI\bin\Debug\net6.0\BaseEntityPack.Core.dll

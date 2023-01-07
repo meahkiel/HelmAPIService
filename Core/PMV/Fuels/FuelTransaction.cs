@@ -4,11 +4,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Core.PMV.Fuels;
 
 
-enum EnumLogType { Dispense, Restock }
+public enum EnumLogType { Dispense, Restock }
 
+[AuditableAttribute]
 public class FuelTransaction : Entity<Guid>
 {
 
+    public FuelTransaction() : base(Guid.NewGuid())
+    {
+        
+    }
     public FuelTransaction(
            Guid id,
         string assetCode,
@@ -57,10 +62,12 @@ public class FuelTransaction : Entity<Guid>
     public string AssetCode { get; set; }
     public int PreviousReading { get; set; }
     public int Reading { get; set; }
-    public string Driver { get; set; }
-    public string Remarks { get; set; }
+    public string? Driver { get; set; }
+    public string? Remarks { get; set; }
     public string LogType { get; set; }
-    public string DriverQatarIdUrl { get; set; }
+    public string? DriverQatarIdUrl { get; set; }
+
+    public FuelLog FuelLog { get; set; }
 
     [NotMapped]
     public string Track { get; set; }

@@ -1,5 +1,4 @@
 ﻿using Applications.UseCases.PMV.Assets.DTO;
-using Applications.UseCases.PMV.Fuels.DTO;
 using Applications.UseCases.PMV.LogSheets.DTO;
 using AutoMapper;
 using Core.PMV.Assets;

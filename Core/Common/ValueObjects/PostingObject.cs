@@ -2,7 +2,7 @@ namespace Core.Common.ValueObjects;
 
 public record PostingObject
 {
-    public static PostingObject Posted()
+    public static PostingObject Post()
     {
 
         return new PostingObject
@@ -11,6 +11,18 @@ public record PostingObject
             PostedAt = DateTime.Now
         };
     }
+
+    public static PostingObject UnPost()
+    {
+
+        return new PostingObject
+        {
+            IsPosted = false,
+            PostedAt = null
+        };
+    }
+
+    
 
     public static PostingObject Create(bool isPosted, DateTime? postedAt = null)
     {
@@ -21,6 +33,8 @@ public record PostingObject
         };
     }
 
-    public bool IsPosted { get; init; } = false;
-    public DateTime? PostedAt { get; init; } = null;
+    public bool IsPosted { get; private set; } = false;
+    public DateTime? PostedAt { get; private set; } = null;
+
+
 }
