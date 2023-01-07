@@ -32,11 +32,11 @@ public record FuelLogRequest(
     string Station,
     string? Remarks,
     string Fueler,
-    ICollection<LogSheetDetailRequest>? Details,
+    ICollection<FuelTransactionsRequest>? Details,
     bool IsPosted = false
 );
 
-public class LogSheetDetailRequest
+public class FuelTransactionsRequest
 {
     public string? Id { get; set; }
     public string? LogSheetId { get; set; }

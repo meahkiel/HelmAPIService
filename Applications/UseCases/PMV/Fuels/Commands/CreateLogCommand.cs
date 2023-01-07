@@ -14,11 +14,12 @@ public class CreateLogCommandHandler : IRequestHandler<CreateLogCommand, Result<
 {
     private readonly IUnitWork _unitWork;
     private readonly ICommonService _commonService;
-        private readonly IFuelLogService _fuelService;
+    private readonly IFuelLogService _fuelService;
     private readonly IPublisher _publisher;
     private readonly IUserAccessor _userAccessor;
 
-    public CreateLogCommandHandler(IUnitWork unitWork,
+    public CreateLogCommandHandler(
+        IUnitWork unitWork,
         ICommonService commonService,
         IFuelLogService fuelService,
         IPublisher publisher, 
@@ -29,8 +30,6 @@ public class CreateLogCommandHandler : IRequestHandler<CreateLogCommand, Result<
         _userAccessor = userAccessor;
         _commonService = commonService;
         _unitWork = unitWork;
-        
-
     }
     public async Task<Result<FuelLogKeyResponse>> Handle(CreateLogCommand request, CancellationToken cancellationToken)
     {
@@ -38,9 +37,11 @@ public class CreateLogCommandHandler : IRequestHandler<CreateLogCommand, Result<
         {
             FuelLog log = await GenerateInitialLog(request.Request);
             var employeeCode = request.Request.EmployeeCode ??  await _userAccessor.GetUserEmployeeCode();
+            
             if(request.Request.Details.Count > 0) {
                 
                 foreach(var detail in request.Request.Details) {
+                    
                     var fuelDateTime = detail.FuelDate.MergeAndConvert(
                                     detail.FuelTime.ConvertToDateTime()!.Value.ToLongTimeString());
 

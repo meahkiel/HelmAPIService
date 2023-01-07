@@ -3997,19 +3997,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\AMercado\\.nuget\\packages\\": {}
+    "C:\\Users\\arnol\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Projects\\HelmApps\\HelmAPI\\HelmAPIService\\HlmTesting\\HlmTesting.csproj",
+      "projectUniqueName": "D:\\Projects\\Application\\PMV\\HelmAPIService\\HlmTesting\\HlmTesting.csproj",
       "projectName": "HlmTesting",
-      "projectPath": "D:\\Projects\\HelmApps\\HelmAPI\\HelmAPIService\\HlmTesting\\HlmTesting.csproj",
-      "packagesPath": "C:\\Users\\AMercado\\.nuget\\packages\\",
-      "outputPath": "D:\\Projects\\HelmApps\\HelmAPI\\HelmAPIService\\HlmTesting\\obj\\",
+      "projectPath": "D:\\Projects\\Application\\PMV\\HelmAPIService\\HlmTesting\\HlmTesting.csproj",
+      "packagesPath": "C:\\Users\\arnol\\.nuget\\packages\\",
+      "outputPath": "D:\\Projects\\Application\\PMV\\HelmAPIService\\HlmTesting\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\AMercado\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\arnol\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -4023,8 +4023,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\Projects\\HelmApps\\HelmAPI\\HelmAPIService\\Core\\Core.csproj": {
-              "projectPath": "D:\\Projects\\HelmApps\\HelmAPI\\HelmAPIService\\Core\\Core.csproj"
+            "D:\\Projects\\Application\\PMV\\HelmAPIService\\Core\\Core.csproj": {
+              "projectPath": "D:\\Projects\\Application\\PMV\\HelmAPIService\\Core\\Core.csproj"
             }
           }
         }
@@ -4076,7 +4076,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.404\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
       }
     }
   }

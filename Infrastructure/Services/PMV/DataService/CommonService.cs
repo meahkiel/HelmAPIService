@@ -1,7 +1,7 @@
 using Applications.Interfaces;
+using Applications.UseCases.Common;
 using Applications.UseCases.PMV.Common;
 using Applications.UseCases.PMV.LogSheets.Interfaces.DTO;
-using Applications.UseCases.PMV.Services.DTO;
 using Core.Common;
 using Core.PMV.Assets;
 using Core.PMV.Fuels;
@@ -29,6 +29,15 @@ public class CommonService : ICommonService
             return results.FirstOrDefault();
     }
 
+    public async Task<IEnumerable<Station>> GetAllStation()
+    {
+        var results = await _context.Database.GetDbConnection().QueryAsync<Station>(
+                "sp_GetStationByCode",
+                commandType: System.Data.CommandType.StoredProcedure);
+        
+        return results.ToList();
+    }
+
     public async Task<Asset> GetAssetByCode(string code)
     {
          var results = await _context.Database.GetDbConnection().QueryAsync<Asset>(
@@ -37,6 +46,15 @@ public class CommonService : ICommonService
                 commandType: System.Data.CommandType.StoredProcedure);
             
             return results.FirstOrDefault();
+    }
+
+    public async Task<IEnumerable<SelectItem>> GetAssetLookup()
+    {
+        var results = await _context.Database.GetDbConnection().QueryAsync<SelectItem>(
+              "sp_AssetLookup",
+              commandType: System.Data.CommandType.StoredProcedure);
+
+        return results;
     }
 
     public async Task<LocationResponse?> GetLocationByKey(string code,string type = "code",int id=0)

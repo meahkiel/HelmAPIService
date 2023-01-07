@@ -1,5 +1,6 @@
 using Applications.UseCases.PMV.Fuels.Commands;
 using Applications.UseCases.PMV.Fuels.DTO;
+using Applications.UseCases.PMV.Fuels.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +17,14 @@ public class FuelLogController : APIControllerBase
     }
 
 
+    [HttpGet]
+    public async Task<IActionResult> Index()
+    {
+        
+        var cmd = new GetInitialValueQuery();
+        return HandleResult(await _mediator.Send(cmd));
 
+    }
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] FuelLogRequest request)
     {
