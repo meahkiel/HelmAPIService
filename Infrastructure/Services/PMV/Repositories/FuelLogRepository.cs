@@ -19,9 +19,7 @@ public class FuelLogRepository : IFuelLogRepository
     {
         _context.FuelLogs.Add(log);
     }
-
-   
-
+    
     public Task<IEnumerable<FuelLog>> GetDraftLogs(string station)
     {
         throw new NotImplementedException();
@@ -34,9 +32,18 @@ public class FuelLogRepository : IFuelLogRepository
             .SingleOrDefaultAsync(f => f.Id == Guid.Parse(id));
     }
 
-    public Task<IEnumerable<FuelTransactionReport>> GetTransactions(string dateFrom, string dateTo)
+    public Task<IEnumerable<FuelTransactionReport>> GetTransactions(DateTime dateFrom, DateTime dateTo)
     {
         throw new NotImplementedException();
+    }
+
+    public async Task<IEnumerable<FuelLog>> GetTankTransactions(string fuelStation, DateTime dateFrom, DateTime dateTo)
+    {
+        return await _context.FuelLogs
+                        .Include(f => f.FuelTransactions)
+                        .Where(f => f.StationCode == fuelStation)
+                        .Where(f => f.Date >= dateFrom && f.Date <= dateTo)
+                        .ToListAsync();
     }
 
     public void UpdateLog(FuelLog log)

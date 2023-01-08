@@ -1,5 +1,6 @@
 ﻿using Applications.UseCases.Common;
 using Applications.UseCases.PMV.Common;
+using Applications.UseCases.PMV.Fuels.DTO;
 
 namespace Applications.UseCases.PMV.Fuels.Queries;
 
@@ -15,25 +16,24 @@ namespace Applications.UseCases.PMV.Fuels.Queries;
 
 public class InitialValue
 {
-	public InitialValue()
-	{
-
-	}
+	
+    public FuelLogRequest Data { get; set; } = new FuelLogRequest();
 	public IEnumerable<SelectItem> Stations { get; set; } = new List<SelectItem>();
 	public IEnumerable<SelectItem> Assets { get; set; } = new List<SelectItem>();
 } 
 
-public record GetInitialValueQuery : IRequest<Result<InitialValue>>;
-public class GetInitialValueQueryHandler : IRequestHandler<GetInitialValueQuery, Result<InitialValue>>
+public record GetFuelLogQuery : IRequest<Result<InitialValue>>;
+
+public class GetFuelLogQueryHandler : IRequestHandler<GetFuelLogQuery, Result<InitialValue>>
 {
     private readonly ICommonService _commonService;
 
-    public GetInitialValueQueryHandler(ICommonService commonService)
+    public GetFuelLogQueryHandler(ICommonService commonService)
 	{
         _commonService = commonService;
     }
     
-    public async Task<Result<InitialValue>> Handle(GetInitialValueQuery request, CancellationToken cancellationToken)
+    public async Task<Result<InitialValue>> Handle(GetFuelLogQuery request, CancellationToken cancellationToken)
     {
         try
         {

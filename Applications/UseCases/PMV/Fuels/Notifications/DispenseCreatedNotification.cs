@@ -50,6 +50,7 @@ public class DispenseCreatedNotificationHandler : INotificationHandler<DispenseC
                 else {
                     assetRecord.CurrentReading = transaction.Reading;
                     assetRecord.LastServiceDate = transaction.FuelDateTime;
+                    assetRecord.LatestTransactionId = transaction.Id.ToString();
                     _unitWork.Assets.UpdateAssetRecord(assetRecord);
                 }
             }

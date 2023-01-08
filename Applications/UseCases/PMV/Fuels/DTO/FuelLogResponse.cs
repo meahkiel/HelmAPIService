@@ -14,7 +14,7 @@ public class FuelLogDetailKeyResponse
 }
 
 
-public class LogSheetResponse
+public class FuelLogResponse
 {
 
     public string? Id { get; set; } = null;
@@ -31,10 +31,6 @@ public class LogSheetResponse
 
     public int? EndShiftTankerKm { get; set; }
 
-    public int StartShiftMeterReading { get; set; }
-
-    public int? EndShiftMeterReading { get; set; }
-
     public string Location { get; set; } = "";
 
     public string Station { get; set; } = "";
@@ -43,21 +39,19 @@ public class LogSheetResponse
 
     public string Fueler { get; set; } = null!;
 
-    public IEnumerable<LogSheetDetailResponse> Details { get; set; } = new List<LogSheetDetailResponse>();
+    public IEnumerable<FuelTransactionResponse> Details { get; set; } = new List<FuelTransactionResponse>();
 }
 
 
-public class LogSheetDetailResponse
+public class FuelTransactionResponse
 {
-
     public string LogSheetId { get; set; }
     public string Id { get; set; }
     public string AssetCode { get; set; } = "";
     public DateTime FuelTime { get; set; } = DateTime.Now;
     public string? OperatorDriver { get; set; } = "";
     public int Reading { get; set; } = 0;
-    //readonly
-    public int PreviousReading { get; set; }
+    
     public float Quantity { get; set; } = 0f;
     public string DriverQatarIdUrl { get; set; }
     public string TransactionType { get; set; }

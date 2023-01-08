@@ -33,19 +33,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\arnol\\.nuget\\packages\\": {}
+    "C:\\Users\\AMercado\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Projects\\Application\\PMV\\HelmAPIService\\Core\\Core.csproj",
+      "projectUniqueName": "D:\\Projects\\HelmApps\\HelmAPI\\HelmAPIService\\Core\\Core.csproj",
       "projectName": "Core",
-      "projectPath": "D:\\Projects\\Application\\PMV\\HelmAPIService\\Core\\Core.csproj",
-      "packagesPath": "C:\\Users\\arnol\\.nuget\\packages\\",
-      "outputPath": "D:\\Projects\\Application\\PMV\\HelmAPIService\\Core\\obj\\",
+      "projectPath": "D:\\Projects\\HelmApps\\HelmAPI\\HelmAPIService\\Core\\Core.csproj",
+      "packagesPath": "C:\\Users\\AMercado\\.nuget\\packages\\",
+      "outputPath": "D:\\Projects\\HelmApps\\HelmAPI\\HelmAPIService\\Core\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\arnol\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\AMercado\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -92,7 +92,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.404\\RuntimeIdentifierGraph.json"
       }
     }
   }

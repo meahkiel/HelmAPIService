@@ -17,14 +17,16 @@ public class FuelLogController : APIControllerBase
     }
 
 
-    [HttpGet]
-    public async Task<IActionResult> Index()
+    [HttpGet("single")]
+    public async Task<IActionResult> Single()
     {
         
-        var cmd = new GetInitialValueQuery();
+        var cmd = new GetFuelLogQuery();
         return HandleResult(await _mediator.Send(cmd));
-
     }
+
+
+
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] FuelLogRequest request)
     {
@@ -34,7 +36,7 @@ public class FuelLogController : APIControllerBase
         return HandleResult(result);
     }
 
-    [HttpPost("{id}")]
+    [HttpPost("update")]
     public async Task<IActionResult> Update([FromBody] FuelLogRequest request)
     {
         var cmd = new UpdateLogCommand(request);
