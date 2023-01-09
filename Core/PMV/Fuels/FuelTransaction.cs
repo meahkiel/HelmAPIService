@@ -9,7 +9,6 @@ public enum EnumLogType { Dispense, Restock }
 [AuditableAttribute]
 public class FuelTransaction : Entity<Guid>
 {
-
     public FuelTransaction() : base(Guid.NewGuid())
     {
         
@@ -57,7 +56,7 @@ public class FuelTransaction : Entity<Guid>
     public float GetDispenseQuantity() => LogType == EnumLogType.Dispense.ToString() ? Quantity : 0f;
     
     public string? FuelStation { get; set; }
-    public DateTime FuelDateTime { get; set; }
+    public DateTime FuelDateTime { get; set; } = DateTime.Today;
     public float Quantity { get; set; }
     public string AssetCode { get; set; }
     public int PreviousReading { get; set; }

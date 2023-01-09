@@ -36,7 +36,7 @@ public class CreateLogCommandHandler : IRequestHandler<CreateLogCommand, Result<
         try
         {
             FuelLog log = await GenerateInitialLog(request.Request);
-            var employeeCode = request.Request.EmployeeCode ??  await _userAccessor.GetUserEmployeeCode();
+            var employeeCode = string.IsNullOrEmpty(request.Request.EmployeeCode) ?  await _userAccessor.GetUserEmployeeCode() : request.Request.EmployeeCode;
             
             if(request.Request.Details.Count > 0) {
                 

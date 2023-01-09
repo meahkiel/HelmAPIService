@@ -18,10 +18,10 @@ public class FuelLogController : APIControllerBase
 
 
     [HttpGet("single")]
-    public async Task<IActionResult> Single()
+    public async Task<IActionResult> Single([FromQuery]string? id)
     {
         
-        var cmd = new GetFuelLogQuery();
+        var cmd = new GetFuelLogQuery(id);
         return HandleResult(await _mediator.Send(cmd));
     }
 

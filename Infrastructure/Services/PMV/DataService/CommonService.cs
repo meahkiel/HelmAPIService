@@ -57,6 +57,15 @@ public class CommonService : ICommonService
         return results;
     }
 
+    public async Task<IEnumerable<EmployeeMaster>> GetEmployees()
+    {
+          var results = await _context.Database.GetDbConnection().QueryAsync<EmployeeMaster>(
+                "sp_GetPMVEmployees",
+                commandType: System.Data.CommandType.StoredProcedure);
+            
+            return results;
+    }
+
     public async Task<LocationResponse?> GetLocationByKey(string code,string type = "code",int id=0)
     {   
         
@@ -69,7 +78,16 @@ public class CommonService : ICommonService
         
     }
 
-   
+    public async Task<IEnumerable<LocationResponse>> GetLocations()
+    {
+        var results = await _context.Database.GetDbConnection().QueryAsync<LocationResponse>(
+                "sp_GetLocationByCode",
+                new { code = "", type = "all", id = 0 },
+                commandType: System.Data.CommandType.StoredProcedure);
+            
+            return results;
+    }
+
     public async Task<Station?> GetStationByCode(string code)
     {
         var results = await _context.Database.GetDbConnection().QueryAsync<Station>(

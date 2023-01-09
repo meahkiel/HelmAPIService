@@ -22,7 +22,7 @@ public record FuelLogCloseRequest(
 public record FuelLogRequest(
     string? Id,
     string? EmployeeCode,
-    string FueledDate,
+    string FuelDate,
     int ReferenceNo,
     string ShiftStartTime,
     string ShiftEndTime,
@@ -33,8 +33,7 @@ public record FuelLogRequest(
     string? Remarks,
     string Fueler,
     ICollection<FuelTransactionsRequest>? Details,
-    bool IsPosted = false
-);
+    bool IsPosted = false);
 
 public class FuelTransactionsRequest
 {
@@ -48,9 +47,7 @@ public class FuelTransactionsRequest
     public int Reading { get; set; } = 0;
     public float Quantity { get; set; } = 0f;
     public string? DriverQatarIdUrl { get; set; }
-    public string? EmployeeCode { get; set; }
-    public string LogType { get; set; }
-        
+    public string LogType { get; set; }        
     public bool IsMarkDeleted { get; set; }
 
 }

@@ -52,6 +52,7 @@ namespace Applications.UseCases.PMV.Fuels.Commands
                                 request.Request.Id);
                         }
                         else {
+                            
                             log.UpsertRestockTransaction(
                                 requestDetail.AssetCode,
                                 fuelDateTime,
