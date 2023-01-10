@@ -3,8 +3,6 @@ using Applications.UseCases.PMV.Assets.Interfaces;
 using Applications.UseCases.PMV.Fuels.Interfaces;
 using Applications.UseCases.PMV.LogSheets.Interfaces;
 using Applications.UseCases.PMV.ServiceAlerts.Interfaces;
-using BaseEntityPack.Core;
-using BaseEntityPack.Core.Abstractions;
 using Core.SeedWorks.Attributes;
 using Infrastructure.Context.Db;
 using Infrastructure.Services.PMV.Repositories;
