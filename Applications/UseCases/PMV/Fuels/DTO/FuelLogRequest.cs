@@ -22,7 +22,7 @@ public record FuelLogCloseRequest(
 public record FuelLogRequest(
     string? Id,
     string? EmployeeCode,
-    string FuelDate,
+    string FueledDate,
     int ReferenceNo,
     string ShiftStartTime,
     string ShiftEndTime,
@@ -32,8 +32,9 @@ public record FuelLogRequest(
     string Station,
     string? Remarks,
     string Fueler,
-    ICollection<FuelTransactionsRequest>? Details,
-    bool IsPosted = false);
+    IEnumerable<FuelTransactionsRequest> FuelTransactions,
+    bool IsPosted = false,
+    MarkDelCollection? DelCollection = null);
 
 public class FuelTransactionsRequest
 {
@@ -50,4 +51,8 @@ public class FuelTransactionsRequest
     public string LogType { get; set; }        
     public bool IsMarkDeleted { get; set; }
 
+}
+
+public class MarkDelCollection {
+    public string[] Ids { get; set; }
 }

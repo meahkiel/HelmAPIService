@@ -9,6 +9,8 @@ public class FuelLogConfig : IEntityTypeConfiguration<FuelLog>
     {
         builder.ToTable("FuelLog");
         builder.OwnsOne(l => l.Post);
+        builder.HasMany(m => m.FuelTransactions)
+                .WithOne(m => m.FuelLog);
     }
 }
 
@@ -17,7 +19,5 @@ public class FuelTransactionConfig : IEntityTypeConfiguration<FuelTransaction>
     public void Configure(EntityTypeBuilder<FuelTransaction> builder)
     {
         builder.ToTable("FuelTransaction");
-        builder.HasOne(d => d.FuelLog)
-            .WithMany(l => l.FuelTransactions);
     }
 }

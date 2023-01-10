@@ -18,7 +18,7 @@ public class FuelLogService : IFuelLogService
     public async Task<FuelTransaction> GetLatestFuelLogRecord(string assetCode, int currentReading)
     {
         var previousRecord = await _context.FuelTransactions.Where(d => d.AssetCode == assetCode)
-                                   .OrderByDescending(l => l.Quantity)
+                                   .OrderByDescending(l => l.Reading)
                                    .OrderByDescending(l => l.FuelDateTime)
                                    .FirstOrDefaultAsync() ?? new FuelTransaction();
 

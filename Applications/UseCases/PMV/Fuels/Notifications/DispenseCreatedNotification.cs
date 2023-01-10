@@ -24,12 +24,16 @@ public class DispenseCreatedNotificationHandler : INotificationHandler<DispenseC
     {
 
         //get dispense only
-        var dispenseTransactions = notification.Transactions.Where(p => p.LogType == EnumLogType.Dispense.ToString()).ToList();
+        var dispenseTransactions = notification.Transactions
+                                        .Where(p => p.LogType == EnumLogType.Dispense.ToString())
+                                        .ToList();
 
         if(dispenseTransactions.Count() > 0 ) {
+
             var employeeCode = await _userAccessor.GetUserEmployeeCode();
             
             foreach(var transaction in dispenseTransactions) {
+
                 var asset = await _commonService.GetAssetByCode(transaction.AssetCode);
                 if(asset == null) continue;
 
@@ -38,6 +42,7 @@ public class DispenseCreatedNotificationHandler : INotificationHandler<DispenseC
                                     .FirstOrDefaultAsync();
                 
                 if(assetRecord == null) {
+                    
                     assetRecord = new AssetRecord {
                         AssetId =asset.Id,
                         LastServiceDate = transaction.FuelDateTime,
@@ -45,9 +50,18 @@ public class DispenseCreatedNotificationHandler : INotificationHandler<DispenseC
                         LatestTransactionId = transaction.Id.ToString(),
                         Source = "FuelLog"
                     };
+
                     _unitWork.Assets.AddAssetRecord(assetRecord);
                 }
                 else {
+
+                    //check if the transaction is the same transaction
+                    //otherwise check if the previous record is greater than the latest
+                    //if not means the latest is not the actual latest reading reject it
+                    if(assetRecord.LatestTransactionId != transaction.Id.ToString()) {
+                        if(assetRecord.CurrentReading < transaction.Reading) continue;
+                    }
+
                     assetRecord.CurrentReading = transaction.Reading;
                     assetRecord.LastServiceDate = transaction.FuelDateTime;
                     assetRecord.LatestTransactionId = transaction.Id.ToString();

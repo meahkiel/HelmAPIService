@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Core.PMV.Fuels;
 
 
-public enum EnumLogType { Dispense, Restock }
+public enum EnumLogType { Dispense, Restock,Adjustment }
 
 [AuditableAttribute]
 public class FuelTransaction : Entity<Guid>
@@ -37,7 +37,7 @@ public class FuelTransaction : Entity<Guid>
         DateTime fuelDateTime,
         float qty) : base(id)
     {
-
+        
         AssetCode = assetCode;
         PreviousReading = previousReading;
         Reading = reading;
@@ -70,7 +70,7 @@ public class FuelTransaction : Entity<Guid>
 
     [NotMapped]
     public string Track { get; set; }
-    public bool IsLessThan(int currentReading) => Reading < currentReading;
-    public bool IsLessThanPrevious(int currentReading) => PreviousReading < currentReading;
+    public bool IsLessThan(int currentReading) => Reading <= currentReading;
+    public bool IsLessThanPrevious(int currentReading) => PreviousReading <= currentReading;
 
 }

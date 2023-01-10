@@ -22,15 +22,24 @@ public class FuelLogResponse
 {
 
     public string? Id { get; set; } = null;
+    public string Station { get; set; } = "";
     public int ReferenceNo { get; set; }
     public int DocumentNo { get; set; }
-    public DateTime FueledDate { get; set; } = new DateTime();
+    public DateTime FueledDate { get; set; } = DateTime.Today;
     public DateTime? ShiftStartTime { get; set; } 
     public DateTime? ShiftEndTime { get; set; }
 
-    public int StartShiftTankerKm { get; set; }
+    public int StartShiftTankerKm { get; set; } = 0;
 
-    public int? EndShiftTankerKm { get; set; }
+    public int? EndShiftTankerKm { get; set; } = 0;
+
+    public float OpeningMeter { get; set; }
+    
+    public float ClosingMeter { get; set; }
+
+    public float OpeningBalance { get; set; }
+
+    public float RemainingBalance { get; set; }
 
     public string Location { get; set; } = "";
 
@@ -39,7 +48,6 @@ public class FuelLogResponse
     public bool IsPosted { get; set; }
 
     public IEnumerable<SelectItem> LocationSelections { get; set; } = new List<SelectItem>();
-    public string Station { get; set; } = "";
     public IEnumerable<Station> StationSelections { get; set; } = new List<Station>();
     public IEnumerable<SelectItem> AssetCodeSelections { get; set; } = new List<SelectItem>();
     public IEnumerable<EmployeeMaster> FuelerSelections { get; set; } = new List<EmployeeMaster>();
@@ -52,7 +60,10 @@ public class FuelDetailResponse
     public string LogSheetId { get; set; }
     public string Id { get; set; }
     public string AssetCode { get; set; } = "";
-    public DateTime FuelTime { get; set; } = DateTime.Now;
+
+    public DateTime FuelDateTime { get; set; }
+    public DateTime FuelDate => FuelDateTime;
+    public DateTime FuelTime => FuelDateTime;
     public string? OperatorDriver { get; set; } = "";
 
     public string Remarks { get; set; }

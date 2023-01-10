@@ -19,7 +19,7 @@ public class FuelLogRepository : IFuelLogRepository
     {
         _context.FuelLogs.Add(log);
     }
-    
+
     public Task<IEnumerable<FuelLog>> GetDraftLogs(string station)
     {
         throw new NotImplementedException();
@@ -31,6 +31,14 @@ public class FuelLogRepository : IFuelLogRepository
             .Include(f => f.FuelTransactions)
             .SingleOrDefaultAsync(f => f.Id == Guid.Parse(id));
     }
+
+    public async Task<FuelLog> GetSingleLog(string id)
+    {
+         return await _context.FuelLogs.FindAsync(Guid.Parse(id));
+    }
+
+    
+
 
     public Task<IEnumerable<FuelTransactionReport>> GetTransactions(DateTime dateFrom, DateTime dateTo)
     {
@@ -46,20 +54,49 @@ public class FuelLogRepository : IFuelLogRepository
                         .ToListAsync();
     }
 
-    public void UpdateLog(FuelLog log)
-    {
-        var details = log.FuelTransactions.Where(d => d.Track == "new").ToList();
-        if(details.Count > 0) {
-            foreach (var detail  in details) {
-                _context.FuelTransactions.Add(detail);
-            }
-        }
+    public async Task UpdateLog(FuelLog log)
+    { 
+       _context.FuelLogs.Update(log);
+    }
 
-        var updateDetails = log.FuelTransactions.Where(d => d.Track == "update").ToList();
-        if(updateDetails.Count > 0) {
-            foreach (var updateDetail  in updateDetails) {
-                _context.FuelTransactions.Update(updateDetail);
+    public async Task RemoveTransactions(string[] ids)
+    {
+        foreach (var id in ids)
+        {
+            var transaction = await _context.FuelTransactions.FindAsync(Guid.Parse(id));
+            if(transaction != null) 
+                _context.FuelTransactions.Remove(transaction);
+        }
+    }
+
+    public async Task UpdateTransactionLog(FuelTransactionsRequest transaction,int previousReading,FuelLog log )
+    {
+        var result = await _context.FuelTransactions.SingleOrDefaultAsync(l => l.Id == Guid.Parse(transaction.Id));
+        var fuelDateTime = transaction.FuelDate.MergeAndConvert(
+                                        transaction.FuelTime.ConvertToDateTime()!.Value.ToLongTimeString());
+        if(result != null) {
+            if(transaction.LogType == EnumLogType.Dispense.ToString() && result.IsLessThanPrevious(transaction.Reading)) {
+                result.Reading = transaction.Reading;
             }
+
+            result.AssetCode = transaction.AssetCode;
+            result.Driver = transaction.OperatorDriver;
+            result.Quantity = transaction.Quantity;
+            _context.Entry(result).State = EntityState.Modified;
+        }        
+        else {
+            Guid guid = string.IsNullOrEmpty(transaction.Id) ? Guid.NewGuid() : Guid.Parse(transaction.Id);
+            result = new FuelTransaction(guid,
+                            transaction.AssetCode,
+                            previousReading,
+                            transaction.Reading,
+                            transaction.OperatorDriver,
+                            log.StationCode,
+                            fuelDateTime,
+                            transaction.Quantity);
+            result.FuelLog = log;
+            result.LogType = transaction.LogType;
+            _context.Entry(result).State = EntityState.Added;
         }
     }
 }

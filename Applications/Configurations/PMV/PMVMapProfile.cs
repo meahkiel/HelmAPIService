@@ -23,6 +23,7 @@ public class PMVMapProfile : Profile
 		
 		this.CreateMap<FuelLog,FuelLogResponse>()
 			.ForMember(s => s.FueledDate, o => o.MapFrom(c => c.Date))
+			.ForMember(s => s.Station, o => o.MapFrom(c => c.StationCode))
 			.ForMember(s => s.IsPosted, o => o.MapFrom(c => c.Post.IsPosted));
 
 		this.CreateMap<LogSheetDetail,LogSheetDetailResponse>()

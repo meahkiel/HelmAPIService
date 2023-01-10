@@ -43,7 +43,6 @@ public class GetFuelLogQueryHandler : IRequestHandler<GetFuelLogQuery, Result<Fu
                 response = _mapper.Map<FuelLogResponse>(log);
                 var location = await _commonService.GetLocationByKey("","id",log.LocationId);
                 response.Location = location.ProjectDepartment;
-                
             }
 
             var stations = await _commonService.GetAllStation();

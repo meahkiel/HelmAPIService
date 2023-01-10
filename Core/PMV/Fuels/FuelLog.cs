@@ -197,10 +197,10 @@ public class FuelLog : AggregateRoot<Guid>
 
     public void TogglePost() {
         if(this.Post.PostedAt != null && this.Post.IsPosted) { 
-            PostingObject.UnPost();
+            Post = PostingObject.UnPost();
         }
         else {
-            PostingObject.Post();
+            Post = PostingObject.Post();
         }
     } 
 }

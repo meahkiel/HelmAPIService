@@ -78,11 +78,11 @@ public class FuelEfficiency
 
 
 
-public record FuelTransactionRequest
+public record FuelReportMaster
 {
     private readonly IEnumerable<FuelTransactionReport> _reports;
 
-    public FuelTransactionRequest(IEnumerable<FuelTransactionReport> reports)
+    public FuelReportMaster(IEnumerable<FuelTransactionReport> reports)
     {
         _reports = reports;
 
