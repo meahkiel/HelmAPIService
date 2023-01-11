@@ -43,12 +43,8 @@ public class CreateLogCommandHandler : IRequestHandler<CreateLogCommand, Result<
 
             if (request.Request.FuelTransactions.Count() > 0)
             {
-
                 foreach (var detail in request.Request.FuelTransactions)
                 {
-                    var fuelDateTime = detail.FuelDate.MergeAndConvert(
-                                    detail.FuelTime.ConvertToDateTime()!.Value.ToLongTimeString());
-
                     if (detail.LogType != EnumLogType.Dispense.ToString())
                     {
                         var prevRecord = await _fuelService.GetLatestFuelLogRecord(detail.AssetCode, detail.Reading);
@@ -59,14 +55,15 @@ public class CreateLogCommandHandler : IRequestHandler<CreateLogCommand, Result<
                             previousReading,
                             detail.Reading,
                             detail.OperatorDriver ?? "",
-                            fuelDateTime,
+                            request.Request.FueledDate,
+                            detail.FuelTime,
                             detail.Quantity,
                             detail.DriverQatarIdUrl ?? "",
                             detail.Id);
                     }
                     else
                     {
-                        log.UpsertRestockTransaction(detail.AssetCode, fuelDateTime, detail.Quantity);
+                        log.UpsertRestockTransaction(detail.AssetCode, request.Request.FueledDate,detail.FuelTime, detail.Quantity);
                     }
                 }
             }

@@ -40,7 +40,7 @@ public class FuelLogRepository : IFuelLogRepository
     
 
 
-    public Task<IEnumerable<FuelTransactionReport>> GetTransactions(DateTime dateFrom, DateTime dateTo)
+    public Task<IEnumerable<FuelLogEffeciencyList>> GetTransactions(DateTime dateFrom, DateTime dateTo)
     {
         throw new NotImplementedException();
     }
@@ -69,34 +69,13 @@ public class FuelLogRepository : IFuelLogRepository
         }
     }
 
-    public async Task UpdateTransactionLog(FuelTransactionsRequest transaction,int previousReading,FuelLog log )
+    public void AddTransactionLog(FuelTransaction transaction)
     {
-        var result = await _context.FuelTransactions.SingleOrDefaultAsync(l => l.Id == Guid.Parse(transaction.Id));
-        var fuelDateTime = transaction.FuelDate.MergeAndConvert(
-                                        transaction.FuelTime.ConvertToDateTime()!.Value.ToLongTimeString());
-        if(result != null) {
-            if(transaction.LogType == EnumLogType.Dispense.ToString() && result.IsLessThanPrevious(transaction.Reading)) {
-                result.Reading = transaction.Reading;
-            }
+        _context.FuelTransactions.Add(transaction);
+    }
 
-            result.AssetCode = transaction.AssetCode;
-            result.Driver = transaction.OperatorDriver;
-            result.Quantity = transaction.Quantity;
-            _context.Entry(result).State = EntityState.Modified;
-        }        
-        else {
-            Guid guid = string.IsNullOrEmpty(transaction.Id) ? Guid.NewGuid() : Guid.Parse(transaction.Id);
-            result = new FuelTransaction(guid,
-                            transaction.AssetCode,
-                            previousReading,
-                            transaction.Reading,
-                            transaction.OperatorDriver,
-                            log.StationCode,
-                            fuelDateTime,
-                            transaction.Quantity);
-            result.FuelLog = log;
-            result.LogType = transaction.LogType;
-            _context.Entry(result).State = EntityState.Added;
-        }
+    public void UpdateTransactionLog(FuelTransaction transaction)
+    {
+        _context.FuelTransactions.Update(transaction);
     }
 }

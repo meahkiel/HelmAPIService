@@ -62,11 +62,34 @@ namespace Applications.UseCases.PMV.Fuels.Commands
                 if (request.Request.FuelTransactions != null && request.Request.FuelTransactions.Count() > 0) {
                     foreach (var requestDetail in request.Request.FuelTransactions) {
                         Guid guid = string.IsNullOrEmpty(requestDetail.Id) ? Guid.NewGuid() : Guid.Parse(requestDetail.Id);
-                        var fuelDateTime = requestDetail.FuelDate.MergeAndConvert(
-                                        requestDetail.FuelTime.ConvertToDateTime()!.Value.ToLongTimeString());
+                        var result = await _unitWork.GetContext().FuelTransactions
+                                            .SingleOrDefaultAsync(l => l.Id == guid);
+                        
+                        if(result == null) {
+                            var prevRecord = await _fuelService.GetLatestFuelLogRecord(requestDetail.AssetCode, requestDetail.Reading);
+                            
+                            result = new FuelTransaction(guid,
+                                requestDetail.AssetCode,
+                                prevRecord.Reading,
+                                requestDetail.Reading,
+                                requestDetail.OperatorDriver ?? "",
+                                log.StationCode,
+                                log.Date!.Value.ToShortDateString(),
+                                requestDetail.FuelTime,
+                                requestDetail.Quantity);
 
-                        var prevRecord = await _fuelService.GetLatestFuelLogRecord(requestDetail.AssetCode, requestDetail.Reading);
-                        await _unitWork.FuelLogs.UpdateTransactionLog(requestDetail,prevRecord.Reading,log);
+                            _unitWork.FuelLogs.AddTransactionLog(result);
+                        }
+                        else {
+                            if(requestDetail.LogType == EnumLogType.Dispense.ToString() && result.IsLessThanPrevious(requestDetail.Reading)) {
+                                result.Reading = requestDetail.Reading;
+                            }
+                            result.AssetCode = requestDetail.AssetCode;
+                            result.Driver = requestDetail.OperatorDriver;
+                            result.Quantity = requestDetail.Quantity;
+                            result.LogType = requestDetail.LogType;
+                            _unitWork.FuelLogs.UpdateTransactionLog(result);
+                        }
                     }
                 }
 

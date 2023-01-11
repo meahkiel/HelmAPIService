@@ -1,0 +1,4 @@
+C:\Users\AMercado\OneDrive - HELM Holding WLL\Desktop\Publish\HLM_API\Core.dll
+C:\Users\AMercado\OneDrive - HELM Holding WLL\Desktop\Publish\HLM_API\Core.deps.json
+C:\Users\AMercado\OneDrive - HELM Holding WLL\Desktop\Publish\HLM_API\Core.pdb
+C:\Users\AMercado\OneDrive - HELM Holding WLL\Desktop\Publish\HLM_API\BaseEntityPack.Core.dll

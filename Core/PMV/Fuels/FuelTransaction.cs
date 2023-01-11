@@ -1,4 +1,5 @@
 using BaseEntityPack.Core;
+using Core.Utils;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Core.PMV.Fuels;
@@ -17,10 +18,13 @@ public class FuelTransaction : Entity<Guid>
            Guid id,
         string assetCode,
         string fuelStation,
-        DateTime fuelDateTime,
+        string fuelDate,
+        string fuelTime,
         float qty
     ) : base(id)
     {
+        var fuelDateTime = fuelDate.MergeAndConvert(
+                                    fuelTime.ConvertToDateTime()!.Value.ToLongTimeString());
         AssetCode = assetCode;
         FuelStation = fuelStation;
         FuelDateTime = fuelDateTime;
@@ -34,10 +38,13 @@ public class FuelTransaction : Entity<Guid>
         int reading,
         string driver,
         string fuelStation,
-        DateTime fuelDateTime,
+        string fuelDate,
+        string fuelTime,
         float qty) : base(id)
     {
-        
+        var fuelDateTime = fuelDate.MergeAndConvert(
+                                    fuelTime.ConvertToDateTime()!.Value.ToLongTimeString());
+            
         AssetCode = assetCode;
         PreviousReading = previousReading;
         Reading = reading;
@@ -48,8 +55,11 @@ public class FuelTransaction : Entity<Guid>
         LogType = EnumLogType.Dispense.ToString();
 
     }
+    
+    public static float ToLiterPerHour(float previousReading,float reading,float quantity) => previousReading == 0 ? 0 : quantity / (previousReading - reading);
 
-
+    public static float ToHourPerLiter(float previousReading,float reading,float quantity) => previousReading == 0 ? 0 : (previousReading - reading) / quantity;
+    
     public float GetActualQuantity() => LogType == EnumLogType.Dispense.ToString() ?
             Quantity * -1 : Quantity;
 

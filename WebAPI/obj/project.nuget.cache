@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "1CXG0300tSYgn6EMDlwT4o5eAmX4CeJ9uK22y/AfQ6eQH8g28aFRSphOMLVgt/DaFaMzai9ys/H1R8eH+sbnUw==",
+  "dgSpecHash": "pJGwVSuCPVRPJ2gGCqEcjxdxBzgfiQiulzITXMfOt2FLi223UXn5FtYV2KKLebkOpSN5OruCL4EF7JAA+gN2Dg==",
   "success": true,
   "projectFilePath": "D:\\Projects\\HelmApps\\HelmAPI\\HelmAPIService\\WebAPI\\WebAPI.csproj",
   "expectedPackageFiles": [

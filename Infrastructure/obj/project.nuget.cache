@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "QLa8xpji5QM/B+PWusZbGssst0CBuexBzp1RC4s1czkKWgJLKV333NzcrAjSF29pTP+ZS6pQI1qg3X4NSJ6iTA==",
+  "dgSpecHash": "nQi89ARp+lMNCCWp+TYHiEsghmKvnUdQqJGOAGql0Imz03ha85tkSKHLIhfLo88gLzG/FMTFZ25O6KS5xTB/QA==",
   "success": true,
   "projectFilePath": "D:\\Projects\\HelmApps\\HelmAPI\\HelmAPIService\\Infrastructure\\Infrastructure.csproj",
   "expectedPackageFiles": [

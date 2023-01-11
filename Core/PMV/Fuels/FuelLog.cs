@@ -1,5 +1,6 @@
 using BaseEntityPack.Core;
 using Core.Common.ValueObjects;
+using Core.Utils;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Core.PMV.Fuels;
@@ -122,7 +123,8 @@ public class FuelLog : AggregateRoot<Guid>
     public float RemainingBalance => (OpeningBalance - TotalDispense) + TotalRestock;
     public void UpsertRestockTransaction(
         string assetCode, 
-        DateTime fuelDateTime, 
+        string fuelDate,
+        string fuelTime,
         float qty,
         string? transactionId = null)
     {
@@ -132,7 +134,8 @@ public class FuelLog : AggregateRoot<Guid>
             existing = new FuelTransaction(guid,
                 assetCode,
                 this.StationCode,
-                fuelDateTime,
+                fuelDate,
+                fuelTime,
                 qty);
 
             existing.Track = "add";
@@ -152,7 +155,8 @@ public class FuelLog : AggregateRoot<Guid>
         int previousReading,
         int reading, 
         string operatorDriver,
-        DateTime fuelDateTime,
+        string fuelDate,
+        string fuelTime,
         float quantity, 
         string driverQatarIdUrl = "",
         string? detailId = null)
@@ -165,7 +169,7 @@ public class FuelLog : AggregateRoot<Guid>
             if(transaction == null) {
                 transaction = new FuelTransaction(guid,assetCode,previousReading,
                                         reading, operatorDriver, this.StationCode,
-                                        fuelDateTime,quantity);
+                                        fuelDate,fuelTime,quantity);
                 transaction.DriverQatarIdUrl = driverQatarIdUrl;
                 transaction.Track = "add";
                 FuelTransactions.Add(transaction);
@@ -179,7 +183,6 @@ public class FuelLog : AggregateRoot<Guid>
                 transaction.AssetCode = assetCode;
                 transaction.Reading = reading;
                 transaction.Quantity = quantity;
-                transaction.FuelDateTime = fuelDateTime;
                 transaction.Driver = operatorDriver;
                 transaction.LogType = EnumLogType.Dispense.ToString();
                 transaction.Track = "update";

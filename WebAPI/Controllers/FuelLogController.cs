@@ -54,6 +54,11 @@ public class FuelLogController : APIControllerBase
         return HandleResult(result);
     }
 
+    [HttpGet("list")]
+    public async Task<IActionResult> GetFuelLogs([FromQuery] GetFuelLogTransactionQuery query) {
+        return HandleResult(await _mediator.Send(query));
+    }
+
 
 
 }

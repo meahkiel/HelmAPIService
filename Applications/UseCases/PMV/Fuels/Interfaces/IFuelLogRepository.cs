@@ -14,9 +14,11 @@ public interface IFuelLogRepository
 
     Task<IEnumerable<FuelLog>> GetDraftLogs(string station);
 
-    Task<IEnumerable<FuelTransactionReport>> GetTransactions(DateTime dateFrom, DateTime dateTo);
+    Task<IEnumerable<FuelLogEffeciencyList>> GetTransactions(DateTime dateFrom, DateTime dateTo);
     Task<IEnumerable<FuelLog>> GetTankTransactions(string fuelStation,DateTime dateFrom, DateTime dateTo);
 
     Task UpdateLog(FuelLog log);
-    Task UpdateTransactionLog(FuelTransactionsRequest transaction,int previousReading,FuelLog log);
+
+    void AddTransactionLog(FuelTransaction transaction);
+    void UpdateTransactionLog(FuelTransaction transaction);
 }

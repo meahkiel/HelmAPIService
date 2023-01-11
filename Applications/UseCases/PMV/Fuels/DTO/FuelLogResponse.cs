@@ -23,6 +23,7 @@ public class FuelLogResponse
 
     public string? Id { get; set; } = null;
     public string Station { get; set; } = "";
+    public string StationType { get; set; }
     public int ReferenceNo { get; set; }
     public int DocumentNo { get; set; }
     public DateTime FueledDate { get; set; } = DateTime.Today;
@@ -73,6 +74,7 @@ public class FuelDetailResponse
     public int Reading { get; set; } = 0;
     public float Quantity { get; set; } = 0f;
     public string DriverQatarIdUrl { get; set; }
+    
     
 
 

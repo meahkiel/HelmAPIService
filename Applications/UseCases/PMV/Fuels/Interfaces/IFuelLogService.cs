@@ -1,10 +1,11 @@
+using Applications.UseCases.PMV.Fuels.DTO;
 using Core.PMV.Fuels;
-using Core.PMV.LogSheets;
 
 namespace Applications.UseCases.PMV.Fuels.Interfaces
 {
     public interface IFuelLogService
     {
         Task<FuelTransaction> GetLatestFuelLogRecord(string assetCode,int currentReading);
+        Task<IEnumerable<FuelLogMaster>> GetFuelLogMasterList(DateTime dateFrom,DateTime dateTo);
     }
 }
