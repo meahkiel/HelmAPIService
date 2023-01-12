@@ -16,6 +16,7 @@ public interface ICommonService
     public Task<IEnumerable<Station>> GetAllStation();
 
     public Task<Asset> GetAssetByCode(string code);
+    public Task<IEnumerable<Asset>> GetInternalAssets();
 
     public Task<AutoNumber> GenerateAutoNumber(string type,string source);
 

@@ -13,7 +13,7 @@ namespace Applications.UseCases.PMV.Fuels.Queries;
 ///     
 /// </summary>
 
-public record GetFuelLogQuery(string? Id) : IRequest<Result<FuelLogResponse>>;
+public record GetFuelLogQuery(string? Id,bool IsPostBack = false) : IRequest<Result<FuelLogResponse>>;
 
 public class GetFuelLogQueryHandler : IRequestHandler<GetFuelLogQuery, Result<FuelLogResponse>>
 {
@@ -35,6 +35,17 @@ public class GetFuelLogQueryHandler : IRequestHandler<GetFuelLogQuery, Result<Fu
 
             FuelLogResponse response = new FuelLogResponse();
 
+            if(!request.IsPostBack) {
+                var stations = await _commonService.GetAllStation();
+                
+                response.StationSelections = await _commonService.GetAllStation();
+                response.LocationSelections = (await _commonService.GetLocations())
+                                                .Select(s => new SelectItem {Value = s.ProjectDepartment,Text = s.ProjectDepartment});
+                response.AssetCodeSelections = await _commonService.GetAssetLookup();
+                response.FuelerSelections = await _commonService.GetEmployees();
+            }
+
+
             if(!string.IsNullOrEmpty(request.Id)) {
                 var log = await _unitWork.FuelLogs.GetLog(request.Id);
                 if(log == null)
@@ -45,14 +56,7 @@ public class GetFuelLogQueryHandler : IRequestHandler<GetFuelLogQuery, Result<Fu
                 response.Location = location.ProjectDepartment;
             }
 
-            var stations = await _commonService.GetAllStation();
             
-            response.StationSelections = await _commonService.GetAllStation();
-            response.LocationSelections = (await _commonService.GetLocations())
-                                            .Select(s => new SelectItem {Value = s.ProjectDepartment,Text = s.ProjectDepartment});
-            response.AssetCodeSelections = await _commonService.GetAssetLookup();
-            response.FuelerSelections = await _commonService.GetEmployees();
-
             return Result.Ok(response);
         }
         catch(Exception ex) {

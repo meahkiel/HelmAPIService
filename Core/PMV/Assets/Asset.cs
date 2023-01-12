@@ -14,5 +14,7 @@ public class Asset : AggregateRoot<int>
     }
 
     public string AssetCode { get; set; }
+    public string AssetDesc { get; set; }
+    public string FullDesc { get; set; }
     public string CompanyCode { get; set; }
 }

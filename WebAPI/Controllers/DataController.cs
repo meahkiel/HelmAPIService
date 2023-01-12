@@ -1,3 +1,4 @@
+using Applications.Interfaces;
 using Core.PMV.Maintenance;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
@@ -13,11 +14,15 @@ namespace WebAPI.Controllers;
 public class DataController : ControllerBase
 {
     private readonly IWebHostEnvironment _webHostEnvironment;
+    private readonly IUnitWork _unitWork;
 
-    public DataController(IWebHostEnvironment webHostEnvironment)
+    public DataController(IWebHostEnvironment webHostEnvironment,IUnitWork unitWork)
     {
         _webHostEnvironment = webHostEnvironment;
+        _unitWork = unitWork;
     }
+
+    
 
     [HttpGet("lookups")]
     public IActionResult GetJsonLookup() {

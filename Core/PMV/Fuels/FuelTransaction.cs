@@ -40,7 +40,8 @@ public class FuelTransaction : Entity<Guid>
         string fuelStation,
         string fuelDate,
         string fuelTime,
-        float qty) : base(id)
+        float qty,
+        string logType) : base(id)
     {
         var fuelDateTime = fuelDate.MergeAndConvert(
                                     fuelTime.ConvertToDateTime()!.Value.ToLongTimeString());
@@ -52,7 +53,7 @@ public class FuelTransaction : Entity<Guid>
         FuelStation = fuelStation;
         FuelDateTime = fuelDateTime;
         Quantity = qty;
-        LogType = EnumLogType.Dispense.ToString();
+        LogType = logType;
 
     }
     

@@ -16,7 +16,20 @@ public class FuelLogService : IFuelLogService
         _context = (PMVDataContext)context;
     }
 
-    public async Task<IEnumerable<FuelLogMaster>> GetFuelLogMasterList(DateTime dateFrom, DateTime dateTo)
+    public async Task<IEnumerable<FuelLogEffeciencyList>> GetFuelEffeciencyMasterList(DateTime dateFrom,DateTime dateTo,string? assetCodes =null)
+    {
+        var results = await _context.Database.GetDbConnection().QueryAsync<FuelLogEffeciencyList>(
+                "sp_FuelLogSummary",
+                param: new {
+                    dateFrom = DateTime.Parse(dateFrom.ToShortDateString() + " 00:00") , 
+                    dateTo = DateTime.Parse(dateTo.ToShortDateString() + " 23:59:59"),
+                    effeciency = 1 },
+                commandType: System.Data.CommandType.StoredProcedure);
+        
+        return results;
+    }
+
+    public async Task<IEnumerable<FuelLogMaster>> GetFuelLogMasterList(DateTime dateFrom, DateTime dateTo, string? stationCode = null)
     {
         var results = await _context.Database.GetDbConnection().QueryAsync<FuelLogMaster, FuelDetailMaster,FuelLogMaster>(
                 "sp_FuelLogSummary",
@@ -44,6 +57,8 @@ public class FuelLogService : IFuelLogService
 
         return masters;
     }
+
+    
 
     public async Task<FuelTransaction> GetLatestFuelLogRecord(string assetCode, int currentReading)
     {

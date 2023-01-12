@@ -36,14 +36,7 @@ public class FuelLogRepository : IFuelLogRepository
     {
          return await _context.FuelLogs.FindAsync(Guid.Parse(id));
     }
-
-    
-
-
-    public Task<IEnumerable<FuelLogEffeciencyList>> GetTransactions(DateTime dateFrom, DateTime dateTo)
-    {
-        throw new NotImplementedException();
-    }
+   
 
     public async Task<IEnumerable<FuelLog>> GetTankTransactions(string fuelStation, DateTime dateFrom, DateTime dateTo)
     {

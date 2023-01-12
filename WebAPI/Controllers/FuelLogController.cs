@@ -18,14 +18,12 @@ public class FuelLogController : APIControllerBase
 
 
     [HttpGet("single")]
-    public async Task<IActionResult> Single([FromQuery]string? id)
+    public async Task<IActionResult> Single([FromQuery]string? Id,bool IsPostBack)
     {
         
-        var cmd = new GetFuelLogQuery(id);
+        var cmd = new GetFuelLogQuery(Id,IsPostBack);
         return HandleResult(await _mediator.Send(cmd));
     }
-
-
 
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] FuelLogRequest request)
@@ -59,6 +57,12 @@ public class FuelLogController : APIControllerBase
         return HandleResult(await _mediator.Send(query));
     }
 
+    [HttpGet("efficiency")]
+    public async Task<IActionResult> GetFuelEfficiency([FromQuery] GetFuelEfficiencyQuery query) {
+        return HandleResult(await _mediator.Send(query));
+    }
 
+
+    
 
 }

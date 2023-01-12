@@ -113,7 +113,6 @@ public class FuelLog : AggregateRoot<Guid>
     {
         get
         {
-            
             var transactions = FuelTransactions.Where(t => t.LogType == EnumLogType.Dispense.ToString()).ToList();
             return transactions.Sum(l => l.GetDispenseQuantity());
         }
@@ -169,7 +168,7 @@ public class FuelLog : AggregateRoot<Guid>
             if(transaction == null) {
                 transaction = new FuelTransaction(guid,assetCode,previousReading,
                                         reading, operatorDriver, this.StationCode,
-                                        fuelDate,fuelTime,quantity);
+                                        fuelDate,fuelTime,quantity,EnumLogType.Dispense.ToString());
                 transaction.DriverQatarIdUrl = driverQatarIdUrl;
                 transaction.Track = "add";
                 FuelTransactions.Add(transaction);

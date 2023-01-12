@@ -66,6 +66,15 @@ public class CommonService : ICommonService
             return results;
     }
 
+    public async Task<IEnumerable<Asset>> GetInternalAssets()
+    {
+        var results = await _context.Database.GetDbConnection().QueryAsync<Asset>(
+                "sp_PMVAsset_GetAssets",
+                commandType: System.Data.CommandType.StoredProcedure);
+        
+        return results;
+    }
+
     public async Task<LocationResponse?> GetLocationByKey(string code,string type = "code",int id=0)
     {   
         

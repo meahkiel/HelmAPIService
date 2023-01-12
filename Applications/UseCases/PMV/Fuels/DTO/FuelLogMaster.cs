@@ -1,7 +1,15 @@
+using Applications.UseCases.Common;
+using Core.PMV.Assets;
 using Core.PMV.Fuels;
 
 namespace Applications.UseCases.PMV.Fuels.DTO;
 
+public class FuelLogReportResult {
+    public IEnumerable<Station>? StationSelections {get;set;} = null;
+    public IEnumerable<Asset>? AssetSelections { get; set; } = null;
+    public IEnumerable<FuelLogMaster> Masters { get; set; } = new List<FuelLogMaster>();
+    public IEnumerable<FuelLogEffeciencyList> EffeciencyLists { get; set; } = new List<FuelLogEffeciencyList>();
+}
 
 public class FuelLogMaster
 {
@@ -33,6 +41,7 @@ public class FuelLogMaster
     public float OpeningBalance => TotalRestock;
 
     public float RemainingBalance => (TotalRestock - TotalDispense - TotalAdjustment);
+    
 }
 
 
@@ -65,10 +74,10 @@ public class FuelLogEffeciencyList
 {
 
     public string AssetCode { get; set; } = "";
-    public string Code { get; set; } = "";
+    public string Station { get; set; } = "";
     public string Location { get; set; } = "";
     public DateTime FueledDate { get; set; }
-    public DateTime FuelTime { get; set; }
+    public DateTime FuelDateTime { get; set; }
     public float Quantity { get; set; }
     public int Reading { get; set; } = 0;
     public int PreviousReading { get; set; } = 0;
@@ -77,24 +86,8 @@ public class FuelLogEffeciencyList
     public float HL => Quantity == 0 ? 0 : Diff / Quantity;
     public string LHFormat => LH.ToString("0.00");
     public string HLFormat => HL.ToString("0.00");
-
     public string Fueler { get; set; }
-
-    public Guid LogSheetId { get; set; }
-    public int ReferenceNo { get; set; }
-    public string RefNoFormatted => ReferenceNo.ToString("0000");
-
-    public int StartShiftMeterReading { get; set; }
-
-    public int EndShiftMeterReading { get; set; }
-
-    public string TransactionType { get; set; }
-
-    public string RefillStation { get; set; }
-
-    public bool IsPosted { get; set; }
-    public string PostedAt { get; set; }
-
+    
 }
 
 public class TankerSummary
