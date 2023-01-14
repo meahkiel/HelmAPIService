@@ -157,8 +157,10 @@ public class FuelLog : AggregateRoot<Guid>
         string fuelDate,
         string fuelTime,
         float quantity, 
+        string? remarks = "",
         string driverQatarIdUrl = "",
-        string? detailId = null)
+        string? detailId = null,
+        string sourceType = "")
     {
 
         Guid guid = string.IsNullOrEmpty(detailId) ? Guid.NewGuid() : Guid.Parse(detailId);
@@ -168,7 +170,7 @@ public class FuelLog : AggregateRoot<Guid>
             if(transaction == null) {
                 transaction = new FuelTransaction(guid,assetCode,previousReading,
                                         reading, operatorDriver, this.StationCode,
-                                        fuelDate,fuelTime,quantity,EnumLogType.Dispense.ToString());
+                                        fuelDate,fuelTime,quantity,EnumLogType.Dispense.ToString(),sourceType);
                 transaction.DriverQatarIdUrl = driverQatarIdUrl;
                 transaction.Track = "add";
                 FuelTransactions.Add(transaction);
@@ -184,6 +186,8 @@ public class FuelLog : AggregateRoot<Guid>
                 transaction.Quantity = quantity;
                 transaction.Driver = operatorDriver;
                 transaction.LogType = EnumLogType.Dispense.ToString();
+                transaction.Remarks = remarks;
+                transaction.SourceType = sourceType;
                 transaction.Track = "update";
             }
         }

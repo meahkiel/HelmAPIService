@@ -12,7 +12,7 @@ public interface IFuelLogRepository
     Task<FuelLog?> GetLog(string id);
     Task<FuelLog> GetSingleLog(string id);
 
-    Task<IEnumerable<FuelLog>> GetDraftLogs(string station);
+    Task<IEnumerable<FuelLog>> GetDraftLogs(string station,string fueler);
     
     Task<IEnumerable<FuelLog>> GetTankTransactions(string fuelStation,DateTime dateFrom, DateTime dateTo);
 

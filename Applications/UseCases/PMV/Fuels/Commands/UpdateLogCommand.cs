@@ -1,4 +1,5 @@
 using Applications.UseCases.Common;
+using Applications.UseCases.PMV.Common;
 using Applications.UseCases.PMV.Fuels.DTO;
 using Applications.UseCases.PMV.Fuels.Interfaces;
 using Applications.UseCases.PMV.Fuels.Notifications;
@@ -23,10 +24,12 @@ public class UpdateLogCommandHandler : IRequestHandler<UpdateLogCommand, Result<
     private IFuelLogService _fuelService;
     private readonly IUserAccessor _userAccessor;
     private readonly INotificationPublisher _publisher;
+    private readonly ICommonService _commonService;
 
     public UpdateLogCommandHandler(IUnitWork unitWork,IUserAccessor userAccessor,
-        INotificationPublisher publisher,IFuelLogService fuelService)
+        INotificationPublisher publisher,IFuelLogService fuelService,ICommonService commonService)
     {
+        _commonService = commonService;
         _userAccessor = userAccessor;
         _publisher = publisher;
         _unitWork = unitWork;
@@ -60,36 +63,66 @@ public class UpdateLogCommandHandler : IRequestHandler<UpdateLogCommand, Result<
             }
 
             if (request.Request.FuelTransactions != null && request.Request.FuelTransactions.Count() > 0) {
-                foreach (var requestDetail in request.Request.FuelTransactions) {
-                    Guid guid = string.IsNullOrEmpty(requestDetail.Id) ? Guid.NewGuid() : Guid.Parse(requestDetail.Id);
+
+                var stations = await _commonService.GetAllStation();
+                foreach (var detail in request.Request.FuelTransactions) {
+
+                    Guid guid = string.IsNullOrEmpty(detail.Id) ? Guid.NewGuid() : Guid.Parse(detail.Id);
                     var result = await _unitWork.GetContext().FuelTransactions
                                         .SingleOrDefaultAsync(l => l.Id == guid);
                     
                     if(result == null) {
-                        var prevRecord = await _fuelService.GetLatestFuelLogRecord(requestDetail.AssetCode, requestDetail.Reading);
-                        
-                        result = new FuelTransaction(guid,
-                            requestDetail.AssetCode,
-                            prevRecord.Reading,
-                            requestDetail.Reading,
-                            requestDetail.OperatorDriver ?? "",
-                            log.StationCode,
-                            log.Date!.Value.ToShortDateString(),
-                            requestDetail.FuelTime,
-                            requestDetail.Quantity,
-                            requestDetail.LogType);
-                        
+
+                        var previousReading = 0;
+
+                        if(detail.LogType == EnumLogType.Dispense.ToString()) {
+                            string sourceType = "";
+                            if(!stations.Any(s => s.Code == detail.AssetCode)) {
+                                var prevRecord = await _fuelService.GetLatestFuelLogRecord(detail.AssetCode, detail.Reading);
+                                previousReading = prevRecord.Reading;
+                                sourceType = "Equipment";
+                            }
+                            else {
+                                sourceType = "Tank";
+                            }
+
+                            result = new FuelTransaction(guid,
+                                detail.AssetCode,
+                                previousReading,
+                                detail.Reading,
+                                detail.OperatorDriver ?? "",
+                                log.StationCode,
+                                log.Date!.Value.ToShortDateString(),
+                                detail.FuelTime,
+                                detail.Quantity,
+                                detail.LogType,
+                                sourceType);
+
+                            result.Remarks = request.Request.Remarks;
+                        }
+                        else {
+                            result = new FuelTransaction(guid,detail.AssetCode,log.StationCode,log.Date!.Value.ToShortDateString(),detail.FuelTime,detail.Quantity);
+                        }
+
                         result.FuelLog = log;
                         _unitWork.FuelLogs.AddTransactionLog(result);
                     }
                     else {
-                        if(requestDetail.LogType == EnumLogType.Dispense.ToString() && result.IsLessThanPrevious(requestDetail.Reading)) {
-                            result.Reading = requestDetail.Reading;
+                        if(detail.LogType == EnumLogType.Dispense.ToString() && result.IsLessThanPrevious(detail.Reading)) {
+                            
+                            if(!stations.Any(s => s.Code == detail.AssetCode))
+                                result.SourceType = "Equipment";
+                            else
+                                result.SourceType = "Tank";
+
+                            result.Reading = detail.Reading;
                         }
-                        result.AssetCode = requestDetail.AssetCode;
-                        result.Driver = requestDetail.OperatorDriver;
-                        result.Quantity = requestDetail.Quantity;
-                        result.LogType = requestDetail.LogType;
+
+                        result.AssetCode = detail.AssetCode;
+                        result.Driver = detail.OperatorDriver;
+                        result.Quantity = detail.Quantity;
+                        result.LogType = detail.LogType;
+                        result.Remarks = detail.Remarks;
                         _unitWork.FuelLogs.UpdateTransactionLog(result);
                     }
                 }

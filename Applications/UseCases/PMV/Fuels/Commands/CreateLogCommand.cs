@@ -41,14 +41,23 @@ public class CreateLogCommandHandler : IRequestHandler<CreateLogCommand, Result<
             FuelLog log = await GenerateInitialLog(request.Request);
             var employeeCode = string.IsNullOrEmpty(request.Request.EmployeeCode) ? await _userAccessor.GetUserEmployeeCode() : request.Request.EmployeeCode;
 
-            if (request.Request.FuelTransactions.Count() > 0)
-            {
+            if (request.Request.FuelTransactions.Count() > 0) {
+                 var stations = await _commonService.GetAllStation();
                 foreach (var detail in request.Request.FuelTransactions)
                 {
                     if (detail.LogType != EnumLogType.Dispense.ToString())
                     {
-                        var prevRecord = await _fuelService.GetLatestFuelLogRecord(detail.AssetCode, detail.Reading);
-                        var previousReading = prevRecord.Reading;
+                       
+                        int previousReading = 0;
+                        string sourceType = "";
+                        if(!stations.Any(s => s.Code == detail.AssetCode)) {
+                            var prevRecord = await _fuelService.GetLatestFuelLogRecord(detail.AssetCode, detail.Reading);
+                            previousReading = prevRecord.Reading;
+                            sourceType = "Equipment";
+                        }
+                        else {
+                            sourceType = "Tank";
+                        }
 
                         log.UpsertDispenseTransaction(
                             detail.AssetCode,
@@ -58,8 +67,10 @@ public class CreateLogCommandHandler : IRequestHandler<CreateLogCommand, Result<
                             request.Request.FueledDate,
                             detail.FuelTime,
                             detail.Quantity,
+                            request.Request.Remarks,
                             detail.DriverQatarIdUrl ?? "",
-                            detail.Id);
+                            detail.Id,
+                            sourceType);
                     }
                     else
                     {

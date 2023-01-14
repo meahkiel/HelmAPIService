@@ -30,6 +30,7 @@ public class FuelTransaction : Entity<Guid>
         FuelDateTime = fuelDateTime;
         Quantity = qty;
         LogType = EnumLogType.Restock.ToString();
+        SourceType = "Tank";
     }
     public FuelTransaction(
         Guid id,
@@ -41,7 +42,8 @@ public class FuelTransaction : Entity<Guid>
         string fuelDate,
         string fuelTime,
         float qty,
-        string logType) : base(id)
+        string logType,
+        string sourceType = "Equipment") : base(id)
     {
         var fuelDateTime = fuelDate.MergeAndConvert(
                                     fuelTime.ConvertToDateTime()!.Value.ToLongTimeString());
@@ -54,11 +56,11 @@ public class FuelTransaction : Entity<Guid>
         FuelDateTime = fuelDateTime;
         Quantity = qty;
         LogType = logType;
+        SourceType = sourceType;
 
     }
     
     public static float ToLiterPerHour(float previousReading,float reading,float quantity) => previousReading == 0 ? 0 : quantity / (previousReading - reading);
-
     public static float ToHourPerLiter(float previousReading,float reading,float quantity) => previousReading == 0 ? 0 : (previousReading - reading) / quantity;
     
     public float GetActualQuantity() => LogType == EnumLogType.Dispense.ToString() ?
@@ -69,6 +71,7 @@ public class FuelTransaction : Entity<Guid>
     public string? FuelStation { get; set; }
     public DateTime FuelDateTime { get; set; } = DateTime.Today;
     public float Quantity { get; set; }
+    public string SourceType { get; set; }
     public string AssetCode { get; set; }
     public int PreviousReading { get; set; }
     public int Reading { get; set; }

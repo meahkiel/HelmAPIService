@@ -44,6 +44,7 @@ public class FuelTransactionsRequest
     public string AssetCode { get; set; } = "";
     public string FuelDate { get; set; }
     public string FuelTime { get; set; } = "";
+    public string? Remarks { get; set; }
     public string? OperatorDriver { get; set; } = "";
     public int Reading { get; set; } = 0;
     public float Quantity { get; set; } = 0f;

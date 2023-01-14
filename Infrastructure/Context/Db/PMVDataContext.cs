@@ -38,9 +38,5 @@ public class PMVDataContext : DbContext, IDataContext
         modelBuilder.ApplyConfiguration(new ServiceAlertDetailConfig());
         modelBuilder.ApplyConfiguration(new AssetRecordConfig());
         modelBuilder.ApplyConfiguration(new ServiceLogConfig());
-        
-        
-        
-        
     }
 }

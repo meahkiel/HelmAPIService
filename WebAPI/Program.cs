@@ -6,7 +6,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services
     .AddApplication()
-    .AddInfrastructure(builder.Configuration.GetConnectionString("ServiceDb"));
+    .AddExportApplication()
+    .AddInfrastructure(builder.Configuration.GetConnectionString("ServiceDb"))
+    .AddSqlInfractructure(builder.Configuration.GetConnectionString("PortalDb"));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

@@ -20,9 +20,12 @@ public class FuelLogRepository : IFuelLogRepository
         _context.FuelLogs.Add(log);
     }
 
-    public Task<IEnumerable<FuelLog>> GetDraftLogs(string station)
+    public async Task<IEnumerable<FuelLog>> GetDraftLogs(string station,string fueler)
     {
-        throw new NotImplementedException();
+        return await _context.FuelLogs
+                    .Include(c => c.FuelTransactions)
+                    .Where(c => c.StationCode == station && c.Fueler == fueler)
+                    .ToListAsync();
     }
 
     public Task<FuelLog?> GetLog(string id)

@@ -31,12 +31,15 @@ public class GetFuelLogTransactionQueryHandler : IRequestHandler<GetFuelLogTrans
             FuelLogReportResult result = new FuelLogReportResult();
             //check if the request is new
             if(request.IsPostBack) {
-                string[] stations = Array.Empty<string>();
-                //paramter
-                if (!string.IsNullOrEmpty(request.Stations)) {
+                var masters = await FetchLogTransactions(request);
+                if(!string.IsNullOrEmpty(request.Stations)) {
+                    string[] stations = Array.Empty<string>();
                     stations = request.Stations.Split(",");
+                    result.Masters = masters.Where(m => stations.Contains(m.Station)).ToList();
                 }
-                result.Masters = await FetchLogTransactions(request);
+                else {
+                    result.Masters =masters;
+                }
             }
             else {
                  result.StationSelections = await _commonService.GetAllStation();

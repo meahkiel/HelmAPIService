@@ -8,12 +8,19 @@ namespace Applications;
 
 public static class DependencyInjections
 {
-     public static IServiceCollection AddApplication(this IServiceCollection services) {
+    public static IServiceCollection AddApplication(this IServiceCollection services) {
 
         services.AddMediatR(Assembly.GetExecutingAssembly(),typeof(CreateLogSheetCommand).Assembly);
         services.AddValidatorsFromAssemblyContaining<LogSheetValidator>();
         services.AddAutoMapper(typeof(PMVMapProfile));
         services.AddScoped<INotificationPublisher,NotificationPublisher>();
+
+        return services;
+    }
+
+    public static IServiceCollection AddExportApplication(this IServiceCollection services) {
+
+        
         return services;
     }
 }

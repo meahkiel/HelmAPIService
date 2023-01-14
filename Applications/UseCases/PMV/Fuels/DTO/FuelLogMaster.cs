@@ -82,10 +82,9 @@ public class FuelLogEffeciencyList
     public int Reading { get; set; } = 0;
     public int PreviousReading { get; set; } = 0;
     public float Diff => Reading - PreviousReading;
-    public float LH => Diff == 0 ? 0 : Quantity / Diff;
-    public float HL => Quantity == 0 ? 0 : Diff / Quantity;
-    public string LHFormat => LH.ToString("0.00");
-    public string HLFormat => HL.ToString("0.00");
+    public float LH => PreviousReading == 0 ? 0 : Quantity / Diff;
+    public float HL => PreviousReading == 0 ? 0 : Diff / Quantity;
+   
     public string Fueler { get; set; }
     
 }

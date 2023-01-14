@@ -4,7 +4,7 @@ using Applications.UseCases.PMV.Fuels.Interfaces;
 
 namespace Applications.UseCases.PMV.Fuels.Queries;
 
-public record GetFuelEfficiencyQuery(string? AssetCodes, DateTime DateFrom,DateTime DateTo,bool IsPostBack = false) : IRequest<Result<FuelLogReportResult>>;
+public record GetFuelEfficiencyQuery(string? AssetCode, DateTime DateFrom,DateTime DateTo,bool IsPostBack = false) : IRequest<Result<FuelLogReportResult>>;
 
 public class GetFuelEfficiencyQueryHandler : IRequestHandler<GetFuelEfficiencyQuery, Result<FuelLogReportResult>>
 {
@@ -24,7 +24,15 @@ public class GetFuelEfficiencyQueryHandler : IRequestHandler<GetFuelEfficiencyQu
             
             FuelLogReportResult result = new FuelLogReportResult();
             if(request.IsPostBack) {
-                result.EffeciencyLists = await _service.GetFuelEffeciencyMasterList(request.DateFrom, request.DateTo,request.AssetCodes);
+                var effeciencyLists = await _service.GetFuelEffeciencyMasterList(request.DateFrom, request.DateTo,request.AssetCode);
+                if(!string.IsNullOrEmpty(request.AssetCode)) {
+                    string[] assets = Array.Empty<string>();
+                    assets = request.AssetCode.Split(",");
+                    result.EffeciencyLists = effeciencyLists.Where(e => assets.Contains(e.AssetCode)).ToList();
+                }
+                else {
+                    result.EffeciencyLists = effeciencyLists;
+                }
             }
             else {
                 result.AssetSelections = await _commonService.GetInternalAssets();
