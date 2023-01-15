@@ -1,0 +1,4 @@
+D:\Published\API Service\Core.dll
+D:\Published\API Service\Core.deps.json
+D:\Published\API Service\Core.pdb
+D:\Published\API Service\BaseEntityPack.Core.dll

@@ -1,5 +1,6 @@
 using BaseEntityPack.Core;
 using Core.Utils;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Core.PMV.Fuels;
@@ -81,6 +82,9 @@ public class FuelTransaction : Entity<Guid>
     public string? DriverQatarIdUrl { get; set; }
 
     public FuelLog FuelLog { get; set; }
+
+    [Timestamp]
+    public DateTime RowVersion { get; set; }
 
     [NotMapped]
     public string Track { get; set; }

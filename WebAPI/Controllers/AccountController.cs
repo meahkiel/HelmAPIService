@@ -16,14 +16,16 @@ public class AccountController : APIControllerBase
     }
 
     [HttpPost("auth")]
-    public async Task<IActionResult> Login([FromBody]LoginQuery query) {
+    public async Task<IActionResult> LoginPortal([FromBody]LoginQuery query) {
 
         return HandleResult(await _mediator.Send(query));
     }
 
+   
+
     [HttpGet("profile")]
-    public async Task<IActionResult> Profile([FromQuery]string empCode){
-        
+    public async Task<IActionResult> Profile([FromQuery]string empCode)
+    {   
         return HandleResult(await _mediator.Send(new UserProfileQuery(empCode)));
     }
 }

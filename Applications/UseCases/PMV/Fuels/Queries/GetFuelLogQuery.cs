@@ -32,8 +32,8 @@ public class GetFuelLogQueryHandler : IRequestHandler<GetFuelLogQuery, Result<Fu
     {
         try
         {
-
             FuelLogResponse response = new FuelLogResponse();
+            
             if(!string.IsNullOrEmpty(request.Id)) {
                 var log = await _unitWork.FuelLogs.GetLog(request.Id);
                 if(log == null)
@@ -53,8 +53,6 @@ public class GetFuelLogQueryHandler : IRequestHandler<GetFuelLogQuery, Result<Fu
                 response.AssetCodeSelections = await _commonService.GetAssetLookup();
                 response.FuelerSelections = await _commonService.GetEmployees();
             }
-
-
             
             return Result.Ok(response);
         }

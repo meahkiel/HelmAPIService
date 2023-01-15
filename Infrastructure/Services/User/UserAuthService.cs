@@ -2,12 +2,13 @@ using System.Security.Cryptography;
 using System.Text;
 using Applications.Contracts;
 using Applications.Contracts.Interface;
+using Core.Common;
 using Infrastructure.Context.Abstract;
 using Infrastructure.Context.Db;
 
 namespace Infrastructure.Services.User;
 
-public class AuthQuery : BaseQuery<AuthResult>
+public class AuthQuery : BaseQuery<EmployeeMaster>
 {
     public string EmployeeCode { get; set; }
 
@@ -16,10 +17,15 @@ public class AuthQuery : BaseQuery<AuthResult>
         
     }
 
-    public override async Task<AuthResult> ExecuteAsync()
+    public override async Task<EmployeeMaster> ExecuteAsync()
     {
-        string sql = "SELECT EmpCode,EmpPasswd FROM dbo.EmployeeLogin WHERE EmpCode = @empCode";
+        
+        string sql = "SELECT em.EmpCode EmpCode,el.EmpPasswd EmpPasswd,em.EmpName EmpName FROM dbo.EmployeeLogin el" + 
+                    " INNER JOIN EmployeeMaster em ON em.EmpCode = el.EmpCode " +
+                     "WHERE el.EmpCode = @empCode";
+
         var result = await this.GetQuerySingle(sql,new {empCode = EmployeeCode});
+        
         return result;
     }
 }
@@ -33,47 +39,16 @@ public class UserAuthService : IUserAuthService
         _query = query;
     }
 
-    public async Task<bool> Login(string empCode,string password) {
+    public async Task<EmployeeMaster> Login(string empCode,string password) {
         
         _query.EmployeeCode = empCode;
         var result = await _query.ExecuteAsync();
         
-        if(result == null) 
-            return false;
-        
-        string enc = EncodePassword(password);
-        if (enc != result.EmpPasswd) {
-            return false;
-        }
-
-        return true;
-
+        return result;
     }
 
 
-    public string EncodePassword(string originalPassword)
-        {
-            //Declarations
-            Byte[] originalBytes;
-            Byte[] encodedBytes;
-            MD5 md5;
-
-            //Instantiate MD5CryptoServiceProvider, get bytes for original password and compute hash (encoded password)
-            md5 = new MD5CryptoServiceProvider();
-            originalBytes = ASCIIEncoding.Default.GetBytes(originalPassword);
-            encodedBytes = md5.ComputeHash(originalBytes);
-            
-            StringBuilder builder = new StringBuilder();
-            for (int i = 0; i < encodedBytes.Length; i++)  
-            {  
-                //change it into 2 hexadecimal digits  
-                //for each byte  
-                builder.Append(encodedBytes[i].ToString("x2"));  
-            }  
-
-            //Convert encoded bytes back to a ‘readable’ string
-            return builder.ToString();
-        }
+    
 
 
    

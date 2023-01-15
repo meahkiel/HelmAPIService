@@ -4,4 +4,6 @@ public class EmployeeMaster
 {
     public string EmpCode { get; set; }
     public string EmpName { get; set; }
+    public string EmpPasswd { get; set; }
+
 }

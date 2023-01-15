@@ -36,7 +36,6 @@ public class CreateLogCommandHandler : IRequestHandler<CreateLogCommand, Result<
     {
         try
         {
-            
 
             FuelLog log = await GenerateInitialLog(request.Request);
             var employeeCode = string.IsNullOrEmpty(request.Request.EmployeeCode) ? await _userAccessor.GetUserEmployeeCode() : request.Request.EmployeeCode;
@@ -102,6 +101,8 @@ public class CreateLogCommandHandler : IRequestHandler<CreateLogCommand, Result<
     private async Task<FuelLog> GenerateInitialLog(FuelLogRequest request)
     {
 
+        
+
         var location = await _commonService.GetLocationByKey(request.Location);
         if (location == null) throw new Exception("location cannot be found");
         
@@ -117,14 +118,12 @@ public class CreateLogCommandHandler : IRequestHandler<CreateLogCommand, Result<
         float openingBalance = 0f;
         var autoNumber = await _commonService.GenerateAutoNumber("DocumentNo","FuelLog");
 
-        if (record != null)
-        {
+        if (record != null) {
             openingMeter = record.ClosingMeter;
             openingBalance = record.RemainingBalance;
         }
         else {
             var station = await _commonService.GetStationByCode(request.Station);
-
             if(station != null) {
                 openingMeter = station.OpeningMeter;
                 openingBalance = station.OpeningBalance;

@@ -21,6 +21,7 @@ public static class DepedencyInjections
         services.AddScoped<Applications.UseCases.PMV.LogSheets.Interfaces.IFuelLogService, Services.PMV.DataService.FuelService>();
         services.AddScoped<Applications.UseCases.PMV.Fuels.Interfaces.IFuelLogService, Services.PMV.DataService.FuelLogService>();
 
+        services.AddScoped<IUserToken,UserToken>();
         
 
         services.AddScoped<IUserAccessor,UserAccessor>();

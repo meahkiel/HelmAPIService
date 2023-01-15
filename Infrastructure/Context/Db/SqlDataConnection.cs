@@ -8,8 +8,7 @@ public class SqlDataConnection : IDisposable
     private readonly SqlConnection _sqlConnection;
 
 
-    public SqlDataConnection(string connectionString)
-    {
+    public SqlDataConnection(string connectionString){
         _sqlConnection = new SqlConnection(connectionString);
     }
 
