@@ -64,21 +64,15 @@ public class FuelDetailResponse
     public string LogSheetId { get; set; }
     public string Id { get; set; }
     public string AssetCode { get; set; } = "";
-
     public DateTime FuelDateTime { get; set; }
     public DateTime FuelDate => FuelDateTime;
     public DateTime FuelTime => FuelDateTime;
-    public string? OperatorDriver { get; set; } = "";
-
+    public string? OperatorDriver { get; set; } = "";    
     public string Remarks { get; set; }
-
     public string LogType { get; set; }
-    
     public int Reading { get; set; } = 0;
     public float Quantity { get; set; } = 0f;
+    public float DisplayQty => LogType == "Refill" ? Quantity : Quantity * -1;
     public string DriverQatarIdUrl { get; set; }
-    
-    
-
 
 }

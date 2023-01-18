@@ -1,7 +1,6 @@
 using Applications.Interfaces;
 using Applications.UseCases.PMV.Assets.Interfaces;
 using Applications.UseCases.PMV.Fuels.Interfaces;
-using Applications.UseCases.PMV.LogSheets.Interfaces;
 using Applications.UseCases.PMV.ServiceAlerts.Interfaces;
 using Core.SeedWorks.Attributes;
 using Infrastructure.Context.Db;
@@ -13,7 +12,7 @@ public class UnitWork : IUnitWork
 {
 
     private readonly PMVDataContext _context;
-    private ILogSheetRepository _logsheets;
+    
     private IServiceAlertRepository _serviceAlert;
     private IAssetRepository _assets;
     private IFuelLogRepository _logs;
@@ -23,12 +22,7 @@ public class UnitWork : IUnitWork
         _context = (PMVDataContext)dataContext;
     }
     
-    public ILogSheetRepository LogSheets {
-        get {
-            if(_logsheets == null) _logsheets = new LogSheetRepository(_context);
-            return _logsheets;
-        }
-    }
+   
     
     public IServiceAlertRepository ServiceAlert { 
         get {

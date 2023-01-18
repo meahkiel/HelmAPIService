@@ -36,7 +36,7 @@ public class FuelLogRepository : IFuelLogRepository
             .SingleOrDefaultAsync(f => f.Id == Guid.Parse(id));
     }
 
-    public async Task<FuelLog> GetSingleLog(string id)
+    public async Task<FuelLog?> GetSingleLog(string id)
     {
          return await _context.FuelLogs.FindAsync(Guid.Parse(id));
     }
@@ -61,7 +61,7 @@ public class FuelLogRepository : IFuelLogRepository
         foreach (var id in ids)
         {
             var transaction = await _context.FuelTransactions.FindAsync(Guid.Parse(id));
-            if(transaction != null) 
+            if(transaction is not null)
                 _context.FuelTransactions.Remove(transaction);
         }
     }

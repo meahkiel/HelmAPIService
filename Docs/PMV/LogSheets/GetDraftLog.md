@@ -126,6 +126,7 @@
         "logType": "Dispense",
         "reading": 10000,
         "quantity": 125,
+        "displayQty": -97,
         "driverQatarIdUrl": null
       }
     ],

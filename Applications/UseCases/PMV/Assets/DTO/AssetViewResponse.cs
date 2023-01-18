@@ -1,4 +1,3 @@
-using Applications.UseCases.PMV.LogSheets.DTO;
 
 namespace Applications.UseCases.PMV.Assets.DTO;
 
@@ -47,7 +46,8 @@ public class AssetViewResponse
     public string? LatestTransactionId { get; set; }
     public DateTime? LastInspectionDate { get; set; }
     public IEnumerable<ServiceLogResponse> ServiceLogs { get; set; } = new List<ServiceLogResponse>();
-    public IEnumerable<FuelLogTransactionsResponse> LogSheets { get; set; } = new List<FuelLogTransactionsResponse>();
+    
+    //public IEnumerable<FuelLog> LogSheets { get; set; } = new List<FuelLogTransactionsResponse>();
 }
 
 public class ServiceLogResponse {

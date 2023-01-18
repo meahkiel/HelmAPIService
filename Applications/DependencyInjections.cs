@@ -1,7 +1,7 @@
 using System.Reflection;
 using Applications.Configurations.PMV;
 using Applications.UseCases.Common;
-using Applications.UseCases.PMV.LogSheets;
+using Applications.UseCases.PMV.Fuels.Commands;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Applications;
@@ -10,8 +10,8 @@ public static class DependencyInjections
 {
     public static IServiceCollection AddApplication(this IServiceCollection services) {
 
-        services.AddMediatR(Assembly.GetExecutingAssembly(),typeof(CreateLogSheetCommand).Assembly);
-        services.AddValidatorsFromAssemblyContaining<LogSheetValidator>();
+        services.AddMediatR(Assembly.GetExecutingAssembly(),typeof(CreateLogCommand).Assembly);
+        services.AddValidatorsFromAssemblyContaining<CreateLogValidator>();
         services.AddAutoMapper(typeof(PMVMapProfile));
         services.AddScoped<INotificationPublisher,NotificationPublisher>();
 

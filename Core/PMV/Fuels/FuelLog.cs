@@ -1,6 +1,5 @@
 using BaseEntityPack.Core;
 using Core.Common.ValueObjects;
-using Core.Utils;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Core.PMV.Fuels;
@@ -105,7 +104,7 @@ public class FuelLog : AggregateRoot<Guid>
     public float ClosingMeter => (OpeningMeter) + TotalDispense;
     [NotMapped]
     public float TotalRestock => FuelTransactions
-        .Where(t => t.LogType == EnumLogType.Restock.ToString())
+        .Where(t => t.LogType == EnumLogType.Refill.ToString())
         .Sum(c => c.GetActualQuantity());
 
     [NotMapped]
@@ -144,7 +143,7 @@ public class FuelLog : AggregateRoot<Guid>
         else {
             existing.AssetCode = assetCode;
             existing.Quantity = qty;
-            existing.LogType = EnumLogType.Restock.ToString();
+            existing.LogType = EnumLogType.Refill.ToString();
             existing.Track = "update";
         }
     }

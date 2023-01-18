@@ -58,7 +58,7 @@ public class FuelLogController : APIControllerBase
         return Ok(request);
     }
 
-    [HttpPost("/submit")]
+    [HttpPost("submit")]
     public async Task<IActionResult> Submit([FromBody] FuelLogCloseRequest request)
     {
         var cmd = new SubmitLogCommand(request);
@@ -69,12 +69,16 @@ public class FuelLogController : APIControllerBase
 
     [HttpGet("draft")]
     public async Task<IActionResult> GetDraftLogs([FromQuery] GetDraftLogQuery query) {
+
         return HandleResult(await _mediator.Send(query));
+        
     }
 
     [HttpGet("list")]
     public async Task<IActionResult> GetFuelLogs([FromQuery] GetFuelLogTransactionQuery query) {
+
         return HandleResult(await _mediator.Send(query));
+
     }
 
     [HttpGet("efficiency")]

@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Core.PMV.Fuels;
 
 
-public enum EnumLogType { Dispense, Restock,Adjustment }
+public enum EnumLogType { Dispense, Refill,Adjustment }
 
 [AuditableAttribute]
 public class FuelTransaction : Entity<Guid>
@@ -30,7 +30,7 @@ public class FuelTransaction : Entity<Guid>
         FuelStation = fuelStation;
         FuelDateTime = fuelDateTime;
         Quantity = qty;
-        LogType = EnumLogType.Restock.ToString();
+        LogType = EnumLogType.Refill.ToString();
         SourceType = "Tank";
     }
     public FuelTransaction(

@@ -68,7 +68,7 @@ public class GetFuelLogTransactionQueryHandler : IRequestHandler<GetFuelLogTrans
                                         .Where(t => t.LogType == EnumLogType.Adjustment.ToString())
                                         .Sum(t => t.Quantity);
             result.TotalRestock = result.FuelTransactions
-                                        .Where(t => t.LogType == EnumLogType.Restock.ToString())
+                                        .Where(t => t.LogType == EnumLogType.Refill.ToString())
                                         .Sum(t => t.Quantity);
         }
 

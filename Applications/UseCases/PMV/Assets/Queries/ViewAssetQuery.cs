@@ -1,5 +1,4 @@
 ﻿using Applications.UseCases.PMV.Assets.DTO;
-using Applications.UseCases.PMV.LogSheets.DTO;
 using AutoMapper;
 using Core.PMV.Assets;
 
@@ -38,8 +37,8 @@ public class ViewAssetQueryHandler :
             viewAsset.ServiceLogs = _mapper.Map<IEnumerable<ServiceLogResponse>>(serviceLogs ?? new List<ServiceLog>());
 
             //get fuel history
-            viewAsset.LogSheets = await _unitWork.LogSheets.GetPostedTransactionsByAsset(viewAsset.AssetCode!) 
-                                            ?? new List<FuelLogTransactionsResponse>();
+            //viewAsset.LogSheets = await _unitWork.LogSheets.GetPostedTransactionsByAsset(viewAsset.AssetCode!) 
+                                            //?? new List<FuelLogTransactionsResponse>();
             
             return Result.Ok(viewAsset);
         }

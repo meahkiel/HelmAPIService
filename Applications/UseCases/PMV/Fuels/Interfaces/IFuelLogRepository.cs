@@ -15,7 +15,7 @@ public interface IFuelLogRepository
     void AddTransactionLog(FuelTransaction transaction);
     void UpdateTransactionLog(FuelTransaction transaction);
     Task<FuelLog?> GetLog(string id);
-    Task<FuelLog> GetSingleLog(string id);
+    Task<FuelLog?> GetSingleLog(string id);
     
     Task<IEnumerable<FuelLog>> GetDraftLogs(string fueler);
     

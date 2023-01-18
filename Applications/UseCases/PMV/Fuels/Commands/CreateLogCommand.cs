@@ -10,6 +10,14 @@ namespace Applications.UseCases.PMV.Fuels.Commands;
 
 public record CreateLogCommand(FuelLogRequest Request) : IRequest<Result<FuelLogKeyResponse>>;
 
+public class CreateLogValidator : AbstractValidator<FuelLogRequest> {
+    
+    public CreateLogValidator()
+    {
+        
+    }
+}
+
 public class CreateLogCommandHandler : IRequestHandler<CreateLogCommand, Result<FuelLogKeyResponse>>
 {
     private readonly IUnitWork _unitWork;

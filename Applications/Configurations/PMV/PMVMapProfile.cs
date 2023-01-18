@@ -1,6 +1,5 @@
 ﻿using Applications.UseCases.PMV.Assets.DTO;
 using Applications.UseCases.PMV.Fuels.DTO;
-using Applications.UseCases.PMV.LogSheets.DTO;
 using AutoMapper;
 using Core.PMV.Assets;
 using Core.PMV.Fuels;
@@ -26,8 +25,6 @@ public class PMVMapProfile : Profile
 			.ForMember(s => s.Station, o => o.MapFrom(c => c.StationCode))
 			.ForMember(s => s.IsPosted, o => o.MapFrom(c => c.Post.IsPosted));
 
-		this.CreateMap<LogSheetDetail,LogSheetDetailResponse>()
-			.ForMember(s => s.LogSheetId, o => o.MapFrom(c => c.LogSheet.Id));
-		this.CreateMap<LogSheet,LogSheetResponse>();
+		
 	}
 }
