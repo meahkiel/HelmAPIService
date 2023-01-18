@@ -1,20 +1,44 @@
 ﻿using Applications.UseCases.PMV.Fuels.DTO;
 
-namespace Applications.UseCases.PMV.Fuels.Commands
+namespace Applications.UseCases.PMV.Fuels.Commands;
+
+public record UpdateDetailCommand(FuelTransactionsRequest Request) : IRequest<Result<Unit>>;
+
+public class UpdateDetailCommandHandler : IRequestHandler<UpdateDetailCommand, Result<Unit>>
 {
-    public record UpdateDetailCommand(FuelTransactionsRequest Request) : IRequest<Result<Unit>>;
+    private readonly IUnitWork _unitWork;
 
-    public class UpdateDetailCommandHandler : IRequestHandler<UpdateDetailCommand, Result<Unit>>
+    public UpdateDetailCommandHandler(IUnitWork unitWork)
     {
-        private readonly IUnitWork _unitWork;
+        _unitWork = unitWork;
+    }
+    public async Task<Result<Unit>> Handle(UpdateDetailCommand request, CancellationToken cancellationToken)
+    {
+        try {
+            
+            var transaction = await _unitWork.GetContext().FuelTransactions
+                                    .Include(t => t.FuelLog)
+                                    .SingleOrDefaultAsync(
+                                        t => t.Id == Guid.Parse(request.Request.Id) && 
+                                        t.FuelLog.Id == Guid.Parse(request.Request.FuelLogId));
+            
+            if(transaction == null)
+                throw new Exception("Cannot find transaction");
+            
+            if(transaction.FuelLog.Post.IsPosted) 
+                throw new Exception("Transaction is already posted");
 
-        public UpdateDetailCommandHandler(IUnitWork unitWork)
-        {
-            _unitWork = unitWork;
+            
+            return Result.Ok(Unit.Value);
+
         }
-        public Task<Result<Unit>> Handle(UpdateDetailCommand request, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
+        catch(Exception ex) {
+            return Result.Fail(ex.Message);
         }
+
+        
+        
+
+
     }
 }

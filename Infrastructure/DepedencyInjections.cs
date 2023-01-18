@@ -18,7 +18,7 @@ public static class DepedencyInjections
         services.AddTransient<IUnitWork,UnitWork>();
 
         services.AddScoped<ICommonService,CommonService>();
-        services.AddScoped<Applications.UseCases.PMV.LogSheets.Interfaces.IFuelLogService, Services.PMV.DataService.FuelService>();
+        //services.AddScoped<Applications.UseCases.PMV.LogSheets.Interfaces.IFuelLogService, Services.PMV.DataService.FuelService>();
         services.AddScoped<Applications.UseCases.PMV.Fuels.Interfaces.IFuelLogService, Services.PMV.DataService.FuelLogService>();
 
         services.AddScoped<IUserToken,UserToken>();

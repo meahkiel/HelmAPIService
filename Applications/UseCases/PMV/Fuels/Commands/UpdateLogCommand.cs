@@ -8,14 +8,15 @@ using Core.Utils;
 
 namespace Applications.UseCases.PMV.Fuels.Commands;
 
-public record UpdateLogCommand(FuelLogRequest Request,bool IsPartial = false) : IRequest<Result<Unit>>;
+public record UpdateLogCommand(FuelLogRequest Request, bool IsPartial = false) : IRequest<Result<Unit>>;
 
-public class UpdateLogValidator : AbstractValidator<FuelLogRequest> {
-    
-    
+public class UpdateLogValidator : AbstractValidator<FuelLogRequest>
+{
+
+
     public UpdateLogValidator(IUnitWork unitWork)
     {
-        
+
     }
 }
 public class UpdateLogCommandHandler : IRequestHandler<UpdateLogCommand, Result<Unit>>
@@ -26,8 +27,8 @@ public class UpdateLogCommandHandler : IRequestHandler<UpdateLogCommand, Result<
     private readonly INotificationPublisher _publisher;
     private readonly ICommonService _commonService;
 
-    public UpdateLogCommandHandler(IUnitWork unitWork,IUserAccessor userAccessor,
-        INotificationPublisher publisher,IFuelLogService fuelService,ICommonService commonService)
+    public UpdateLogCommandHandler(IUnitWork unitWork, IUserAccessor userAccessor,
+        INotificationPublisher publisher, IFuelLogService fuelService, ICommonService commonService)
     {
         _commonService = commonService;
         _userAccessor = userAccessor;
@@ -36,57 +37,83 @@ public class UpdateLogCommandHandler : IRequestHandler<UpdateLogCommand, Result<
         _fuelService = fuelService;
 
     }
-    public async Task<Result<Unit>> Handle(UpdateLogCommand request, CancellationToken cancellationToken)
+
+    private async Task<FuelLog> GetHeader(FuelLogRequest request)
     {
-        try {
-            
 
-            var log = await _unitWork.FuelLogs.GetSingleLog(request.Request.Id!);
-            if (log == null) throw new Exception("Fuel Log not found");
+        var log = await _unitWork.FuelLogs.GetSingleLog(request.Id!);
 
-            if(log.Post.IsPosted) 
-                throw new Exception("Fuel Log already posted");
+        if (log == null) throw new Exception("Fuel Log not found");
 
-            var employeeCode = request.Request.EmployeeCode ??  await _userAccessor.GetUserEmployeeCode();
-            
-            
-            log.ShiftStartTime = request.Request.ShiftStartTime.ConvertToDateTime();
-            log.ShiftEndTime = request.Request.ShiftEndTime.ConvertToDateTime();
-            log.StartShiftTankerKm = request.Request.StartShiftTankerKm;
-            log.EndShiftTankerKm = request.Request.EndShiftTankerKm;
-            log.Fueler = request.Request.Fueler;
+        if (log.Post.IsPosted)
+            throw new Exception("Fuel Log already posted");
 
+        if (!request.IsPartial) {
+            log.ShiftStartTime = request.ShiftStartTime.ConvertToDateTime();
+            log.ShiftEndTime = request.ShiftEndTime.ConvertToDateTime();
+            log.StartShiftTankerKm = request.StartShiftTankerKm;
+            log.EndShiftTankerKm = request.EndShiftTankerKm;
+            log.Fueler = request.Fueler;
 
             //check item for delete
-            if(request.Request.DelCollection != null) {
-               await _unitWork.FuelLogs.RemoveTransactions(request.Request.DelCollection.Ids);
+            if (request.DelCollection != null)
+            {
+                await _unitWork.FuelLogs.RemoveTransactions(request.DelCollection.Ids);
             }
 
-            if (request.Request.FuelTransactions != null && request.Request.FuelTransactions.Count() > 0) {
+            if(request.IsPosted) {
+                log.ShiftEndTime = request.ShiftEndTime.ConvertToDateTime();
+                log.EndShiftTankerKm = request.EndShiftTankerKm;
+                log.TogglePost();
+                _publisher.Add(new DispenseCreatedNotification(log.FuelTransactions));
+            }
+        }
+        else {
+            if(request.IsPosted) {
+                log.ShiftEndTime = request.ShiftEndTime.ConvertToDateTime();
+                log.EndShiftTankerKm = request.EndShiftTankerKm;
+                log.TogglePost();
+            }
+        }
 
+        return log;
+    }
+
+    
+
+    public async Task<Result<Unit>> Handle(UpdateLogCommand request, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var log = await GetHeader(request.Request);
+            var employeeCode = request.Request.EmployeeCode ?? await _userAccessor.GetUserEmployeeCode();
+            if (request.Request.FuelTransactions != null && request.Request.FuelTransactions.Count() > 0)
+            {
                 var stations = await _commonService.GetAllStation();
-                foreach (var detail in request.Request.FuelTransactions) {
-
+                foreach (var detail in request.Request.FuelTransactions)
+                {
                     Guid guid = string.IsNullOrEmpty(detail.Id) ? Guid.NewGuid() : Guid.Parse(detail.Id);
-                    var result = await _unitWork.GetContext().FuelTransactions
+                    var transaction = await _unitWork.GetContext().FuelTransactions
                                         .SingleOrDefaultAsync(l => l.Id == guid);
-                    
-                    if(result == null) {
 
+                    if (transaction == null)
+                    {
                         var previousReading = 0;
-
-                        if(detail.LogType == EnumLogType.Dispense.ToString()) {
+                        if (detail.LogType == EnumLogType.Dispense.ToString())
+                        {
                             string sourceType = "";
-                            if(!stations.Any(s => s.Code == detail.AssetCode)) {
+                            if (!stations.Any(s => s.Code == detail.AssetCode))
+                            {
                                 var prevRecord = await _fuelService.GetLatestFuelLogRecord(detail.AssetCode, detail.Reading);
                                 previousReading = prevRecord.Reading;
                                 sourceType = "Equipment";
                             }
-                            else {
+                            else
+                            {
                                 sourceType = "Tank";
                             }
 
-                            result = new FuelTransaction(guid,
+                            transaction = new FuelTransaction(guid,
                                 detail.AssetCode,
                                 previousReading,
                                 detail.Reading,
@@ -98,50 +125,51 @@ public class UpdateLogCommandHandler : IRequestHandler<UpdateLogCommand, Result<
                                 detail.LogType,
                                 sourceType);
 
-                            result.Remarks = request.Request.Remarks;
+                            transaction.Remarks = request.Request.Remarks;
                         }
-                        else {
-                            result = new FuelTransaction(guid,detail.AssetCode,log.StationCode,log.Date!.Value.ToShortDateString(),detail.FuelTime,detail.Quantity);
+                        else
+                        {
+                            transaction = new FuelTransaction(guid, detail.AssetCode, log.StationCode, log.Date!.Value.ToShortDateString(), detail.FuelTime, detail.Quantity);
                         }
 
-                        result.FuelLog = log;
-                        _unitWork.FuelLogs.AddTransactionLog(result);
+                        transaction.FuelLog = log;
+                        _unitWork.FuelLogs.AddTransactionLog(transaction);
                     }
-                    else {
-                        if(detail.LogType == EnumLogType.Dispense.ToString() && result.IsLessThanPrevious(detail.Reading)) {
-                            
-                            if(!stations.Any(s => s.Code == detail.AssetCode))
-                                result.SourceType = "Equipment";
-                            else
-                                result.SourceType = "Tank";
+                    else
+                    {
 
-                            result.Reading = detail.Reading;
+                        if (detail.LogType == EnumLogType.Dispense.ToString() && transaction.IsLessThanPrevious(detail.Reading))
+                        {
+                            if (!stations.Any(s => s.Code == detail.AssetCode))
+                                transaction.SourceType = "Equipment";
+                            else
+                                transaction.SourceType = "Tank";
+
+                            transaction.Reading = detail.Reading;
                         }
 
-                        result.AssetCode = detail.AssetCode;
-                        result.Driver = detail.OperatorDriver;
-                        result.Quantity = detail.Quantity;
-                        result.LogType = detail.LogType;
-                        result.Remarks = detail.Remarks;
-                        _unitWork.FuelLogs.UpdateTransactionLog(result);
+                        transaction.AssetCode = detail.AssetCode;
+                        transaction.Driver = detail.OperatorDriver;
+                        transaction.Quantity = detail.Quantity;
+                        transaction.LogType = detail.LogType;
+                        transaction.Remarks = detail.Remarks;
+
+                        _unitWork.FuelLogs.UpdateTransactionLog(transaction);
                     }
                 }
             }
-            
-            //request to post
-            if(request.Request.IsPosted) {
-                log.TogglePost();
-                _publisher.Add(new DispenseCreatedNotification(log.FuelTransactions));
-            }
-            
-            await _unitWork.FuelLogs.UpdateLog(log);
+
+            _unitWork.FuelLogs.UpdateLog(log);
+
             //publish all notification
-            await _publisher.Publish();
+            //await _publisher.Publish();
+            
             await _unitWork.CommitSaveAsync(employeeCode);
 
             return Result.Ok(Unit.Value);
         }
-        catch(Exception ex) {
+        catch (Exception ex)
+        {
             return Result.Fail(ex.Message);
         }
 

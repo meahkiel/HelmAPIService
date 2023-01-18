@@ -6,6 +6,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers;
 
+
+/***
+
+
+
+*/
+
+
 [Route("api/pmv/[controller]")]
 public class FuelLogController : APIControllerBase
 {
@@ -16,12 +24,19 @@ public class FuelLogController : APIControllerBase
         _mediator = mediator;
     }
 
+    [HttpGet("new")]
+    public async Task<IActionResult> New([FromQuery]string? station,bool IsPostBack)
+    {
+        var cmd = new GetFuelLogQuery(null,station,IsPostBack);
+        return HandleResult(await _mediator.Send(cmd));
+    }
+
 
     [HttpGet("single")]
     public async Task<IActionResult> Single([FromQuery]string? Id,bool IsPostBack)
     {
         
-        var cmd = new GetFuelLogQuery(Id,IsPostBack);
+        var cmd = new GetFuelLogQuery(Id,null,IsPostBack);
         return HandleResult(await _mediator.Send(cmd));
     }
 
@@ -40,15 +55,15 @@ public class FuelLogController : APIControllerBase
         var cmd = new UpdateLogCommand(request);
         var result = await _mediator.Send(cmd);
         
-        return HandleResult(result);
+        return Ok(request);
     }
 
-    [HttpPost("/partial/{id}")]
-    public async Task<IActionResult> PartialUpdate([FromBody] FuelLogRequest request)
+    [HttpPost("/submit")]
+    public async Task<IActionResult> Submit([FromBody] FuelLogCloseRequest request)
     {
-        var cmd = new UpdateLogCommand(request,true);
+        var cmd = new SubmitLogCommand(request);
         var result = await _mediator.Send(cmd);
-        
+
         return HandleResult(result);
     }
 
@@ -66,8 +81,4 @@ public class FuelLogController : APIControllerBase
     public async Task<IActionResult> GetFuelEfficiency([FromQuery] GetFuelEfficiencyQuery query) {
         return HandleResult(await _mediator.Send(query));
     }
-
-
-    
-
 }

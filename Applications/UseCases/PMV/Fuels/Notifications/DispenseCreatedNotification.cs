@@ -22,8 +22,8 @@ public class DispenseCreatedNotificationHandler : INotificationHandler<DispenseC
     public async Task Handle(
         DispenseCreatedNotification notification, CancellationToken cancellationToken)
     {
-
-        //get dispense only
+        
+        //get dispense only 
         var dispenseTransactions = notification.Transactions
                                         .Where(p => p.LogType == EnumLogType.Dispense.ToString())
                                         .ToList();

@@ -20,11 +20,12 @@ public class FuelLogRepository : IFuelLogRepository
         _context.FuelLogs.Add(log);
     }
 
-    public async Task<IEnumerable<FuelLog>> GetDraftLogs(string station,string fueler)
+    public async Task<IEnumerable<FuelLog>> GetDraftLogs(string fueler)
     {
         return await _context.FuelLogs
                     .Include(c => c.FuelTransactions)
-                    .Where(c => c.StationCode == station && c.Fueler == fueler)
+                    .Where(c => c.Post.IsPosted == false)
+                    .Where(c => c.Fueler == fueler)
                     .ToListAsync();
     }
 
@@ -50,7 +51,7 @@ public class FuelLogRepository : IFuelLogRepository
                         .ToListAsync();
     }
 
-    public async Task UpdateLog(FuelLog log)
+    public void UpdateLog(FuelLog log)
     { 
        _context.FuelLogs.Update(log);
     }
@@ -73,5 +74,16 @@ public class FuelLogRepository : IFuelLogRepository
     public void UpdateTransactionLog(FuelTransaction transaction)
     {
         _context.FuelTransactions.Update(transaction);
+    }
+
+    public async Task<FuelLog?> GetLastFuelLog(string station)
+    {
+        //get the latest record 
+        return await _context.FuelLogs
+                .Include(f => f.FuelTransactions)
+                .Where(l => l.StationCode == station)
+                .OrderByDescending(l => l.ShiftStartTime)
+                .OrderByDescending(l => l.DocumentNo)
+                .FirstOrDefaultAsync();
     }
 }

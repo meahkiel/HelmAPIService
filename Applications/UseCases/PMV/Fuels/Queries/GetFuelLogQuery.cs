@@ -13,7 +13,7 @@ namespace Applications.UseCases.PMV.Fuels.Queries;
 ///     
 /// </summary>
 
-public record GetFuelLogQuery(string? Id,bool IsPostBack = false) : IRequest<Result<FuelLogResponse>>;
+public record GetFuelLogQuery(string? Id,string? station, bool IsPostBack = false) : IRequest<Result<FuelLogResponse>>;
 
 public class GetFuelLogQueryHandler : IRequestHandler<GetFuelLogQuery, Result<FuelLogResponse>>
 {
@@ -21,7 +21,9 @@ public class GetFuelLogQueryHandler : IRequestHandler<GetFuelLogQuery, Result<Fu
     private readonly IUnitWork _unitWork;
     private readonly IMapper _mapper;
 
-    public GetFuelLogQueryHandler(ICommonService commonService,IUnitWork unitWork,IMapper mapper)
+    public GetFuelLogQueryHandler(
+        ICommonService commonService,
+        IUnitWork unitWork,IMapper mapper)
 	{
         _commonService = commonService;
         _unitWork = unitWork;
@@ -43,8 +45,18 @@ public class GetFuelLogQueryHandler : IRequestHandler<GetFuelLogQuery, Result<Fu
                 var location = await _commonService.GetLocationByKey("","id",log.LocationId);
                 response.Location = location.ProjectDepartment;
             }
+            else {
+
+                if(!string.IsNullOrEmpty(request.station)) {
+                    
+                    var fuelRecord = await _unitWork.FuelLogs.GetLastFuelLog(request.station);
+                    response.OpeningMeter = fuelRecord!.OpeningMeter;
+
+                }
+            }
 
              if(!request.IsPostBack) {
+                
                 var stations = await _commonService.GetAllStation();
                 
                 response.StationSelections = await _commonService.GetAllStation();

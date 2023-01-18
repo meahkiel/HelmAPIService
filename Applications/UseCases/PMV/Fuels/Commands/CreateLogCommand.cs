@@ -2,7 +2,6 @@ using Applications.UseCases.Common;
 using Applications.UseCases.PMV.Common;
 using Applications.UseCases.PMV.Fuels.DTO;
 using Applications.UseCases.PMV.Fuels.Interfaces;
-using Applications.UseCases.PMV.Fuels.Notifications;
 
 using Core.PMV.Fuels;
 using Core.Utils;
@@ -32,11 +31,12 @@ public class CreateLogCommandHandler : IRequestHandler<CreateLogCommand, Result<
         _commonService = commonService;
         _unitWork = unitWork;
     }
+
+
     public async Task<Result<FuelLogKeyResponse>> Handle(CreateLogCommand request, CancellationToken cancellationToken)
     {
         try
-        {
-
+        {   
             FuelLog log = await GenerateInitialLog(request.Request);
             var employeeCode = string.IsNullOrEmpty(request.Request.EmployeeCode) ? await _userAccessor.GetUserEmployeeCode() : request.Request.EmployeeCode;
 
@@ -81,17 +81,19 @@ public class CreateLogCommandHandler : IRequestHandler<CreateLogCommand, Result<
             //request to post
             if (request.Request.IsPosted) {
                 log.TogglePost();
-                _publisher.Add(new DispenseCreatedNotification(log.FuelTransactions));
             }
 
             _unitWork.FuelLogs.AddFuelLog(log);
 
             //publish all notification
-            await _publisher.Publish();
+            //await _publisher.Publish();
 
             await _unitWork.CommitSaveAsync(employeeCode);
 
-            return Result.Ok(new FuelLogKeyResponse { Id = log.Id.ToString(), DocumentNo = log.DocumentNo });
+            return Result.Ok(new FuelLogKeyResponse { 
+                Id = log.Id.ToString(), 
+                DocumentNo = log.DocumentNo, 
+                OpeningMeter = log.OpeningMeter });
         }
         catch (Exception ex) {
             return Result.Fail(ex.Message);
@@ -101,17 +103,15 @@ public class CreateLogCommandHandler : IRequestHandler<CreateLogCommand, Result<
     private async Task<FuelLog> GenerateInitialLog(FuelLogRequest request)
     {
 
-        
-
         var location = await _commonService.GetLocationByKey(request.Location);
         if (location == null) throw new Exception("location cannot be found");
-        
+
         //get the latest record 
+        
         FuelLog? record = await _unitWork.GetContext().FuelLogs
                             .Include(f => f.FuelTransactions)
                             .Where(l => l.StationCode == request.Station)
                             .OrderByDescending(l => l.ShiftStartTime)
-                            .OrderByDescending(l => l.DocumentNo)
                             .FirstOrDefaultAsync();
 
         float openingMeter = 0f;
@@ -123,25 +123,38 @@ public class CreateLogCommandHandler : IRequestHandler<CreateLogCommand, Result<
             openingBalance = record.RemainingBalance;
         }
         else {
+            
             var station = await _commonService.GetStationByCode(request.Station);
+
             if(station != null) {
                 openingMeter = station.OpeningMeter;
                 openingBalance = station.OpeningBalance;
             }
         }
 
+        DateTime? shiftStartTime = DateTime.Now;
+        DateTime? endShifTime = DateTime.Now;
+
+        if(!request.IsPartial) { 
+            shiftStartTime = request.ShiftStartTime.ConvertToDateTime();
+            endShifTime = request.ShiftEndTime!.ConvertToDateTime();
+        }
+
+
         var log = FuelLog.Create(
             request.Station,
             location.Id,
             autoNumber.CurrentNumber,
             request.ReferenceNo,
-            request.ShiftStartTime.ConvertToDateTime(),
-            request.ShiftEndTime.ConvertToDateTime(),
+            shiftStartTime,
+            endShifTime,
             request.StartShiftTankerKm,
             request.EndShiftTankerKm,
             openingMeter,
             openingBalance, 0, 0);
         
+        log.Fueler = request.Fueler;
+
         return log;
     }
 }

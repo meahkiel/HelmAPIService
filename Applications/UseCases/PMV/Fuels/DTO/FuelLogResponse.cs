@@ -9,6 +9,9 @@ public class FuelLogKeyResponse
 {
     public string Id { get; set; }
     public int DocumentNo { get; set; }
+
+    public float OpeningMeter { get; set; }
+    
 }
 
 public class FuelLogDetailKeyResponse
@@ -27,12 +30,12 @@ public class FuelLogResponse
     public int ReferenceNo { get; set; }
     public int DocumentNo { get; set; }
     public DateTime FueledDate { get; set; } = DateTime.Today;
-    public DateTime? ShiftStartTime { get; set; } 
-    public DateTime? ShiftEndTime { get; set; }
+    public DateTime? ShiftStartTime { get; set; }  = DateTime.Today;
+    public DateTime? ShiftEndTime { get; set; } = DateTime.Today;
 
     public int StartShiftTankerKm { get; set; } = 0;
 
-    public int? EndShiftTankerKm { get; set; } = 0;
+    public int EndShiftTankerKm { get; set; } = 0;
 
     public float OpeningMeter { get; set; }
     

@@ -19,30 +19,33 @@ public record FuelLogCloseRequest(
     string? Remarks
 );
 
-public record FuelLogRequest(
-    string? Id,
-    string? EmployeeCode,
-    string FueledDate,
-    int ReferenceNo,
-    string ShiftStartTime,
-    string ShiftEndTime,
-    int StartShiftTankerKm,
-    int EndShiftTankerKm,
-    string Location,
-    string Station,
-    string? Remarks,
-    string Fueler,
-    IEnumerable<FuelTransactionsRequest> FuelTransactions,
-    bool IsPosted = false,
-    MarkDelCollection? DelCollection = null);
+
+public record FuelLogRequest {
+
+    public string? Id { get; init; }
+    public string EmployeeCode { get; init; }
+    public string? FueledDate { get; init; }
+    public int ReferenceNo { get; init; }
+    public string ShiftStartTime { get; init; }
+    public string? ShiftEndTime { get; init; }
+    public int StartShiftTankerKm { get; init; }
+    public int EndShiftTankerKm { get; init; }
+    public string Location { get; init; }
+    public string Station { get; init; }
+    public string Remarks { get; init; }
+    public string Fueler { get; init; }
+    public IEnumerable<FuelTransactionsRequest> FuelTransactions { get; init; } = new List<FuelTransactionsRequest>();
+    public bool IsPosted { get; init; }
+    public MarkDelCollection? DelCollection { get; init; }
+    public bool IsPartial { get; init; }
+    
+}
 
 public class FuelTransactionsRequest
 {
     public string? Id { get; set; }
-    public string? LogSheetId { get; set; }
-    public string? FuelStation { get; set; }
+    public string? FuelLogId { get; set; }
     public string AssetCode { get; set; } = "";
-    public string FuelDate { get; set; }
     public string FuelTime { get; set; } = "";
     public string? Remarks { get; set; }
     public string? OperatorDriver { get; set; } = "";

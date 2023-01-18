@@ -9,15 +9,17 @@ public interface IFuelLogRepository
 
     Task RemoveTransactions(string[] ids);
 
-    Task<FuelLog?> GetLog(string id);
-    Task<FuelLog> GetSingleLog(string id);
 
-    Task<IEnumerable<FuelLog>> GetDraftLogs(string station,string fueler);
-    
-    Task<IEnumerable<FuelLog>> GetTankTransactions(string fuelStation,DateTime dateFrom, DateTime dateTo);
-
-    Task UpdateLog(FuelLog log);
+    void UpdateLog(FuelLog log);
 
     void AddTransactionLog(FuelTransaction transaction);
     void UpdateTransactionLog(FuelTransaction transaction);
+    Task<FuelLog?> GetLog(string id);
+    Task<FuelLog> GetSingleLog(string id);
+    
+    Task<IEnumerable<FuelLog>> GetDraftLogs(string fueler);
+    
+    Task<IEnumerable<FuelLog>> GetTankTransactions(string fuelStation,DateTime dateFrom, DateTime dateTo);
+    
+    Task<FuelLog?> GetLastFuelLog(string station); 
 }
